@@ -1,44 +1,53 @@
-NAME		= cub3d
+NAME = cub3d
 
-CC			= cc
-# LDFLAGS		= -L./libft -lft -lreadline -lncurses
-LDFLAGS		= -lbsd
-CFLAGS		= -Wall -Wextra -Werror -g
-# CPPFLAGS	= -I./libft/include -I./include
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CPPFLAGS = -IMLX42/include -Ilibft/include -Idebug -Iinclude
+LDFLAGS =  -lmlx42 -lglfw -lm -Lbuild -Llibft -lft # -fsanitize=address
 
-SRCDIR = src
-OBJDIR = build
+include debug/log.mk
 
-ifeq ($(DEBUG), 1)
-CFLAGS += -DDEBUG
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+	LDFLAGS += -ldl -pthread 
+else ifeq ($(UNAME_S), Darwin)
+	LDFLAGS += -L"/opt/homebrew/Cellar/glfw/3.4/lib"
+	CPPFLAGS += -I"/opt/homebrew/Cellar/glfw/3.4/include"
 endif
 
-FILES = 	main					\
-			read_map			\
-			get_next_line/get_next_line		\
-			get_next_line/get_next_line_utils		\
-			
-#
+SRC += 	main.c							\
+		src/map/read_map.c					\
+		src/map/validate_map.c					\
 
-OBJECTS = $(FILES:%=$(OBJDIR)/%.o)
+TEST_SRC = test_barycentric.c
+TEST_OBJ = $(TEST_SRC:%.c=build/%.o)
+TEST_NAME = test
 
-all: $(NAME)
+OBJ = $(SRC:%.c=build/%.o)
 
 
-$(NAME): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+all: MLX42 $(NAME)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+MLX42:
+	cmake -S MLX42 -B build -Wno-dev
+	cmake --build build -j4
+
+libft:
+	$(MAKE) -C libft
+
+$(NAME): $(OBJ) | libft
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+build/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS)  -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS)
-	rm -rf $(OBJDIR)
+	rm -f $(OBJ) $(NAME)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all bonus libft clean fclean re test
+.PHONY: all clean fclean re MLX42 test libft

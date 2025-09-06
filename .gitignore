@@ -1,1 +1,12 @@
 .vscode
+
+%.dSYM
+cub3d
+
+build
+*.o
+projection/projection
+
+*.a
+*#*
+*~*
