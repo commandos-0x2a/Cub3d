@@ -29,12 +29,12 @@
 
 typedef unsigned long int	size_t;
 
-typedef struct	s_queue
+typedef struct	s_stack
 {
 	int				x;
 	int				y;
-	struct s_queue	*next;
-}	t_queue;
+	struct s_stack	*next;
+}	t_stack;
 
 typedef struct	s_map
 {
