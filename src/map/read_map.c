@@ -153,12 +153,24 @@ t_map	*init_map()
 	return (map);
 }
 
+int	valid_file_name(const char *map_file)
+{
+	char	*ext;
+
+	ext = ft_strrchr(map_file, '.');
+	if (!ext)
+		return (0);
+	return (ft_strcmp(ext, ".cub") == 0);
+}
+
 t_map	*read_map(const char *map_file)
 {
 	t_map	*map;
 	int		fd;
 	int		err;
 
+	if (!valid_file_name(map_file))
+		return (NULL);
 	map = init_map();
 	if (!map)
 		return (NULL);
