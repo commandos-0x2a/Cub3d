@@ -16,15 +16,10 @@ else ifeq ($(UNAME_S), Darwin)
 endif
 
 SRC += 	main.c							\
-		src/map/read_map.c					\
-		src/map/validate_map.c					\
-
-TEST_SRC = test_barycentric.c
-TEST_OBJ = $(TEST_SRC:%.c=build/%.o)
-TEST_NAME = test
+		src/map/read_map.c				\
+		src/map/validate_map.c			\
 
 OBJ = $(SRC:%.c=build/%.o)
-
 
 all: MLX42 $(NAME)
 

@@ -22,11 +22,16 @@ void print_map(t_map *map)
     }
 }
 
-int main()
+int main(int argc, char **argv)
 {
     t_map   *map;
 
-    map = read_map("test.cub");
+    if (argc != 2)
+    {
+        printf("%s map_file\n", argv[0]);
+        return (1);
+    }
+    map = read_map(argv[1]);
     if (!map)
         return (1);
     if (!validate_map(map))

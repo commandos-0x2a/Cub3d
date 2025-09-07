@@ -19,13 +19,13 @@
 #  include <limits.h>
 # endif
 
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define YELLOW  "\x1b[33m"
-#define BLUE    "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
-#define RESET   "\x1b[0m"
+#define RED		"\x1b[31m"
+#define GREEN	"\x1b[32m"
+#define YELLOW	"\x1b[33m"
+#define BLUE	"\x1b[34m"
+#define MAGENTA	"\x1b[35m"
+#define CYAN	"\x1b[36m"
+#define RESET	"\x1b[0m"
 
 typedef unsigned long int	size_t;
 
@@ -53,6 +53,8 @@ typedef struct	s_map
 }	t_map;
 
 t_map	*read_map(const char *map_file);
-int	validate_map(t_map *map);
+int		validate_map(t_map *map);
+int		valid_file_name(const char *map_file);
+
 
 #endif

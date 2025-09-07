@@ -70,6 +70,16 @@ int	valid_player_number(t_map *map)
 	return (1);
 }
 
+int	valid_file_name(const char *map_file)
+{
+	char	*ext;
+
+	ext = ft_strrchr(map_file, '.');
+	if (!ext)
+		return (0);
+	return (ft_strcmp(ext, ".cub") == 0);
+}
+
 int	validate_map(t_map *map)
 {
 	if (valid_char(map) == 0)

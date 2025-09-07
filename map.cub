@@ -1,7 +1,7 @@
-NO ./textures/test/NO.png
-SO ./textures/test/SO.png
-WE ./textures/test/WE.png
-EA ./textures/test/EA.png
+NO ./textures/north_texture.jpg
+SO ./textures/south_texture.jpg
+WE ./textures/west_textue.jpg
+EA ./textures/east_texture.jpg
 
 F 220,100,0
 C 225,30,0
