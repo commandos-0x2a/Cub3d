@@ -14,7 +14,17 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	print_valid_char_error(t_map *map)
+int	valid_file_name(const char *map_file)
+{
+	char	*ext;
+
+	ext = ft_strrchr(map_file, '.');
+	if (!ext)
+		return (0);
+	return (ft_strcmp(ext, ".cub") == 0);
+}
+
+int	print_valid_char_error(t_map *map)
 {
 	size_t	y;
 	size_t	x;
@@ -37,14 +47,15 @@ void	print_valid_char_error(t_map *map)
 		y++;
 	}
 	printf(RED"Error: found char not valid in map\n\n"RESET);
+	return (0);
 }
 
-int	valid_char(t_map *map)
+int	print_nb_player_error(t_map *map, int nb_player)
 {
 	size_t	y;
 	size_t	x;
 	char	c;
-	
+
 	y = 0;
 	while (y < map->h)
 	{
@@ -52,35 +63,56 @@ int	valid_char(t_map *map)
 		while (x < map->w)
 		{
 			c = map->grid[y * map->w + x];
-			if (ft_strchr("01 NSEW", c) == NULL)
-			{
-				print_valid_char_error(map);
-				return (0);
-			}
+			if (ft_strchr("NSEW", c))
+				printf(RED"%c"RESET, c);
+			else
+				printf("%c", c);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+	if (nb_player == 0)
+		printf(RED"Error: not found player in map\n\n"RESET);
+	else
+		printf(RED"Error: too many player in map\n\n"RESET);
+	return (0);
+}
+
+int	valid_char_nb_player(t_map *map)
+{
+	size_t	y;
+	size_t	x;
+	char	c;
+	int		nb_player;
+
+	y = 0;
+	nb_player = 0;
+	while (y < map->h)
+	{
+		x = 0;
+		while (x < map->w)
+		{
+			c = map->grid[y * map->w + x];
+			if (ft_strchr("01 ", c))
+				;
+			else if (ft_strchr("NSEW", c))
+				nb_player++;
+			else
+				return (print_valid_char_error(map));
 			x++;
 		}
 		y++;
 	}
-	return (1);
-}
-
-int	valid_player_number(t_map *map)
-{
-  (void)map;
-	return (1);
-}
-
-int	valid_file_name(const char *map_file)
-{
-	char	*ext;
-
-	ext = ft_strrchr(map_file, '.');
-	if (!ext)
+	if (nb_player != 1)
+	{
+		print_nb_player_error(map, nb_player);
 		return (0);
-	return (ft_strcmp(ext, ".cub") == 0);
+	}
+	return (1);
 }
 
-int	validate_map(t_map *map)
+int	valid_char_nb_player(t_map *map)
 {
 	if (valid_char(map) == 0)
 		return (0);
