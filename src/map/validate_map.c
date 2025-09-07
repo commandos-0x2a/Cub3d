@@ -66,6 +66,7 @@ int	valid_char(t_map *map)
 
 int	valid_player_number(t_map *map)
 {
+  (void)map;
 	return (1);
 }
 
