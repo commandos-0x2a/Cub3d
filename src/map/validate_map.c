@@ -79,7 +79,7 @@ int	print_nb_player_error(t_map *map, int nb_player)
 	return (0);
 }
 
-int	valid_char_nb_player(t_map *map)
+int	valid_char(t_map *map)
 {
 	size_t	y;
 	size_t	x;
@@ -112,7 +112,7 @@ int	valid_char_nb_player(t_map *map)
 	return (1);
 }
 
-int	valid_char_nb_player(t_map *map)
+int	validate_map(t_map *map)
 {
 	if (valid_char(map) == 0)
 		return (0);

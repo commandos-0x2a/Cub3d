@@ -15,7 +15,7 @@ else ifeq ($(UNAME_S), Darwin)
 	CPPFLAGS += -I"/opt/homebrew/Cellar/glfw/3.4/include"
 endif
 
-SRC += 	main.c							\
+SRC += 	src/main.c							\
 		src/map/read_map.c				\
 		src/map/validate_map.c			\
 

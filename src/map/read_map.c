@@ -119,7 +119,8 @@ int	read_map_iter(int fd, int i, t_map *map)
 	else if (ft_strncmp(line, "C ", 2) == 0)
 		err = copy_color(&map->ceiling_color, line + 2);
 	else if (is_emtpy_line(line))
-		printf("%i: emtpy line\n", i + 1);
+		// printf("%i: emtpy line\n", i + 1)
+		;
 	else
 		err = read_grid_iter(fd, 0, map, line);
 	if (err != 0)
