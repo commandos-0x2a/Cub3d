@@ -24,54 +24,6 @@ void print_map(t_map *map)
     }
 }
 
-void ft_hook(void* param)
-{
-	t_game* game;
-	size_t	y;
-	size_t	x;
-
-	game = param;
-	// printf("x: %u, y: %u\n", game->frame->width, game->frame->height);
-	y = 0;
-	while (y < game->frame->height)
-	{
-		x = 0;
-		while (x < game->frame->width)
-		{
-			if (y < game->frame->height / 2)
-				// mlx_put_pixel(game->frame, x, y, 0x0);
-				mlx_put_pixel(game->frame, x, y, game->map->ceiling_color);
-			else
-				// mlx_put_pixel(game->frame, x, y, 0xffffffff);
-				mlx_put_pixel(game->frame, x, y, game->map->floor_color);
-			x++;
-		}	
-		y++;
-	}
-	render_world(game);
-}
-
-void	update_player(void *param)
-{
-	t_game	*game;
-
-	game = param;
-
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
-		// image->instances[0].y -= 5;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
-		// image->instances[0].y += 5;
-		;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		// image->instances[0].x -= 5;
-		;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		// image->instances[0].x += 5;
-		;
-}
-
 int main(int argc, char **argv)
 {
 	t_game	game;
@@ -107,8 +59,8 @@ int main(int argc, char **argv)
 		return(1);
 	}
 
-	mlx_loop_hook(game.mlx, update_player, &game);
-	mlx_loop_hook(game.mlx, ft_hook, &game);
+	mlx_loop_hook(game.mlx, player_control, &game);
+	mlx_loop_hook(game.mlx, render, &game);
 
 	mlx_loop(game.mlx);
 	// free map

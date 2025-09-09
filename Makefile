@@ -18,6 +18,7 @@ endif
 SRC += 	src/main.c							\
 		src/map/read_map.c				\
 		src/map/validate_map.c			\
+		src/render.c 					\
 
 OBJ = $(SRC:%.c=build/%.o)
 
