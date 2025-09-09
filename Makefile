@@ -21,6 +21,7 @@ SRC += 	src/main.c							\
 		src/render.c 					\
 		src/controls.c					\
 		src/utils.c					\
+		src/player.c
 
 OBJ = $(SRC:%.c=build/%.o)
 
