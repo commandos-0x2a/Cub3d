@@ -42,6 +42,8 @@ void render(void* param)
 	
 	render_floor_ceiling(game->frame, game->map->floor_color, game->map->ceiling_color);
 	render_world(game);
+	// ? temporary player position update
+	update_player_pos(game);
 
 	char buf[1024];
 	snprintf(buf, 1024, "player: (%.2f, %.2f)", game->player.pos.x, game->player.pos.y);
