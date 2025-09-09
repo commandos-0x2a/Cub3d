@@ -40,12 +40,12 @@ int main(int argc, char **argv)
 		return (1);
 	print_map(game.map);
 
-	// Gotta error check this stuff
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
 		return(1);
 	}
+	
 	if (!(game.frame = mlx_new_image(game.mlx, WIDTH, HEIGHT)))
 	{
 		mlx_close_window(game.mlx);
@@ -58,6 +58,12 @@ int main(int argc, char **argv)
 		puts(mlx_strerror(mlx_errno));
 		return(1);
 	}
+
+	game.last_render = mlx_get_time();
+
+	// player
+	game.player.speed = 1;
+	game.player.r = 0;
 
 	mlx_loop_hook(game.mlx, player_control, &game);
 	mlx_loop_hook(game.mlx, render, &game);

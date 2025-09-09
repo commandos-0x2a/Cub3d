@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/09 16:08:59 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:22:50 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ typedef struct	s_player
 
 typedef struct	s_game
 {
-	t_map			*map;
-	mlx_t			*mlx;
-	mlx_image_t		*frame;
-	t_player		*player;
-	unsigned long	last_render;
-	unsigned long	time_delta;
+	t_map		*map;
+	mlx_t		*mlx;
+	mlx_image_t	*frame;
+	t_player	player;
+	double		last_render;
+	double		time_delta;
 }	t_game;
 
 void			render(void* param);
