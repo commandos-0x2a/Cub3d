@@ -39,14 +39,14 @@ int	copy_color(int *dst, char *line)
 {
 	int	color;
 
-	*dst = 0;
+	*dst = 0xff;
 	color = ft_atoi_r(&line);
 	while (*line && isspace(*line))
 		line++;
 	if (color < 0 || color > 255 || *line != ',')
 		return (-1);
 	line++; // skip comma
-	*dst = color << 16;
+	*dst |= color << 24;
 
 	color = ft_atoi_r(&line);
 	while (*line && isspace(*line))
@@ -54,14 +54,14 @@ int	copy_color(int *dst, char *line)
 	if (color < 0 || color > 255 || *line != ',')
 		return (-2);
 	line++; // skip comma
-	*dst |= color << 8;
+	*dst |= color << 16;
 
 	color = ft_atoi_r(&line);
 	while (*line && isspace(*line))
 		line++;
 	if (color < 0 || color > 255 || *line != '\0')
 		return (-3);
-	*dst |= color;
+	*dst |= color << 8;
 	return (0);
 }
 
