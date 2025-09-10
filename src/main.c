@@ -15,7 +15,7 @@ void print_map(t_map *map)
     printf("Map Height: %zu\n", map->h);
     printf("first_map_line: %zu\n", map->first_map_line);
     printf("Map Blocks:\n");
-    
+
     for (size_t y = 0; y < map->h; y++) {
         for (size_t x = 0; x < map->w; x++) {
             putchar(map->grid[y * map->w + x]);
@@ -24,28 +24,29 @@ void print_map(t_map *map)
     }
 }
 
-int main(int argc, char **argv)
+int main()
 {
 	t_game	game;
 
-	if (argc != 2)
-	{
-		printf("%s map_file\n", argv[0]);
-		return (1);
-	}
-	game.map = read_map(argv[1]);
-	if (!game.map)
-		return (1);
-	if (!validate_map(game.map))
-		return (1);
-	print_map(game.map);
+	// ! commented for testing
+	// if (argc != 2)
+	// {
+	// 	printf("%s map_file\n", argv[0]);
+	// 	return (1);
+	// }
+	// game.map = read_map(argv[1]);
+	// if (!game.map)
+	// 	return (1);
+	// if (!validate_map(game.map))
+	// 	return (1);
+	// print_map(game.map);
 
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
 		return(1);
 	}
-	
+
 	if (!(game.frame = mlx_new_image(game.mlx, WIDTH, HEIGHT)))
 	{
 		mlx_close_window(game.mlx);
@@ -62,8 +63,11 @@ int main(int argc, char **argv)
 	game.last_render = mlx_get_time();
 
 	// player
-	game.player.speed = 1;
+	game.player.speed = .2;
 	game.player.r = 0;
+	game.player.pos.x = 0;
+	game.player.pos.y = 0;
+
 
 	mlx_loop_hook(game.mlx, player_control, &game);
 	mlx_loop_hook(game.mlx, render, &game);

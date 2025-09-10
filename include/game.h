@@ -17,9 +17,12 @@
 # include "utils.h"
 # include <MLX42/MLX42.h>
 
+// Resolution
 # define WIDTH 1080
 # define HEIGHT 720
 
+// PIXEL SCALE: is for scaling the entites movement. because moving 1px to right in a 1080 720 res is slow as hell
+# define PIXEL_SCALE 10
 enum	e_direction
 {
 	FRONT,
