@@ -63,14 +63,14 @@ int main()
 	game.last_render = mlx_get_time();
 
 	// player
-	game.player.speed = .2;
+	game.player.speed = 10;
 	game.player.r = 0;
 	game.player.pos.x = 0;
 	game.player.pos.y = 0;
 
 
-	mlx_loop_hook(game.mlx, player_control, &game);
 	mlx_loop_hook(game.mlx, render, &game);
+	mlx_loop_hook(game.mlx, player_control, &game);
 
 	mlx_loop(game.mlx);
 	// free map

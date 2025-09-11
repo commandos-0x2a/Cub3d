@@ -23,6 +23,12 @@
 
 // PIXEL SCALE: is for scaling the entites movement. because moving 1px to right in a 1080 720 res is slow as hell
 # define PIXEL_SCALE 10
+
+// ( int ) FOV: determines the range the player will see from.
+// higher number results in more angle, less number will result in less angle to see through
+// Giving the "zoomed" effect
+# define FOV 60
+
 enum	e_direction
 {
 	FRONT,

@@ -15,8 +15,8 @@ int map[]=
 void render_world(t_game *game)
 {
     const int map_rows = 6;
-    const int map_cols = 9;  // Fix: your map has 9 columns, not 8
-    int tile_size = 120;      // Fix: smaller tile size to fit in window
+    const int map_cols = 9;
+    int tile_size = 120;
     int black = 0x000000FF;
 
     for (int row = 0; row < map_rows; row++)

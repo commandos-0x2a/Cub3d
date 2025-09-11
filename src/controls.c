@@ -34,8 +34,13 @@ void	player_control(void *param)
 		vec.x -= 1;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D)) // right
 		vec.x += 1;
-	vec.x *= player->speed;
-	vec.y *= player->speed;
+	// The math function uses radians (PI for 180d) instead of normal degress
+	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
+		player->r -= 0.014;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
+		player->r += 0.014;
+	vec.x *= player->speed * game->time_delta;
+	vec.y *= player->speed * game->time_delta;
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
 }
