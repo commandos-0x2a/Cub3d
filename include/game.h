@@ -29,6 +29,9 @@
 // Giving the "zoomed" effect
 # define FOV 60
 
+//quick debug map
+extern int map[6][9];
+
 enum	e_direction
 {
 	FRONT,

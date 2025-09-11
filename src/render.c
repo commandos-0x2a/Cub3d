@@ -1,34 +1,35 @@
 #include "game.h"
 #include <stdio.h>
 
-//quick debug map
-int map[]=
+int map[6][9]=
 {
-	1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 0, 0, 1, 1,
-	1, 0, 1, 1, 1, 0, 0, 1, 1,
-	1, 0, 0, 0, 0, 0, 0, 1, 1,
-	1, 0, 0, 0, 1, 0, 0, 1, 1,
-	1, 1, 1, 1, 1, 1, 1, 1, 1,
+	{1, 1, 1, 1, 1, 1, 1, 1, 1}
+	,{1, 0, 0, 0, 0, 0, 0, 1, 1}
+	,{1, 0, 1, 1, 1, 0, 0, 1, 1}
+	,{1, 0, 0, 0, 0, 0, 0, 1, 1}
+	,{1, 0, 0, 0, 1, 0, 0, 1, 1}
+	,{1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
 void render_world(t_game *game)
 {
-    const int map_rows = 6;
-    const int map_cols = 9;
     int tile_size = 120;
     int black = 0x000000FF;
 
-    for (int row = 0; row < map_rows; row++)
-    {
-        for (int col = 0; col < map_cols; col++)
-        {
-            int map_index = row * map_cols + col;
+	int	i;
+	int	j;
 
-            if (map[map_index] == 1)
-            {
-                int start_x = col * tile_size;
-                int start_y = row * tile_size;
+	i = 0;
+	while (i < 6)
+	{
+		j = 0;
+		while (j < 9)
+		{
+			if (map[i][j] == 1)
+			{
+				// draw a square
+				int start_x = j * tile_size;
+                int start_y = i * tile_size;
 
                 for (int py = start_y; py < start_y + tile_size - 1; py++)
                 {
@@ -42,9 +43,11 @@ void render_world(t_game *game)
                         }
                     }
                 }
-            }
-        }
-    }
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void	render_floor_ceiling(mlx_image_t *frame,
