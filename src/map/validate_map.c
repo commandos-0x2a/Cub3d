@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:04:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/06 11:34:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:27:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int	valid_file_name(const char *map_file)
 	return (ft_strcmp(ext, ".cub") == 0);
 }
 
-int	print_valid_char_error(t_map *map)
+int	print_valid_char_error(t_grid *grid)
 {
 	size_t	y;
 	size_t	x;
 	char	c;
 	
 	y = 0;
-	while (y < map->h)
+	while (y < grid->h)
 	{
 		x = 0;
-		while (x < map->w)
+		while (x < grid->w)
 		{
-			c = map->grid[y * map->w + x];
+			c = grid->raw[y * grid->w + x];
 			if (ft_strchr("01 NSEW", c) == NULL)
 				printf(RED"%c"RESET, c);
 			else
@@ -50,19 +50,19 @@ int	print_valid_char_error(t_map *map)
 	return (0);
 }
 
-int	print_nb_player_error(t_map *map, int nb_player)
+int	print_nb_player_error(t_grid *grid, int nb_player)
 {
 	size_t	y;
 	size_t	x;
 	char	c;
 
 	y = 0;
-	while (y < map->h)
+	while (y < grid->h)
 	{
 		x = 0;
-		while (x < map->w)
+		while (x < grid->w)
 		{
-			c = map->grid[y * map->w + x];
+			c = grid->raw[y * grid->w + x];
 			if (ft_strchr("NSEW", c))
 				printf(RED"%c"RESET, c);
 			else
@@ -79,7 +79,7 @@ int	print_nb_player_error(t_map *map, int nb_player)
 	return (0);
 }
 
-int	valid_char(t_map *map)
+int	valid_char(t_grid *grid)
 {
 	size_t	y;
 	size_t	x;
@@ -88,25 +88,25 @@ int	valid_char(t_map *map)
 
 	y = 0;
 	nb_player = 0;
-	while (y < map->h)
+	while (y < grid->h)
 	{
 		x = 0;
-		while (x < map->w)
+		while (x < grid->w)
 		{
-			c = map->grid[y * map->w + x];
+			c = grid->raw[y * grid->w + x];
 			if (ft_strchr("01 ", c))
 				;
 			else if (ft_strchr("NSEW", c))
 				nb_player++;
 			else
-				return (print_valid_char_error(map));
+				return (print_valid_char_error(grid));
 			x++;
 		}
 		y++;
 	}
 	if (nb_player != 1)
 	{
-		print_nb_player_error(map, nb_player);
+		print_nb_player_error(grid, nb_player);
 		return (0);
 	}
 	return (1);
@@ -114,7 +114,9 @@ int	valid_char(t_map *map)
 
 int	validate_map(t_map *map)
 {
-	if (valid_char(map) == 0)
+	if (valid_char(&map->grid) == 0)
+		return (0);
+	if (valid_surrounded_wall(map) == 0)
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/06 11:29:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/10 21:16:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # else
 #  include <limits.h>
 # endif
+#include "utils.h"
 
 #define RED		"\x1b[31m"
 #define GREEN	"\x1b[32m"
@@ -36,6 +37,14 @@ typedef struct	s_stack
 	struct s_stack	*next;
 }	t_stack;
 
+
+typedef struct	s_grid
+{
+	size_t	w;
+	size_t	h;
+	char	*raw;
+}	t_grid;
+
 typedef struct	s_map
 {
 	char	north[PATH_MAX];
@@ -47,14 +56,17 @@ typedef struct	s_map
 	int		ceiling_color;
 
 	size_t	first_map_line;
-	size_t	w;
-	size_t	h;
-	char	*grid;
+	t_grid	grid;
+	int		player_x;
+	int		player_y;
 }	t_map;
 
 t_map	*read_map(const char *map_file);
 int		validate_map(t_map *map);
 int		valid_file_name(const char *map_file);
+int		valid_surrounded_wall(t_map *map);
+void	print_grid(t_grid *grid);
+void	print_map(t_map *map);
 
 
 #endif
