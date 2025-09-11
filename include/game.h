@@ -17,8 +17,20 @@
 # include "utils.h"
 # include <MLX42/MLX42.h>
 
+// Resolution
 # define WIDTH 1080
 # define HEIGHT 720
+
+// PIXEL SCALE: is for scaling the entites movement. because moving 1px to right in a 1080 720 res is slow as hell
+# define PIXEL_SCALE 10
+
+// ( int ) FOV: determines the range the player will see from.
+// higher number results in more angle, less number will result in less angle to see through
+// Giving the "zoomed" effect
+# define FOV 60
+
+//quick debug map
+extern int map[6][9];
 
 enum	e_direction
 {
