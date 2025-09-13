@@ -33,7 +33,7 @@
 
 // NUM_RAYS: the amount of rays that will be shot from the player. More gives more detailed and less prone to hidden walls or entites
 // due to the lack of rays.
-# define NUM_RAYS 60
+# define NUM_RAYS 300
 
 //quick debug map
 extern int map[6][9];

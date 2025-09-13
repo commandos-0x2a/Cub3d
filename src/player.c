@@ -14,9 +14,9 @@ int hit_wall(float x, float y)
 	// ? 120 stands for the tile size, reducing this will result in out of bounds
 	mx = (int)(x / TILE_SIZE);
 	my = (int)(y / TILE_SIZE);
-    // Check bounds
+	// Check bounds
 	// ! please replace these values. these are for debugging
-    if (mx < 0 || mx >= 9 || my < 0 || my >= 6)
+	if (mx < 0 || mx >= 9 || my < 0 || my >= 6)
 		return 1; // Out of bounds = wall
 
 	return (map[my][mx] == 1);
@@ -60,37 +60,40 @@ float cast_ray(t_game *game, double angle, int draw_ray)
 
 void	draw_wall(t_game *game, float wall_distance, int ray)
 {
-	// ! In debug mode
 	int const color = 0xFF00FFFF;
-	// int const max_distance = 1000;
-	// (void)ray;
-	int new_width = WIDTH / 2;
-	int	i;
-	int	y;
-	int	wall_height;
-	int	wall_start;
-	int	wall_end;
-	int	x_segment;
+	int		x;
+	int		y;
+	int		wall_height;
+	int		wall_start;
+	int		wall_end;
+	int		x_start;
+	int		x_end;
+	double	angle_offset;
+	float	corrected_distance;
 
-	i = 0;
-	y = 0;
-	x_segment = (new_width / NUM_RAYS);
-	wall_height = (int)(new_width / wall_distance * 50);
-	double angle_diff = (ray - NUM_RAYS/2) * (FOV * PI / 180) / NUM_RAYS;
-    wall_height *= cos(angle_diff);
-	wall_start = ((HEIGHT - wall_height) / 2);
+	// fish effect correction
+	angle_offset = (ray - NUM_RAYS / 2) * (FOV * PI / 180.0 / NUM_RAYS);
+	corrected_distance = wall_distance * cos(angle_offset);
+	wall_height = (int)(HEIGHT * TILE_SIZE / corrected_distance);
+	if (wall_height > HEIGHT)
+		wall_height = HEIGHT;
+	if (wall_height < 1)
+		wall_height = 1;
+	wall_start = (HEIGHT - wall_height) / 2;
 	wall_end = wall_start + wall_height;
-	while (i < x_segment)
+	x_start = (ray * WIDTH) / NUM_RAYS;
+	x_end = ((ray + 1) * WIDTH) / NUM_RAYS;
+	x = x_start;
+	while (x < x_end)
 	{
-		y = 0;
-		while (y < HEIGHT)
+		y = wall_start;
+		while (y < wall_end)
 		{
-			int x = ray * x_segment + i;
-			if (y >= wall_start && y <= wall_end)
-				mlx_put_pixel(game->frame, x + new_width, y, color);
+			if (x > 0 && x <= WIDTH && y > 0 && y <= HEIGHT)
+				mlx_put_pixel(game->frame, x, y, color);
 			y++;
 		}
-		i++;
+		x++;
 	}
 }
 
