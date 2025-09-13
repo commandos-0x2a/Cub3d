@@ -29,6 +29,12 @@
 // Giving the "zoomed" effect
 # define FOV 60
 
+# define TILE_SIZE 60
+
+// NUM_RAYS: the amount of rays that will be shot from the player. More gives more detailed and less prone to hidden walls or entites
+// due to the lack of rays.
+# define NUM_RAYS 60
+
 //quick debug map
 extern int map[6][9];
 
@@ -39,6 +45,12 @@ enum	e_direction
 	LEFT,
 	RIGHT
 };
+
+typedef struct s_debug
+{
+	double	sec;
+	int		fps;
+}	t_debug;
 
 typedef struct	s_player
 {
@@ -53,6 +65,7 @@ typedef struct	s_game
 	mlx_t		*mlx;
 	mlx_image_t	*frame;
 	t_player	player;
+	t_debug		debug;
 	double		last_render;
 	double		time_delta;
 }	t_game;

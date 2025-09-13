@@ -12,12 +12,10 @@ int hit_wall(float x, float y)
 	int	my;
 
 	// ? 120 stands for the tile size, reducing this will result in out of bounds
-	mx = (int)(x / 120);
-	my = (int)(y / 120);
-
-	// fprintf(stderr,"x:%d y:%d\n", mx, my);
-
+	mx = (int)(x / TILE_SIZE);
+	my = (int)(y / TILE_SIZE);
     // Check bounds
+	// ! please replace these values. these are for debugging
     if (mx < 0 || mx >= 9 || my < 0 || my >= 6)
 		return 1; // Out of bounds = wall
 
@@ -65,12 +63,44 @@ float cast_ray(t_game *game, double angle, int draw_ray)
 	return (max_distance); // incase no wall is hit
 }
 
+void	draw_wall(t_game *game, float wall_distance, int ray)
+{
+	// ! In debug mode
+	int const color = 0xFF00FFFF;
+	// int const max_distance = 1000;
+	// (void)ray;
+	int new_width = WIDTH / 2;
+	int	i;
+	int	y;
+	int	wall_height;
+	int	wall_start;
+	int	wall_end;
+	int	x_segment;
+
+	i = 0;
+	y = 0;
+	x_segment = (new_width / NUM_RAYS);
+	wall_height = (int)(new_width / wall_distance * 100);
+	wall_start = ((HEIGHT - wall_height) / 2);
+	wall_end = wall_start + wall_height;
+	while (i < x_segment)
+	{
+		y = 0;
+		while (y < HEIGHT)
+		{
+			if (y >= wall_start && y <= wall_end)
+				mlx_put_pixel(game->frame, ((WIDTH / 2) + (i * ray)), y, color);
+			y++;
+		}
+		i++;
+	}
+}
+
 // ! remove before eval !!!!
 // This function uses DDA to detemine the player's vision
 // Where FOV is the range the player can see
-void draw_player_vision(t_game *game, int const player_size, double fov)
+void draw_player_vision(t_game *game)
 {
-	int const	num_rays = 60;
 	int			i;
 	double		fov_rad;
 	double		sangle;
@@ -78,16 +108,15 @@ void draw_player_vision(t_game *game, int const player_size, double fov)
 	double		current_angle;
 	float		wall_distance;
 
-	fov_rad = fov * PI / 180;
+	fov_rad = FOV * PI / 180;
 	sangle = game->player.r - (fov_rad / 2);
-	angle_step = fov_rad / num_rays;
+	angle_step = fov_rad / NUM_RAYS;
 	i = 0;
-	while (i < num_rays)
+	while (i < NUM_RAYS)
 	{
 		current_angle = sangle + (i * angle_step);
 		wall_distance = cast_ray(game, current_angle, 1); // 1 means draw the ray. For debugging
-		(void)wall_distance;
-		(void)player_size;
+		draw_wall(game, wall_distance, i);
 		i++;
 	}
 
@@ -116,5 +145,5 @@ void update_player_pos(t_game *game)
 		j = 0;
 		i++;
 	}
-	draw_player_vision(game, player_size, FOV);
+	draw_player_vision(game);
 }

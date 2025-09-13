@@ -13,7 +13,6 @@ int map[6][9]=
 
 void render_world(t_game *game)
 {
-    int tile_size = 120;
     int black = 0x000000FF;
 
 	int	i;
@@ -28,12 +27,12 @@ void render_world(t_game *game)
 			if (map[i][j] == 1)
 			{
 				// draw a square
-				int start_x = j * tile_size;
-                int start_y = i * tile_size;
+				int start_x = j * TILE_SIZE;
+                int start_y = i * TILE_SIZE;
 
-                for (int py = start_y; py < start_y + tile_size - 1; py++)
+                for (int py = start_y; py < start_y + TILE_SIZE - 1; py++)
                 {
-                    for (int px = start_x; px < start_x + tile_size - 1; px++)
+                    for (int px = start_x; px < start_x + TILE_SIZE - 1; px++)
                     {
                         // Add bounds checking to prevent segfault
                         if (px >= 0 && px < (int)game->frame->width &&
@@ -78,12 +77,18 @@ void render(void* param)
 	double	now;
 
 	game = param;
-
 	// get delta time
 	now = mlx_get_time();
 	game->time_delta = now - game->last_render;
 	game->last_render = now;
-
+	game->debug.sec += game->time_delta;
+	game->debug.fps++;
+	if (game->debug.sec >= 1)
+	{
+		game->debug.sec = 0;
+		fprintf(stderr, "FPS:%d\n", game->debug.fps);
+		game->debug.fps = 0;
+	}
 	// render_floor_ceiling(game->frame, game->map->floor_color, game->map->ceiling_color);
 	// render_world(game);
 	// // ? temporary player position update

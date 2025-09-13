@@ -9,7 +9,7 @@ include debug/log.mk
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
-	LDFLAGS += -ldl -pthread 
+	LDFLAGS += -ldl -pthread
 else ifeq ($(UNAME_S), Darwin)
 	LDFLAGS += -L"/opt/homebrew/Cellar/glfw/3.4/lib"
 	CPPFLAGS += -I"/opt/homebrew/Cellar/glfw/3.4/include"

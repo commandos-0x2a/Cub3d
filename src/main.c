@@ -67,6 +67,9 @@ int main()
 	game.player.r = 0;
 	game.player.pos.x = 0;
 	game.player.pos.y = 0;
+	// debug
+	game.debug.sec = 0;
+	game.debug.fps = 0;
 
 
 	mlx_loop_hook(game.mlx, render, &game);
