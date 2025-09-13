@@ -72,7 +72,7 @@ int	is_emtpy_line(char *line)
 	return (!*line);
 }
 
-int	read_grid_iter(int fd, int i, t_map *map, char *line)
+int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 {
 	int		err;
 	size_t	w;
@@ -81,22 +81,22 @@ int	read_grid_iter(int fd, int i, t_map *map, char *line)
 	err = 0;
 	if (!line)
 	{
-		map->h = i;
-		map->grid = malloc(map->h * map->w);
-		if (!map->grid)
+		grid->h = i;
+		grid->raw = malloc(grid->h * grid->w);
+		if (!grid->raw)
 			return (-1);
 		return (0);
 	}
 	w = ft_strlen(line);
-	if (w > map->w)
-		map->w = w;
-	err = read_grid_iter(fd, i + 1, map, get_next_line(fd));
+	if (w > grid->w)
+		grid->w = w;
+	err = read_grid_iter(fd, i + 1, grid, get_next_line(fd));
 	if (err != 0)
 		return (err);
-	cur = &map->grid[i * map->w];
+	cur = &grid->raw[i * grid->w];
 	while (*line && *line != '\n')
 		*cur++ = *line++;
-	ft_memset(cur, ' ', &map->grid[(i + 1) * map->w] - cur);
+	ft_memset(cur, ' ', &grid->raw[(i + 1) * grid->w] - cur);
 	return (0);
 }
 
@@ -122,7 +122,7 @@ int	read_map_iter(int fd, int i, t_map *map)
 		// printf("%i: emtpy line\n", i + 1)
 		;
 	else
-		err = read_grid_iter(fd, 0, map, line);
+		err = read_grid_iter(fd, 0, &map->grid, line);
 	if (err != 0)
 		return (err);
 	err = read_map_iter(fd, i + 1, map);
@@ -148,9 +148,9 @@ t_map	*init_map()
 	map->east[0] = 0;
 	map->floor_color = 0;
 	map->ceiling_color = 0;
-	map->w = 0;
-	map->h = 0;
-	map->grid = NULL;
+	map->grid.w = 0;
+	map->grid.h = 0;
+	map->grid.raw = NULL;
 	return (map);
 }
 
