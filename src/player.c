@@ -22,11 +22,6 @@ int hit_wall(float x, float y)
 	return (map[my][mx] == 1);
 }
 
-float calculate_distance(float x1, float y1, float x2, float y2)
-{
-	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
-
 float cast_ray(t_game *game, double angle, int draw_ray)
 {
 	int const   max_distance = 1000;
@@ -80,7 +75,9 @@ void	draw_wall(t_game *game, float wall_distance, int ray)
 	i = 0;
 	y = 0;
 	x_segment = (new_width / NUM_RAYS);
-	wall_height = (int)(new_width / wall_distance * 100);
+	wall_height = (int)(new_width / wall_distance * 50);
+	double angle_diff = (ray - NUM_RAYS/2) * (FOV * PI / 180) / NUM_RAYS;
+    wall_height *= cos(angle_diff);
 	wall_start = ((HEIGHT - wall_height) / 2);
 	wall_end = wall_start + wall_height;
 	while (i < x_segment)
@@ -88,8 +85,9 @@ void	draw_wall(t_game *game, float wall_distance, int ray)
 		y = 0;
 		while (y < HEIGHT)
 		{
+			int x = ray * x_segment + i;
 			if (y >= wall_start && y <= wall_end)
-				mlx_put_pixel(game->frame, ((WIDTH / 2) + (i * ray)), y, color);
+				mlx_put_pixel(game->frame, x + new_width, y, color);
 			y++;
 		}
 		i++;
