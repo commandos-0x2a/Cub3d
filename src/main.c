@@ -3,22 +3,22 @@
 #include <MLX42/MLX42.h>
 #include "game.h"
 
-int main()
+int main(int argc, char *argv[])
 {
 	t_game	game;
 
 	// ! commented for testing
-	// if (argc != 2)
-	// {
-	// 	printf("%s map_file\n", argv[0]);
-	// 	return (1);
-	// }
-	// game.map = read_map(argv[1]);
-	// if (!game.map)
-	// 	return (1);
-	// if (!validate_map(game.map))
-	// 	return (1);
-	// print_map(game.map);
+	if (argc != 2)
+	{
+		printf("%s map_file\n", argv[0]);
+		return (1);
+	}
+	game.map = read_map(argv[1]);
+	if (!game.map)
+		return (1);
+	if (!validate_map(game.map))
+		return (1);
+	print_map(game.map);
 
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
@@ -42,7 +42,7 @@ int main()
 	game.last_render = mlx_get_time();
 
 	// player
-	game.player.speed = 10;
+	game.player.speed = 1;
 	game.player.r = 0;
 	game.player.pos.x = 0;
 	game.player.pos.y = 0;
