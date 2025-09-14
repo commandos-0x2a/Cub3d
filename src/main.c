@@ -50,9 +50,9 @@ int main()
 	game.debug.sec = 0;
 	game.debug.fps = 0;
 	// use textures -- in test
-	game.texture[WALL_NORTH] = mlx_load_png("/home/asendar1/Cub3d/textures/east_texture.png");
-    game.texture[WALL_SOUTH] = mlx_load_png("/home/asendar1/Cub3d/textures/east_texture.png");
-    game.texture[WALL_WEST]  = mlx_load_png("/home/asendar1/Cub3d/textures/east_texture.png");
+	game.texture[WALL_NORTH] = mlx_load_png("/home/asendar1/Cub3d/textures/north_texture.png");
+    game.texture[WALL_SOUTH] = mlx_load_png("/home/asendar1/Cub3d/textures/south_texture.png");
+    game.texture[WALL_WEST]  = mlx_load_png("/home/asendar1/Cub3d/textures/west_textue.png");
     game.texture[WALL_EAST]  = mlx_load_png("/home/asendar1/Cub3d/textures/east_texture.png");
 
 	mlx_loop_hook(game.mlx, render, &game);
