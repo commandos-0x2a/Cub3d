@@ -22,7 +22,7 @@ int hit_wall(float x, float y)
 	return (map[my][mx] == 1);
 }
 
-float cast_ray(t_game *game, double angle, int draw_ray)
+t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 {
 	int const   max_distance = 1000;
 	float       px;
@@ -33,6 +33,7 @@ float cast_ray(t_game *game, double angle, int draw_ray)
 	float       distance;
 	float		rx;
 	float		ry;
+	t_ray_hit	ray;
 
 	px = WIDTH / 2 + game->player.pos.x * 10 + PIXEL_SCALE;
 	py = HEIGHT / 2 + game->player.pos.y * 10 + PIXEL_SCALE;
@@ -46,19 +47,18 @@ float cast_ray(t_game *game, double angle, int draw_ray)
 		ry = py + rsin * distance;
 		if (hit_wall(rx, ry))
 		{
-			if (draw_ray && rx > 0 && ry > 0 && rx < WIDTH && ry < HEIGHT)
-				mlx_put_pixel(game->frame, (int)rx, (int)ry, 0x00FF00FF);
-			return (distance);
+			ray.distance = distance;
+			return(ray);
 		}
 		if (draw_ray && rx > 0 && ry > 0 && rx < WIDTH && ry < HEIGHT)
 				mlx_put_pixel(game->frame, (int)rx, (int)ry, 0x00FF00FF);
 		distance += step_size;
 	}
 
-	return (max_distance); // incase no wall is hit
+	return (ray); // incase no wall is hit
 }
 
-void	draw_wall(t_game *game, float wall_distance, int ray)
+void	draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 {
 	int const color = 0xFF00FFFF;
 	int		x;
@@ -73,7 +73,7 @@ void	draw_wall(t_game *game, float wall_distance, int ray)
 
 	// fish effect correction
 	angle_offset = (ray - NUM_RAYS / 2) * (FOV * PI / 180.0 / NUM_RAYS);
-	corrected_distance = wall_distance * cos(angle_offset);
+	corrected_distance = ray_hit.distance * cos(angle_offset);
 	wall_height = (int)(HEIGHT * TILE_SIZE / corrected_distance);
 	if (wall_height > HEIGHT)
 		wall_height = HEIGHT;
@@ -107,7 +107,7 @@ void draw_player_vision(t_game *game)
 	double		sangle;
 	double		angle_step;
 	double		current_angle;
-	float		wall_distance;
+	t_ray_hit	ray_hit;
 
 	fov_rad = FOV * PI / 180;
 	sangle = game->player.r - (fov_rad / 2);
@@ -116,8 +116,8 @@ void draw_player_vision(t_game *game)
 	while (i < NUM_RAYS)
 	{
 		current_angle = sangle + (i * angle_step);
-		wall_distance = cast_ray(game, current_angle, 1); // 1 means draw the ray. For debugging
-		draw_wall(game, wall_distance, i);
+		ray_hit = cast_ray(game, current_angle, 1); // 1 means draw the ray. For debugging
+		draw_wall(game, ray_hit, i);
 		i++;
 	}
 

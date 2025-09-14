@@ -46,6 +46,21 @@ enum	e_direction
 	RIGHT
 };
 
+typedef enum	e_wall_side
+{
+	WALL_EAST,
+	WALL_WEST,
+	WALL_NORTH,
+	WALL_SOUTH
+}	t_wall_side;
+
+typedef struct	s_ray_hit
+{
+	float		distance;
+	t_wall_side	wall_side;
+	float		wall_x;
+}	t_ray_hit;
+
 typedef struct s_debug
 {
 	double	sec;
@@ -61,13 +76,14 @@ typedef struct	s_player
 
 typedef struct	s_game
 {
-	t_map		*map;
-	mlx_t		*mlx;
-	mlx_image_t	*frame;
-	t_player	player;
-	t_debug		debug;
-	double		last_render;
-	double		time_delta;
+	t_map			*map;
+	mlx_t			*mlx;
+	mlx_image_t		*frame;
+	t_player		player;
+	t_debug			debug;
+	mlx_texture_t	*texture[4];
+	double			last_render;
+	double			time_delta;
 }	t_game;
 
 void			render(void* param);
