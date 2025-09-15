@@ -53,9 +53,9 @@ typedef enum	e_wall_side
 
 typedef struct	s_ray_hit
 {
-	float		distance;
-	t_wall_side	wall_side;
-	float		wall_x;
+	float	distance;
+	float	wall_x;        // texture coordinate along wall
+	int		is_vertical;   // 1 if vertical wall, 0 if horizontal
 }	t_ray_hit;
 
 typedef struct s_debug
