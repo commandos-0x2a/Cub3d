@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:05:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/14 21:24:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:09:48 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@
 # define FOV 60
 
 # define TILE_SIZE 1
-
-// NUM_RAYS: the amount of rays that will be shot from the player. More gives more detailed and less prone to hidden walls or entites
-// due to the lack of rays.
-# define NUM_RAYS WIDTH
 
 typedef struct	s_vector
 {

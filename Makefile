@@ -16,14 +16,15 @@ else ifeq ($(UNAME_S), Darwin)
 endif
 
 SRC += 	src/main.c							\
-		src/map/read_map.c				\
-		src/map/validate_map.c			\
-		src/map/validate_surrounded.c			\
-		src/map/print_map.c			\
-		src/render.c 					\
-		src/controls.c					\
-		src/utils.c					\
-		src/player.c
+		src/map/read_map.c					\
+		src/map/validate_map.c				\
+		src/map/validate_surrounded.c		\
+		src/map/print_map.c					\
+		src/render.c 						\
+		src/controls.c						\
+		src/utils.c							\
+		src/player.c						\
+		src/image.c							\
 
 OBJ = $(SRC:%.c=build/%.o)
 
