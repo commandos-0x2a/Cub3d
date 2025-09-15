@@ -6,7 +6,7 @@
 /*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:05:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/15 14:09:48 by hassende         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:29:56 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,18 @@ typedef struct	s_vector
 	float	x;
 	float	y;
 }	t_vector;
+
+typedef enum e_image_type
+{
+	IT_PNG,
+	IT_XPM,
+	IT_SRP,
+}	t_image_type;
+
+typedef struct s_texture
+{
+	int		type;
+	void	*ctx;
+}	t_texture;
 
 #endif
