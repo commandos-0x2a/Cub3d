@@ -191,7 +191,37 @@ void draw_player_vision(t_game *game)
 	}
 }
 
+void update_minimap(t_game *game)
+{
+	int const	minimap_size = game->width / 6;
+	int const	player_size = minimap_size / 9;
+	int const	minimap_x = 10;
+	int const	minimap_y = 10;
+	int			x;
+	int			y;
+
+	x = 0;
+	while (x < minimap_size)
+	{
+		y = 0;
+		while (y < minimap_size)
+		{
+			mlx_put_pixel(game->frame, x + minimap_x, y + minimap_y, 0x000000FF);
+			y++;
+		}
+		x++;
+	}
+	for (int i = 0; i < player_size; i++)
+	{
+		for (int j = 0; j < player_size; j++)
+		{
+			mlx_put_pixel(game->frame, (minimap_size / 2 - 10) + i, (minimap_size / 2 - 10) + j, 0xFF0000FF);
+		}
+	}
+}
+
 void update_player_pos(t_game *game)
 {
 	draw_player_vision(game);
+	update_minimap(game);
 }
