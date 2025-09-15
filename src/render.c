@@ -45,7 +45,7 @@ void render(void* param)
 
 	// ! Debug window for now
 	mlx_delete_image(game->mlx, game->frame);
-	game->frame = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->frame = mlx_new_image(game->mlx, game->width, game->height);
 	mlx_image_to_window(game->mlx, game->frame, 0, 0);
 	render_floor_ceiling(game->frame, game->map->floor_color, game->map->ceiling_color);
 	update_player_pos(game);

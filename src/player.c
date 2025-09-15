@@ -121,22 +121,22 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 	float	corrected_distance;
 
 	// Fish-eye correction
-	angle_offset = (ray - NUM_RAYS / 2) * (FOV * PI / 180.0 / NUM_RAYS);
+	angle_offset = (ray - game->rays_number / 2) * (FOV * PI / 180.0 / game->rays_number);
 	corrected_distance = ray_hit.distance * cos(angle_offset);
 
 	// Avoid division by zero
 	if (corrected_distance <= 0.1f)
 		corrected_distance = 0.1f;
 
-	wall_height = (int)(HEIGHT * TILE_SIZE / corrected_distance);
-	if (wall_height > HEIGHT) wall_height = HEIGHT;
+	wall_height = (int)(game->height * TILE_SIZE / corrected_distance);
+	if (wall_height > game->height) wall_height = game->height;
 	if (wall_height < 1) wall_height = 1;
 
-	wall_start = (HEIGHT - wall_height) / 2;
+	wall_start = (game->height - wall_height) / 2;
 	wall_end = wall_start + wall_height;
 
-	x_start = (ray * WIDTH) / NUM_RAYS;
-	x_end = ((ray + 1) * WIDTH) / NUM_RAYS;
+	x_start = (ray * game->width) / game->rays_number;
+	x_end = ((ray + 1) * game->width) / game->rays_number;
 
 	mlx_texture_t *texture = game->texture[ray_hit.is_vertical];
 	if (!texture || !texture->pixels)
@@ -144,11 +144,11 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 
 	for (x = x_start; x < x_end; x++)
 	{
-		if (x < 0 || x >= WIDTH) continue;
+		if (x < 0 || x >= game->width) continue;
 
 		for (y = wall_start; y < wall_end; y++)
 		{
-			if (y < 0 || y >= HEIGHT) continue;
+			if (y < 0 || y >= game->height) continue;
 
 			// Map texture X: get texture column coordinate
 			int tex_x = (int)(ray_hit.wall_x * texture->width);
@@ -161,9 +161,9 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 			if (tex_y < 0) tex_y = 0;
 			if (tex_y >= (int)texture->height) tex_y = texture->height - 1;
 
+            uint32_t color = get_pixel_color(texture, tex_x, tex_y);
 			// Get pixel color (RGBA)
-			uint8_t *pixel = texture->pixels + (tex_y * texture->width + tex_x) * 4;
-			uint32_t color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+			
 
 			mlx_put_pixel(game->frame, x, y, color);
 		}
@@ -181,9 +181,9 @@ void draw_player_vision(t_game *game)
 
 	fov_rad = FOV * PI / 180.0;
 	sangle = game->player.r - (fov_rad / 2.0);
-	angle_step = fov_rad / NUM_RAYS;
+	angle_step = fov_rad / game->rays_number;
 
-	for (i = 0; i < NUM_RAYS; i++)
+	for (i = 0; i < game->rays_number; i++)
 	{
 		current_angle = sangle + i * angle_step;
 		ray_hit = cast_ray(game, current_angle, 1);

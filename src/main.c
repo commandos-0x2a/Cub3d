@@ -2,6 +2,17 @@
 #include <stdio.h>
 #include <MLX42/MLX42.h>
 #include "game.h"
+#include "libft.h"
+
+void resize_hook(int32_t width, int32_t height, void *param)
+{
+	t_game	*game;
+
+	game = param;
+	game->rays_number = width;
+	game->width = width;
+	game->height = height;
+}
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +24,7 @@ int main(int argc, char *argv[])
 		printf("%s map_file\n", argv[0]);
 		return (1);
 	}
+	ft_bzero(&game, sizeof(game));
 	game.map = read_map(argv[1]);
 	if (!game.map)
 		return (1);
@@ -25,8 +37,11 @@ int main(int argc, char *argv[])
 		puts(mlx_strerror(mlx_errno));
 		return(1);
 	}
+	game.rays_number = WIDTH;
+	game.width = WIDTH;
+	game.height = HEIGHT;
 
-	if (!(game.frame = mlx_new_image(game.mlx, WIDTH, HEIGHT)))
+	if (!(game.frame = mlx_new_image(game.mlx, game.width, game.height)))
 	{
 		mlx_close_window(game.mlx);
 		puts(mlx_strerror(mlx_errno));
@@ -57,6 +72,7 @@ int main(int argc, char *argv[])
 
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop_hook(game.mlx, player_control, &game);
+	mlx_resize_hook(game.mlx, resize_hook, &game);
 
 	mlx_loop(game.mlx);
 	// free map

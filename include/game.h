@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/14 21:24:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:17:22 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,15 @@ typedef struct	s_game
 	mlx_texture_t	*texture[4];
 	double			last_render;
 	double			time_delta;
+	int				rays_number;
+	int				width;
+	int				height;
 }	t_game;
 
 void			render(void* param);
 void			player_control(void *param);
 unsigned long	time_now_ms(void);
 void			update_player_pos(t_game *game);
+uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 
 #endif
