@@ -90,8 +90,22 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 	// Keep fractional part only for texture
 	ray.wall_x -= floor(ray.wall_x);
 	if (ray.wall_x < 0) ray.wall_x += 1.0f;
-	ray.is_vertical = 0;
-	side = 0;
+	if (side == 0)
+		ray.is_vertical = 0;
+	if (side == 0) // vertical wall
+    {
+        if (step_x == 1)
+            ray.is_vertical = WALL_EAST;
+        else
+            ray.is_vertical = WALL_WEST;
+    }
+    else // horizontal wall
+    {
+        if (step_y == 1)
+            ray.is_vertical = WALL_SOUTH;
+        else
+            ray.is_vertical = WALL_NORTH;
+    }
 	return ray;
 }
 
@@ -124,7 +138,7 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 	x_start = (ray * WIDTH) / NUM_RAYS;
 	x_end = ((ray + 1) * WIDTH) / NUM_RAYS;
 
-	mlx_texture_t *texture = game->texture[0];
+	mlx_texture_t *texture = game->texture[ray_hit.is_vertical];
 	if (!texture || !texture->pixels)
 		return;
 
