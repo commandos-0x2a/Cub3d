@@ -38,7 +38,7 @@ void render(void* param)
 	if (game->debug.sec >= 1)
 	{
 		game->debug.sec = 0;
-		fprintf(stderr, "FPS:%d\n", game->debug.fps);
+		// fprintf(stderr, "FPS:%d\n", game->debug.fps);
 		game->debug.fps = 0;
 	}
 

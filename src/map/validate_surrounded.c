@@ -187,7 +187,7 @@ int	valid_surrounded_wall(t_map *map)
 		// 	break;
 		// printf("\n\n\n\n\n");
 	}
-	print_grid(tmp_grid);
+	// print_grid(tmp_grid);
 	free(tmp_grid->raw);
 	free(tmp_grid);
 	clear_stack(&cur);

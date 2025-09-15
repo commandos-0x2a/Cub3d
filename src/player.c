@@ -161,10 +161,8 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 			if (tex_y < 0) tex_y = 0;
 			if (tex_y >= (int)texture->height) tex_y = texture->height - 1;
 
-            uint32_t color = get_pixel_color(texture, tex_x, tex_y);
 			// Get pixel color (RGBA)
-			
-
+            uint32_t color = get_pixel_color(texture, tex_x, tex_y);
 			mlx_put_pixel(game->frame, x, y, color);
 		}
 	}

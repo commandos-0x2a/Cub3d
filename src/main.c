@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 		return (1);
 	if (!validate_map(game.map))
 		return (1);
-	print_map(game.map);
+	// print_map(game.map);
 
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	game.last_render = mlx_get_time();
 
 	// player
-	game.player.speed = 1;
+	game.player.speed = 4;
 	game.player.r = 0;
 	game.player.pos.x = 4;
 	game.player.pos.y = 4;
