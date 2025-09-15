@@ -6,7 +6,7 @@
 /*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/15 14:06:21 by hassende         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:55:12 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	player_control(void *param)
 	t_game		*game;
 	t_player	*player;
 	t_vector	vec;
+	int			mapx;
+	int			mapy;
 
 	game = param;
 	player = &game->player;
@@ -61,4 +63,11 @@ void	player_control(void *param)
 	vec.y *= player->speed * game->time_delta;
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
+	mapx = (int)player->pos.x;
+	mapy = (int)player->pos.y;
+	if (game->map->grid.raw[mapy * game->map->grid.w + mapx] == '1')
+	{
+		player->pos.x -= vec.x;
+		player->pos.y -= vec.y;
+	}
 }

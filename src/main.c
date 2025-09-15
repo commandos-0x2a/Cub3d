@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
 {
 	t_game	game;
 
-	// ! commented for testing
 	if (argc != 2)
 	{
 		printf("%s map_file\n", argv[0]);
@@ -59,12 +58,12 @@ int main(int argc, char *argv[])
 	// player
 	game.player.speed = 1;
 	game.player.r = 0;
-	game.player.pos.x = 0;
-	game.player.pos.y = 0;
+	game.player.pos.x = 4;
+	game.player.pos.y = 4;
 	// debug
 	game.debug.sec = 0;
 	game.debug.fps = 0;
-	// use textures -- in test
+
 	game.texture[WALL_NORTH] = mlx_load_png("./textures/test/NO.png");
     game.texture[WALL_SOUTH] = mlx_load_png("./textures/test/SO.png");
     game.texture[WALL_WEST]  = mlx_load_png("./textures/test/WE.png");
