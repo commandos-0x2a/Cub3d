@@ -1,0 +1,41 @@
+# Makefile for sprite reader test
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -std=c99
+SRCDIR = src
+INCDIR = include
+
+# Source files
+SPRITE_SRCS = $(SRCDIR)/sprite_reader.c
+TEST_SRCS = test_sprite_reader.c
+
+# Object files
+SPRITE_OBJS = $(SPRITE_SRCS:.c=.o)
+TEST_OBJS = $(TEST_SRCS:.c=.o)
+
+# Target executables
+TEST_TARGET = test_sprite_reader
+
+# Default target
+all: $(TEST_TARGET)
+
+# Test program
+$(TEST_TARGET): $(TEST_OBJS) $(SPRITE_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Compile source files
+%.o: %.c
+	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
+
+# Clean
+clean:
+	rm -f $(SPRITE_OBJS) $(TEST_OBJS) $(TEST_TARGET)
+
+# Test with existing sprite files
+test: $(TEST_TARGET)
+	@echo "Testing with generated sprite files..."
+	@if [ -f bonfire.spr ]; then ./$(TEST_TARGET) bonfire.spr; fi
+	@if [ -f directions_64x64.spr ]; then ./$(TEST_TARGET) directions_64x64.spr; fi
+	@if [ -f test_additive.spr ]; then ./$(TEST_TARGET) test_additive.spr; fi
+
+# Phony targets
+.PHONY: all clean test
