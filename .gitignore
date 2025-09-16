@@ -7,6 +7,8 @@ build
 *.o
 projection/projection
 
+.venv
+
 *.a
 *#*
 *~*
