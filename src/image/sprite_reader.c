@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 22:25:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/14 23:05:16 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/16 09:26:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "../include/sprite.h"
+#include "sprite.h"
 
 /**
  * @brief Validate sprite header
  * @param sprite Pointer to sprite structure
  * @return 0 if valid, -1 if invalid
  */
-int	validate_sprite_header(const t_sprite *sprite)
+int	validate_sprite_header(const t_sprite_header *sprite)
 {
 	if (!sprite)
 		return (-1);
@@ -66,7 +66,7 @@ int	validate_sprite_header(const t_sprite *sprite)
  * @param pixel_data Buffer for pixel data (allocated inside function)
  * @return 0 on success, negative error code on failure
  */
-int	load_sprite_file(const char *filename, t_sprite *sprite, 
+int	load_sprite_file(const char *filename, t_sprite_header *sprite, 
 					unsigned char *palette, t_sprite_frame_header *frame_header,
 					unsigned char **pixel_data)
 {
@@ -143,7 +143,7 @@ int	load_sprite_file(const char *filename, t_sprite *sprite,
  * @brief Print sprite information for debugging
  * @param sprite Pointer to sprite structure
  */
-void	print_sprite_info(const t_sprite *sprite)
+void	print_sprite_info(const t_sprite_header *sprite)
 {
 	if (!sprite)
 		return;

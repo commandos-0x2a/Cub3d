@@ -6,14 +6,15 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 21:39:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/14 23:05:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/16 09:30:14 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <MLX42/MLX42.h>
 #ifndef SPRITE_H
 # define SPRITE_H
 
-typedef struct __attribute__((packed))	s_sprite
+typedef struct __attribute__((packed))	s_sprite_header
 {
 	int		id;						// format ID, "IDSP" (0x49 0x44 0x53 0x50)
 	int		version;				// Format version number. HL1 SPRs are version 2 (0x02,0x00,0x00,0x00)
@@ -26,7 +27,7 @@ typedef struct __attribute__((packed))	s_sprite
 	float	beam_length;
 	int		synch_type;
 	short	palette_color_count;	// number of colors in the palette; should be 256
-}	t_sprite;
+}	t_sprite_header;
 
 typedef struct __attribute__((packed))	s_sprite_frame_header
 {
@@ -40,16 +41,25 @@ typedef struct __attribute__((packed))	s_sprite_frame_header
 	// The image size is given in the frame header, so the entire data for 1 frame is width*height bytes.
 }	t_sprite_frame_header;
 
+typedef struct s_sprite
+{
+	mlx_texture_t	texture;
+	t_sprite_header	header;
+}	t_sprite;
+
 // Function prototypes for sprite reading
-int		validate_sprite_header(const t_sprite *sprite);
+int		validate_sprite_header(const t_sprite_header *sprite);
 
 // High-level sprite loading function
-int		load_sprite_file(const char *filename, t_sprite *sprite, 
+int		load_sprite_file(const char *filename, t_sprite_header *sprite, 
 						unsigned char *palette, t_sprite_frame_header *frame_header,
 						unsigned char **pixel_data);
 
+t_sprite	*load_sprite(const char *path);
+
+				
 // Debug functions
-void	print_sprite_info(const t_sprite *sprite);
+void	print_sprite_info(const t_sprite_header *sprite);
 void	print_frame_info(const t_sprite_frame_header *frame_header);
 
 // Error codes for sprite loading
