@@ -3,6 +3,7 @@
 
 # define PI 3.14159265359
 # define MAX(a,b) (a > b ? a : b)
+# define FOV_RAD (FOV * PI / 180.0)
 
 // Cast ray using DDA
 t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
@@ -171,21 +172,20 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 void draw_player_vision(t_game *game)
 {
 	int			i;
-	double		fov_rad;
 	double		sangle;
 	double		angle_step;
 	double		current_angle;
 	t_ray_hit	ray_hit;
 
-	fov_rad = FOV * PI / 180.0;
-	sangle = game->player.r - (fov_rad / 2.0);
-	angle_step = fov_rad / game->rays_number;
-
-	for (i = 0; i < game->rays_number; i++)
+	sangle = game->player.r - (FOV_RAD / 2.0);
+	angle_step = FOV_RAD / game->rays_number;
+	i = 0;
+	while (i < game->rays_number)
 	{
 		current_angle = sangle + i * angle_step;
-		ray_hit = cast_ray(game, current_angle, 1);
+		ray_hit = cast_ray(game, current_angle, 0);
 		draw_wall(game, ray_hit, i);
+		i++;
 	}
 }
 

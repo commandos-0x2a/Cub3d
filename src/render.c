@@ -38,21 +38,11 @@ void render(void* param)
 	if (game->debug.sec >= 1)
 	{
 		game->debug.sec = 0;
-		// fprintf(stderr, "FPS:%d\n", game->debug.fps);
 		game->debug.fps = 0;
 	}
-
-
-	// ! Debug window for now
 	mlx_delete_image(game->mlx, game->frame);
 	game->frame = mlx_new_image(game->mlx, game->width, game->height);
 	mlx_image_to_window(game->mlx, game->frame, 0, 0);
 	render_floor_ceiling(game->frame, game->map->floor_color, game->map->ceiling_color);
 	update_player_pos(game);
-
-	// ! This laggens the game with time
-	// char buf[1024];
-	// snprintf(buf, 1024, "player: (%.2f, %.2f)", game->player.pos.x, game->player.pos.y);
-	// printf("player: (%.2f, %.2f)\n", game->player.pos.x, game->player.pos.y);
-	// mlx_put_string(game->mlx, buf, 10, 10);
 }
