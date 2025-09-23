@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:30:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:45:01 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "map.h"
 # include "utils.h"
 # include <MLX42/MLX42.h>
+# include <math.h>
 # include <math.h>
 # include "animate.h"
 
