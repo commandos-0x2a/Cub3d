@@ -1,8 +1,9 @@
 #include "utils.h"
-#include <fcntl.h>
 #include <stdio.h>
 #include "libft.h"
+#include "game.h"
 #include "MLX42/MLX42.h"
+#include "sprite.h"
 
 t_image_type	get_image_type(const char *path)
 {
@@ -20,22 +21,26 @@ t_image_type	get_image_type(const char *path)
 	return (IT_NONE);
 }
 
-t_texture   *open_image(const char *path)
+mlx_texture_t   *open_image(t_game *game, const char *path)
 {
 	t_image_type	type;
-	t_texture		*tex;
+	mlx_texture_t	*tex;
 
 	type = get_image_type(path);
-	if (type == IT_NONE)
-		return (NULL);
-	tex = ft_calloc(1, sizeof(*tex));
-	if (!tex)
-		return (NULL);
-	tex->type = type;
-	if (tex->type == IT_PNG)
-		tex->ctx = mlx_load_png(path);
-	else if (tex->type == IT_XPM)
-		tex->ctx = mlx_load_xpm42(path);
-	else if (tex->type == IT_SRP)
-		tex->ctx = load_sprite_file(path);
+
+	if (type == IT_PNG)
+		tex = mlx_load_png(path);
+	else if (type == IT_XPM)
+		tex = mlx_load_xpm42(path);
+	else if (type == IT_SRP)
+	{
+		tex = load_sprite(path);
+		if (tex)
+		{
+			
+		}
+	}
+	else
+		tex = NULL;
+	return (tex);	
 }

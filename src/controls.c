@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/15 18:58:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/23 16:06:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void	player_control(void *param)
 	t_game		*game;
 	t_player	*player;
 	t_vector	vec;
-	int			new_x;
-	int			mapy;
 
 	game = param;
 	player = &game->player;

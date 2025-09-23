@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:05:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/16 09:00:34 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:17:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,5 @@ typedef enum e_image_type
 	IT_XPM,
 	IT_SRP,
 }	t_image_type;
-
-typedef struct s_texture
-{
-	int		type;
-	void	*ctx;
-}	t_texture;
 
 #endif

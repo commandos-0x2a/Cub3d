@@ -6,16 +6,17 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/19 19:52:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:39:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPRITE_H
-# define SPRITE_H
+#ifndef SPRITE_TEST_H
+# define SPRITE_TEST_H
 
-# include <MLX42/MLX42.h>
 # include <stdio.h>
 # include <stdint.h>
+# include <MLX42/MLX42.h>
+# include "animate.h"
 
 typedef struct __attribute__((packed))	s_sprite_header
 {
@@ -32,41 +33,27 @@ typedef struct __attribute__((packed))	s_sprite_header
 	short	palette_color_count;
 }	t_sprite_header;
 
-typedef struct __attribute__((packed))	s_sprite_frame_header
+
+typedef	struct __attribute__((packed))	s_frame_header
 {
 	int	group;
 	int	originX;
 	int	originY;
 	int	width;
 	int	height;
-}	t_sprite_frame_header;
+} t_frame_header;
 
 typedef struct s_sprite
 {
-	mlx_texture_t		*texture;
-	t_sprite_header		header;
-	mlx_texture_t		*tex;
-	unsigned char		*palette;
-	unsigned int		index;
+	t_animate		animate;
+	t_sprite_header	header;
+	unsigned char	palette[256 * 3];
+	mlx_texture_t	*frames;
 }	t_sprite;
 
-int				validate_sprite_header(const t_sprite_header *sprite);
-
-int				load_sprite_file(const char *filename, t_sprite_header *sprite,
-					unsigned char *palette,
-					t_sprite_frame_header *frame_header,
-					unsigned char **pixel_data);
-
-int				get_frames_by_group(const char *filename, int group_id,
-					int **frame_indices, int *frame_count);
-
-mlx_texture_t	*create_sprite_texture(const unsigned char *pixel_data,
-					const unsigned char *palette,
-					int width, int height, int has_alpha,
-					mlx_t *mlx);
-
-void			print_sprite_info(const t_sprite_header *sprite);
-void			print_frame_info(const t_sprite_frame_header *frame_header);
+int			load_sprite_file(int fd, t_sprite *spr);
+void		free_sprite(t_sprite *spr);
+t_sprite	*load_sprite(const char *filename);
 
 # define SPRITE_SUCCESS			0
 # define SPRITE_ERROR_NULL_PTR		-1

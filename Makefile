@@ -1,7 +1,8 @@
 NAME = cub3d
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+# CFLAGS = -Wall -Wextra -Werror 
+CFLAGS += -g #-fsanitize=address
 CPPFLAGS = -IMLX42/include -Ilibft/include -Idebug -Iinclude
 LDFLAGS =  -lmlx42 -lglfw -lm -Lbuild -Llibft -lft # -fsanitize=address
 
@@ -15,7 +16,7 @@ else ifeq ($(UNAME_S), Darwin)
 	CPPFLAGS += -I"/opt/homebrew/Cellar/glfw/3.4/include"
 endif
 
-SRC += 	src/main.c							\
+SRC += 	src/test.c							\
 		src/map/read_map.c					\
 		src/map/validate_map.c				\
 		src/map/validate_surrounded.c		\
@@ -26,6 +27,7 @@ SRC += 	src/main.c							\
 		src/player.c						\
 		src/image/image.c					\
 		src/image/sprite_reader.c			\
+		src/image/sprite.c					\
 
 OBJ = $(SRC:%.c=build/%.o)
 

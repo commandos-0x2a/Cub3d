@@ -6,12 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/19 19:57:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:33:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprite.h"
-#include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,13 +18,6 @@
 #include <stdint.h>
 #include <limits.h>
 
-/**
- * @brief Read exactly n bytes from file descriptor
- * @param fd File descriptor to read from
- * @param buffer Buffer to store data
- * @param size Number of bytes to read
- * @return SPRITE_SUCCESS on success, error code on failure
- */
 static int	read_exact(int fd, void *buffer, size_t size)
 {
 	ssize_t	bytes_read;
@@ -46,12 +38,7 @@ static int	read_exact(int fd, void *buffer, size_t size)
 	return (SPRITE_SUCCESS);
 }
 
-/**
- * @brief Validate sprite header magic and version
- * @param sprite Pointer to sprite header structure
- * @return SPRITE_SUCCESS if valid, SPRITE_ERROR_INVALID if not
- */
-int	validate_sprite_header(const t_sprite_header *sprite)
+static int	validate_sprite_header(const t_sprite_header *sprite)
 {
 	const int	expected_id = 0x50534449;
 	const int	expected_version = 2;
@@ -69,365 +56,107 @@ int	validate_sprite_header(const t_sprite_header *sprite)
 	return (SPRITE_SUCCESS);
 }
 
-/**
- * @brief Check if sprite uses transparency (INDEXALPHA format)
- * @param sprite Pointer to sprite header structure
- * @return 1 if transparent, 0 if not
- */
-static int	sprite_has_transparency(const t_sprite_header *sprite)
+uint32_t	get_rgba(uint8_t index, uint8_t *palette, int trans)
 {
-	const int	indexalpha_format = 2;
-
-	if (!sprite)
+	uint32_t	rgba;
+	
+	if (trans && index == 255)
 		return (0);
-	return (sprite->text_format == indexalpha_format);
+	rgba = 0;
+	rgba |= palette[index * 3 + 0] << 24;
+	rgba |= palette[index * 3 + 1] << 16;
+	rgba |= palette[index * 3 + 2] << 8;
+	rgba |= 255;
+	return (rgba);
 }
 
-/**
- * @brief Read sprite header from file
- * @param fd File descriptor
- * @param sprite Pointer to sprite header structure
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-static int	read_sprite_header(int fd, t_sprite_header *sprite)
+static int	read_frame_pixels(int fd, uint32_t *pixels, 
+						unsigned char *palette, 
+						t_frame_header *header)
 {
-	int	result;
+	uint8_t		*pixels_data;
+	int			res;
+	uint32_t	x;
+	uint32_t	y;
 
-	if (!sprite)
-		return (SPRITE_ERROR_NULL_PTR);
-	result = read_exact(fd, sprite, sizeof(t_sprite_header));
-	if (result != SPRITE_SUCCESS)
-		return (result);
-	return (validate_sprite_header(sprite));
-}
-
-/**
- * @brief Read palette data from sprite file
- * @param fd File descriptor
- * @param palette Buffer to store palette (must be 768 bytes)
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-static int	read_sprite_palette(int fd, unsigned char *palette)
-{
-	const size_t	palette_size = 768;
-
-	if (!palette)
-		return (SPRITE_ERROR_NULL_PTR);
-	return (read_exact(fd, palette, palette_size));
-}
-
-/**
- * @brief Read frame header from sprite file
- * @param fd File descriptor
- * @param frame Pointer to frame header structure
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-static int	read_frame_header(int fd, t_sprite_frame_header *frame)
-{
-	int	result;
-
-	if (!frame)
-		return (SPRITE_ERROR_NULL_PTR);
-	result = read_exact(fd, frame, sizeof(t_sprite_frame_header));
-	if (result != SPRITE_SUCCESS)
-		return (result);
-	if (frame->width <= 0 || frame->height <= 0)
-		return (SPRITE_ERROR_DIMENSIONS);
-	if (frame->width > 2048 || frame->height > 2048)
-		return (SPRITE_ERROR_DIMENSIONS);
+	pixels_data = malloc(header->width * header->height);
+	if (!pixels_data)
+		return (SPRITE_ERROR_MEMORY);
+	res = read_exact(fd, pixels_data, header->width * header->height);
+	if (res != SPRITE_SUCCESS)
+	{
+		free(pixels_data);
+		return (res);
+	}
+	y = 0;
+	while (y < header->height)
+	{
+		x = 0;
+		while (x < header->width)
+		{
+			pixels[y * header->width + x] = 
+				get_rgba(pixels_data[y * header->width + x], palette, 1);
+			x++;
+		}
+		y++;
+	}
+	free(pixels_data);
 	return (SPRITE_SUCCESS);
 }
 
-/**
- * @brief Allocate memory for pixel data
- * @param frame_count Number of frames
- * @param frame_width Width of each frame
- * @param frame_height Height of each frame
- * @return Pointer to allocated memory, NULL on failure
- */
-static unsigned char	*alloc_pixel_data(int frame_count, int frame_width,
-														int frame_height)
+static int	read_frames(int fd, t_sprite *spr)
 {
-	size_t			total_pixels;
-	unsigned char	*pixel_data;
+	size_t			i;
+	mlx_texture_t	*frame;
+	int				res;
+	t_frame_header	header;
 
-	if (frame_count <= 0 || frame_width <= 0 || frame_height <= 0)
-		return (NULL);
-	total_pixels = (size_t)frame_count * frame_width * frame_height;
-	if (total_pixels > SIZE_MAX / sizeof(unsigned char))
-		return (NULL);
-	pixel_data = malloc(total_pixels * sizeof(unsigned char));
-	return (pixel_data);
-}
-
-/**
- * @brief Read pixel data for all frames
- * @param fd File descriptor
- * @param sprite Sprite header with frame count
- * @param frame_width Width of frames
- * @param frame_height Height of frames
- * @param pixel_data Buffer to store pixel data
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-static int	read_pixel_data(int fd, const t_sprite_header *sprite,
-								int frame_width, int frame_height,
-								unsigned char *pixel_data)
-{
-	size_t	frame_size;
-	size_t	total_size;
-	int		result;
-
-	if (!sprite || !pixel_data)
-		return (SPRITE_ERROR_NULL_PTR);
-	frame_size = (size_t)frame_width * frame_height;
-	total_size = frame_size * sprite->nb_frame;
-	result = read_exact(fd, pixel_data, total_size);
-	return (result);
-}
-
-/**
- * @brief Convert indexed pixel data to RGBA format
- * @param pixel_data Indexed pixel data
- * @param palette RGB palette (768 bytes)
- * @param width Frame width
- * @param height Frame height
- * @param has_alpha Whether sprite has transparency
- * @param rgba_data Output RGBA buffer (must be pre-allocated)
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-static int	convert_to_rgba(const unsigned char *pixel_data,
-								const unsigned char *palette,
-								int width, int height, int has_alpha,
-								unsigned char *rgba_data)
-{
-	const int	transparency_index = 255;
-	int			total_pixels;
-	int			i;
-	int			pixel_index;
-
-	if (!pixel_data || !palette || !rgba_data)
-		return (SPRITE_ERROR_NULL_PTR);
-	total_pixels = width * height;
+	spr->frames = calloc(spr->header.nb_frame, sizeof(mlx_texture_t));
+	if (!spr->frames)
+		return (SPRITE_ERROR_MEMORY);
 	i = 0;
-	while (i < total_pixels)
+	while (i < spr->header.nb_frame)
 	{
-		pixel_index = pixel_data[i];
-		if (pixel_index < 256)
-		{
-			rgba_data[i * 4] = palette[pixel_index * 3];
-			rgba_data[i * 4 + 1] = palette[pixel_index * 3 + 1];
-			rgba_data[i * 4 + 2] = palette[pixel_index * 3 + 2];
-			if (has_alpha && pixel_index == transparency_index)
-				rgba_data[i * 4 + 3] = 0;
-			else
-				rgba_data[i * 4 + 3] = 255;
-		}
-		else
-		{
-			rgba_data[i * 4] = 0;
-			rgba_data[i * 4 + 1] = 0;
-			rgba_data[i * 4 + 2] = 0;
-			rgba_data[i * 4 + 3] = 255;
-		}
+		frame = &spr->frames[i];
+		res = read_exact(fd, &header, sizeof(t_frame_header));
+		if (res != SPRITE_SUCCESS)
+			return (res);
+		frame->width = header.width;
+		frame->height = header.height;
+		frame->bytes_per_pixel = sizeof(uint32_t);
+		frame->pixels = malloc(header.width * header.height * sizeof(uint32_t));
+		if (!frame->pixels)
+			return (SPRITE_ERROR_MEMORY);
+		res = read_frame_pixels(fd, (uint32_t *)frame->pixels, 
+								spr->palette, &header);
+		if (res != SPRITE_SUCCESS)
+			return (res);
+		
 		i++;
 	}
 	return (SPRITE_SUCCESS);
 }
 
-/**
- * @brief Load complete sprite file
- * @param filename Path to sprite file
- * @param sprite Pointer to sprite header structure
- * @param palette Buffer for palette data (768 bytes)
- * @param frame_header Pointer to frame header structure
- * @param pixel_data Pointer to store allocated pixel data
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-int	load_sprite_file(const char *filename, t_sprite_header *sprite,
-						unsigned char *palette, t_sprite_frame_header *frame_header,
-						unsigned char **pixel_data)
+int	load_sprite_file(int fd, t_sprite *spr)
 {
-	int	fd;
 	int	result;
 
-	if (!filename || !sprite || !palette || !frame_header || !pixel_data)
-		return (SPRITE_ERROR_NULL_PTR);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (SPRITE_ERROR_FILE_OPEN);
-	result = read_sprite_header(fd, sprite);
+	// read header 42 bytes
+	result = read_exact(fd, &spr->header, sizeof(t_sprite_header));
 	if (result != SPRITE_SUCCESS)
-	{
-		close(fd);
 		return (result);
-	}
-	result = read_sprite_palette(fd, palette);
+
+	// header validate
+	result = validate_sprite_header(&spr->header);
 	if (result != SPRITE_SUCCESS)
-	{
-		close(fd);
 		return (result);
-	}
-	result = read_frame_header(fd, frame_header);
+	
+	// read palette 768 bytes
+	result = read_exact(fd, spr->palette, sizeof(spr->palette));
 	if (result != SPRITE_SUCCESS)
-	{
-		close(fd);
 		return (result);
-	}
-	*pixel_data = alloc_pixel_data(sprite->nb_frame, frame_header->width,
-									frame_header->height);
-	if (!*pixel_data)
-	{
-		close(fd);
-		return (SPRITE_ERROR_MEMORY);
-	}
-	result = read_pixel_data(fd, sprite, frame_header->width,
-								frame_header->height, *pixel_data);
-	close(fd);
-	return (result);
-}
 
-/**
- * @brief Create MLX texture from sprite frame
- * @param pixel_data Indexed pixel data for frame
- * @param palette RGB palette
- * @param width Frame width
- * @param height Frame height
- * @param has_alpha Whether sprite has transparency
- * @param mlx MLX instance
- * @return MLX texture pointer, NULL on failure
- */
-mlx_texture_t	*create_sprite_texture(const unsigned char *pixel_data,
-										const unsigned char *palette,
-										int width, int height, int has_alpha,
-										mlx_t *mlx)
-{
-	mlx_texture_t	*texture;
-	unsigned char	*rgba_data;
-	int				result;
+	result = read_frames(fd, spr);
 
-	if (!pixel_data || !palette || width <= 0 || height <= 0)
-		return (NULL);
-	rgba_data = malloc((size_t)width * height * 4);
-	if (!rgba_data)
-		return (NULL);
-	result = convert_to_rgba(pixel_data, palette, width, height,
-								has_alpha, rgba_data);
-	if (result != SPRITE_SUCCESS)
-	{
-		free(rgba_data);
-		return (NULL);
-	}
-	texture = malloc(sizeof(mlx_texture_t));
-	if (!texture)
-	{
-		free(rgba_data);
-		return (NULL);
-	}
-	texture->width = width;
-	texture->height = height;
-	texture->pixels = rgba_data;
-	return (texture);
-}
-
-/**
- * @brief Get frame data by group ID
- * @param filename Path to sprite file
- * @param group_id Target group ID
- * @param frame_indices Array to store frame indices (allocated by function)
- * @param frame_count Pointer to store number of frames found
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-int	get_frames_by_group(const char *filename, int group_id,
-							int **frame_indices, int *frame_count)
-{
-	int						fd;
-	t_sprite_header			sprite;
-	t_sprite_frame_header	frame;
-	unsigned char			palette[768];
-	int						*indices;
-	int						found_count;
-	int						i;
-	int						result;
-
-	if (!filename || !frame_indices || !frame_count)
-		return (SPRITE_ERROR_NULL_PTR);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (SPRITE_ERROR_FILE_OPEN);
-	result = read_sprite_header(fd, &sprite);
-	if (result != SPRITE_SUCCESS)
-	{
-		close(fd);
-		return (result);
-	}
-	result = read_sprite_palette(fd, palette);
-	if (result != SPRITE_SUCCESS)
-	{
-		close(fd);
-		return (result);
-	}
-	indices = malloc(sizeof(int) * sprite.nb_frame);
-	if (!indices)
-	{
-		close(fd);
-		return (SPRITE_ERROR_MEMORY);
-	}
-	found_count = 0;
-	i = 0;
-	while (i < sprite.nb_frame)
-	{
-		result = read_frame_header(fd, &frame);
-		if (result != SPRITE_SUCCESS)
-		{
-			free(indices);
-			close(fd);
-			return (result);
-		}
-		if (frame.group == group_id)
-			indices[found_count++] = i;
-		lseek(fd, (off_t)frame.width * frame.height, SEEK_CUR);
-		i++;
-	}
-	close(fd);
-	*frame_indices = indices;
-	*frame_count = found_count;
-	return (SPRITE_SUCCESS);
-}
-
-/**
- * @brief Print sprite header information
- * @param sprite Pointer to sprite header structure
- */
-void	print_sprite_info(const t_sprite_header *sprite)
-{
-	if (!sprite)
-		return ;
-	printf("Sprite Information:\n");
-	printf("  ID: %c%c%c%c\n", (sprite->id & 0xFF),
-			((sprite->id >> 8) & 0xFF), ((sprite->id >> 16) & 0xFF),
-			((sprite->id >> 24) & 0xFF));
-	printf("  Version: %d\n", sprite->version);
-	printf("  Type: %d\n", sprite->type);
-	printf("  Text Format: %d", sprite->text_format);
-	if (sprite_has_transparency(sprite))
-		printf(" (INDEXALPHA - Transparency supported)\n");
-	else
-		printf(" (No transparency)\n");
-	printf("  Dimensions: %dx%d\n", sprite->max_width, sprite->max_height);
-	printf("  Frames: %d\n", sprite->nb_frame);
-	printf("  Palette Colors: %d\n", sprite->palette_color_count);
-}
-
-/**
- * @brief Print frame header information
- * @param frame_header Pointer to frame header structure
- */
-void	print_frame_info(const t_sprite_frame_header *frame_header)
-{
-	if (!frame_header)
-		return ;
-	printf("Frame Information:\n");
-	printf("  Group: %d\n", frame_header->group);
-	printf("  Origin: (%d, %d)\n", frame_header->originX, frame_header->originY);
-	printf("  Size: %dx%d\n", frame_header->width, frame_header->height);
+	return (result);	
 }
