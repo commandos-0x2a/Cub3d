@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite.h                                           :+:      :+:    :+:   */
+/*   sprite_test.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,6 @@
 #ifndef SPRITE_H
 # define SPRITE_H
 
-# include <MLX42/MLX42.h>
 # include <stdio.h>
 # include <stdint.h>
 
@@ -41,15 +40,6 @@ typedef struct __attribute__((packed))	s_sprite_frame_header
 	int	height;
 }	t_sprite_frame_header;
 
-typedef struct s_sprite
-{
-	mlx_texture_t		*texture;
-	t_sprite_header		header;
-	mlx_texture_t		*tex;
-	unsigned char		*palette;
-	unsigned int		index;
-}	t_sprite;
-
 int				validate_sprite_header(const t_sprite_header *sprite);
 
 int				load_sprite_file(const char *filename, t_sprite_header *sprite,
@@ -59,11 +49,6 @@ int				load_sprite_file(const char *filename, t_sprite_header *sprite,
 
 int				get_frames_by_group(const char *filename, int group_id,
 					int **frame_indices, int *frame_count);
-
-mlx_texture_t	*create_sprite_texture(const unsigned char *pixel_data,
-					const unsigned char *palette,
-					int width, int height, int has_alpha,
-					mlx_t *mlx);
 
 void			print_sprite_info(const t_sprite_header *sprite);
 void			print_frame_info(const t_sprite_frame_header *frame_header);

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_reader.c                                    :+:      :+:    :+:   */
+/*   sprite_reader_test.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/19 19:57:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/19 19:52:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sprite.h"
+#include "sprite_test.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -186,55 +186,6 @@ static int	read_pixel_data(int fd, const t_sprite_header *sprite,
 }
 
 /**
- * @brief Convert indexed pixel data to RGBA format
- * @param pixel_data Indexed pixel data
- * @param palette RGB palette (768 bytes)
- * @param width Frame width
- * @param height Frame height
- * @param has_alpha Whether sprite has transparency
- * @param rgba_data Output RGBA buffer (must be pre-allocated)
- * @return SPRITE_SUCCESS on success, error code on failure
- */
-static int	convert_to_rgba(const unsigned char *pixel_data,
-								const unsigned char *palette,
-								int width, int height, int has_alpha,
-								unsigned char *rgba_data)
-{
-	const int	transparency_index = 255;
-	int			total_pixels;
-	int			i;
-	int			pixel_index;
-
-	if (!pixel_data || !palette || !rgba_data)
-		return (SPRITE_ERROR_NULL_PTR);
-	total_pixels = width * height;
-	i = 0;
-	while (i < total_pixels)
-	{
-		pixel_index = pixel_data[i];
-		if (pixel_index < 256)
-		{
-			rgba_data[i * 4] = palette[pixel_index * 3];
-			rgba_data[i * 4 + 1] = palette[pixel_index * 3 + 1];
-			rgba_data[i * 4 + 2] = palette[pixel_index * 3 + 2];
-			if (has_alpha && pixel_index == transparency_index)
-				rgba_data[i * 4 + 3] = 0;
-			else
-				rgba_data[i * 4 + 3] = 255;
-		}
-		else
-		{
-			rgba_data[i * 4] = 0;
-			rgba_data[i * 4 + 1] = 0;
-			rgba_data[i * 4 + 2] = 0;
-			rgba_data[i * 4 + 3] = 255;
-		}
-		i++;
-	}
-	return (SPRITE_SUCCESS);
-}
-
-/**
  * @brief Load complete sprite file
  * @param filename Path to sprite file
  * @param sprite Pointer to sprite header structure
@@ -284,49 +235,6 @@ int	load_sprite_file(const char *filename, t_sprite_header *sprite,
 								frame_header->height, *pixel_data);
 	close(fd);
 	return (result);
-}
-
-/**
- * @brief Create MLX texture from sprite frame
- * @param pixel_data Indexed pixel data for frame
- * @param palette RGB palette
- * @param width Frame width
- * @param height Frame height
- * @param has_alpha Whether sprite has transparency
- * @param mlx MLX instance
- * @return MLX texture pointer, NULL on failure
- */
-mlx_texture_t	*create_sprite_texture(const unsigned char *pixel_data,
-										const unsigned char *palette,
-										int width, int height, int has_alpha,
-										mlx_t *mlx)
-{
-	mlx_texture_t	*texture;
-	unsigned char	*rgba_data;
-	int				result;
-
-	if (!pixel_data || !palette || width <= 0 || height <= 0)
-		return (NULL);
-	rgba_data = malloc((size_t)width * height * 4);
-	if (!rgba_data)
-		return (NULL);
-	result = convert_to_rgba(pixel_data, palette, width, height,
-								has_alpha, rgba_data);
-	if (result != SPRITE_SUCCESS)
-	{
-		free(rgba_data);
-		return (NULL);
-	}
-	texture = malloc(sizeof(mlx_texture_t));
-	if (!texture)
-	{
-		free(rgba_data);
-		return (NULL);
-	}
-	texture->width = width;
-	texture->height = height;
-	texture->pixels = rgba_data;
-	return (texture);
 }
 
 /**

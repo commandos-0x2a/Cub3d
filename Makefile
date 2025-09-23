@@ -24,7 +24,8 @@ SRC += 	src/main.c							\
 		src/controls.c						\
 		src/utils.c							\
 		src/player.c						\
-		src/image.c							\
+		src/image/image.c					\
+		src/image/sprite_reader.c			\
 
 OBJ = $(SRC:%.c=build/%.o)
 
