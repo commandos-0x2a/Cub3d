@@ -17,6 +17,16 @@
 #include "game.h"
 #include "libft.h"
 
+void static init_player(t_game *game)
+{
+	game->player.speed = 4;
+	game->player.r = 0;
+	game->player.pos.x = 4;
+	game->player.pos.y = 4;
+	game->debug.sec = 0;
+	game->debug.fps = 0;
+}
+
 void resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;
@@ -66,15 +76,7 @@ int main(int argc, char *argv[])
 	}
 
 	game.last_render = mlx_get_time();
-
-	// player
-	game.player.speed = 4;
-	game.player.r = 0;
-	game.player.pos.x = 4;
-	game.player.pos.y = 4;
-	// debug
-	game.debug.sec = 0;
-	game.debug.fps = 0;
+	init_player(&game);
 
 	if (load_textures(&game) != 0)
 	{
