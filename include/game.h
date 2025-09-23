@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:14:59 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:24:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "map.h"
 # include "utils.h"
 # include <MLX42/MLX42.h>
+# include <math.h>
 # include "animate.h"
 
 enum	e_direction
@@ -80,6 +81,7 @@ void			player_control(void *param);
 unsigned long	time_now_ms(void);
 void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
+void			update_minimap(t_game *game);
 int				load_textures(t_game *game);
 
 #endif

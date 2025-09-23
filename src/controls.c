@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 10:39:34 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:24:37 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	mouse_control(t_game *game, t_player *player)
 
 	(void)y;
 	dx = x - game->width / 2;
-	
+
 	mlx_set_mouse_pos(game->mlx, game->width / 2, game->height / 2);
 	player->r += dx * 0.005f;
 
@@ -60,7 +60,7 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 	int	new_y;
 	int	old_x;
 	int	old_y;
-	
+
 	new_x = player->pos.x + vec->x;
 	new_y = player->pos.y + vec->y;
 	old_x = player->pos.x;
@@ -87,10 +87,10 @@ void	player_control(void *param)
 	vec = (t_vector){0, 0};
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
-	
+
 	mouse_control(game, player);
 	keyboard_control(game, player, &vec);
-	
+
 	// The math function uses radians (PI for 180d) instead of normal degress
 	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
 		player->r -= 0.054;
@@ -101,7 +101,7 @@ void	player_control(void *param)
 	vec.y *= player->speed * game->time_delta;
 
 	wall_collision(game, player, &vec);
-	
+
 	// float magnitude = sqrtf(vec.x * vec.x + vec.y * vec.y);
 	// if (magnitude > 0)
 	// {
