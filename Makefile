@@ -25,6 +25,7 @@ SRC += 	src/main.c							\
 		src/utils.c							\
 		src/player.c						\
 		src/image.c							\
+		src/minimap.c
 
 OBJ = $(SRC:%.c=build/%.o)
 

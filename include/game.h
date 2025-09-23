@@ -16,6 +16,7 @@
 # include "map.h"
 # include "utils.h"
 # include <MLX42/MLX42.h>
+# include <math.h>
 
 
 enum	e_direction
@@ -74,5 +75,6 @@ void			player_control(void *param);
 unsigned long	time_now_ms(void);
 void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
+void			update_minimap(t_game *game);
 
 #endif
