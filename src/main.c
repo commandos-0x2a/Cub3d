@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:30:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:47:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 #include <MLX42/MLX42.h>
 #include "game.h"
 #include "libft.h"
+
+void static init_player(t_game *game)
+{
+	game->player.speed = 4;
+	game->player.r = 0;
+	game->player.pos.x = 4;
+	game->player.pos.y = 4;
+	game->debug.sec = 0;
+	game->debug.fps = 0;
+}
 
 void static init_player(t_game *game)
 {
