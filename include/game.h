@@ -18,7 +18,6 @@
 # include <MLX42/MLX42.h>
 # include <math.h>
 
-
 enum	e_direction
 {
 	FRONT,
@@ -62,12 +61,13 @@ typedef struct	s_game
 	mlx_image_t		*frame;
 	t_player		player;
 	t_debug			debug;
-	mlx_texture_t	*texture[4];
+	mlx_texture_t	*texture[5];
 	double			last_render;
 	double			time_delta;
 	int				rays_number;
 	int				width;
 	int				height;
+	bool			interact;
 }	t_game;
 
 void			render(void* param);

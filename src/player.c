@@ -73,6 +73,11 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 		// Check if wall
 		if (game->map->grid.raw[map_y * game->map->grid.w + map_x] == '1')
 			hit = 1;
+		if (game->map->grid.raw[map_y * game->map->grid.w + map_x] == 'D')
+		{
+			hit = 1;
+			ray.is_vertical = 5; // door
+		}
 	}
 
 
@@ -91,6 +96,11 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 	// Keep fractional part only for texture
 	ray.wall_x -= floor(ray.wall_x);
 	if (ray.wall_x < 0) ray.wall_x += 1.0f;
+
+	// if door, return now
+	if (ray.is_vertical == 5)
+		return ray;
+	// else determine wall type
 	if (side == 0)
 		ray.is_vertical = 0;
 	if (side == 0) // vertical wall
@@ -139,7 +149,13 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 	x_start = (ray * game->width) / game->rays_number;
 	x_end = ((ray + 1) * game->width) / game->rays_number;
 
-	mlx_texture_t *texture = game->texture[ray_hit.is_vertical];
+	mlx_texture_t *texture;
+	if (ray_hit.is_vertical == 5){
+		// Door texture
+		texture = game->texture[4];
+	}
+	else
+		texture = game->texture[ray_hit.is_vertical];
 	if (!texture || !texture->pixels)
 		return;
 

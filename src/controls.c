@@ -54,24 +54,52 @@ void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
 	}
 }
 
-void	wall_collision(t_game *game, t_player *player, t_vector *vec)
+#define SAFE_MARGIN 0.35f  // Tune between 0.1 and 0.3
+
+void wall_collision(t_game *game, t_player *player, t_vector *vec)
 {
-	int	new_x;
-	int	new_y;
-	int	old_x;
-	int	old_y;
+    float new_x = player->pos.x + vec->x;
+    float new_y = player->pos.y + vec->y;
 
-	new_x = player->pos.x + vec->x;
-	new_y = player->pos.y + vec->y;
-	old_x = player->pos.x;
-	old_y = player->pos.y;
+    int tile_w = game->map->grid.w;
+    int tile_h = game->map->grid.h;
+    char *grid = game->map->grid.raw;
 
-	printf("%+d, %+d --- ", new_x - old_x, new_y - old_y);
-	printf("%.2f, %.2f --- ", vec->x, vec->y);
-	if (new_x != old_x && game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1')
-		vec->x = 0;
-	if (new_y != old_y && game->map->grid.raw[new_y * game->map->grid.w + old_x] == '1')
-		vec->y = 0;
+    // check right - left walls
+    int left_tile  = (int)(new_x - SAFE_MARGIN);
+    int right_tile = (int)(new_x + SAFE_MARGIN);
+    int center_y   = (int)new_y;  // we use y to check rows. Since we need X to check left/right walls
+
+    if (center_y >= 0 && center_y < tile_h)
+    {
+        // Too close to left wall?
+        if (left_tile >= 0 && (grid[center_y * tile_w + left_tile] == '1' || grid[center_y * tile_w + left_tile] == 'D'))
+            new_x = (float)left_tile + 1.0f + SAFE_MARGIN;
+
+        // Too close to right wall?
+        if (right_tile < tile_w && (grid[center_y * tile_w + right_tile] == '1' || grid[center_y * tile_w + right_tile] == 'D'))
+            new_x = (float)right_tile - SAFE_MARGIN;
+    }
+
+    // check top - bottom walls
+    int top_tile    = (int)(new_y - SAFE_MARGIN);
+    int bottom_tile = (int)(new_y + SAFE_MARGIN);
+    int center_x    = (int)new_x;
+
+    if (center_x >= 0 && center_x < tile_w)
+    {
+        // Too close to top wall?
+        if (top_tile >= 0 && (grid[top_tile * tile_w + center_x] == '1' || grid[top_tile * tile_w + center_x] == 'D'))
+            new_y = (float)top_tile + 1.0f + SAFE_MARGIN;
+
+        // Too close to bottom wall?
+        if (bottom_tile < tile_h && (grid[bottom_tile * tile_w + center_x] == '1' || grid[bottom_tile * tile_w + center_x] == 'D'))
+            new_y = (float)bottom_tile - SAFE_MARGIN;
+    }
+
+    // clamp
+    vec->x = new_x - player->pos.x;
+    vec->y = new_y - player->pos.y;
 }
 
 // simple player control
