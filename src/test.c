@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/23 19:39:05 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 13:58:18 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,26 @@ double last;
 
 void    render_sprites(void *param)
 {
+	// printf("%f\n", spr->frames[0].u.group.intervals[0]);
 	(void)param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 	{
 		mlx_close_window(mlx);
 		exit(0);
 	}
-	if (mlx_get_time() - last > 0.2)
-		frame_index = (frame_index + 1) % spr->header.nb_frame;
+	if (mlx_get_time() - last > spr->frames[0].u.group.intervals[0])
+		frame_index = (frame_index + 1) % (spr->frames[0].u.group.nb_frame);
 	else
 		return ;
 
+	
 	last = mlx_get_time();
 	
 	mlx_texture_t	*tex;
 	
-	tex = &spr->frames[frame_index];
+	// tex = &spr->frames[frame_index].u.single;
+
+	tex = &spr->frames[0].u.group.frames[frame_index];
 
 	for (int y = 0; y < tex->height; y++)
 	{

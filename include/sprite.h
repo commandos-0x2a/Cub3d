@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/23 18:39:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 12:05:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,48 @@ typedef struct __attribute__((packed))	s_sprite_header
 	short	palette_color_count;
 }	t_sprite_header;
 
-
-typedef	struct __attribute__((packed))	s_frame_header
+typedef struct __attribute__((packed))	s_dspriteframe
 {
-	int	group;
-	int	originX;
-	int	originY;
-	int	width;
-	int	height;
-} t_frame_header;
+	int		origin[2];  // X and Y offset from the origin (usually [0,0])
+	int		width;      // Width of the frame in pixels
+	int		height;     // Height of the frame in pixels
+}	t_dspriteframe;
+
+typedef struct s_group_frame
+{
+	int				nb_frame;
+	float			*intervals;
+	mlx_texture_t	*frames;
+}	t_group_frame;
+
+typedef struct s_rgb
+{
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+}	t_rgb;
+
+typedef struct s_frame
+{
+	int	type;
+	union u_frame
+	{
+		t_group_frame	group;
+		mlx_texture_t	single;
+	}	u;
+}	t_frame;
 
 typedef struct s_sprite
 {
 	t_animate		animate;
-	t_sprite_header	header;
-	unsigned char	palette[256 * 3];
-	mlx_texture_t	*frames;
+	int				max_width;
+	int				max_height;
+	int				text_format;
+	
+	t_rgb			palette[256];
+
+	size_t			nb_frame;
+	t_frame			*frames;
 }	t_sprite;
 
 int			load_sprite_file(int fd, t_sprite *spr);

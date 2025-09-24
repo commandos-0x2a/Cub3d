@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/23 19:04:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 12:04:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	free_sprite(t_sprite *spr)
-{
-	size_t	i;
+// void	free_sprite(t_sprite *spr)
+// {
+// 	size_t	i;
 
-	if (spr->frames)
-	{
-		i = 0;
-		while (i < spr->header.nb_frame)
-		{
-			free(spr->frames[i].pixels);
-			spr->frames[i].pixels = NULL;
-			i++;
-		}
-		free(spr->frames);
-	}
-	free(spr);
-}
+// 	if (spr->frames)
+// 	{
+// 		i = 0;
+// 		while (i < spr->nb_frame)
+// 		{
+// 			free(spr->frames[i].pixels);
+// 			spr->frames[i].pixels = NULL;
+// 			i++;
+// 		}
+// 		free(spr->frames);
+// 	}
+// 	free(spr);
+// }
 
 /**
  * @brief Get error message from error code
@@ -64,19 +64,20 @@ const char	*get_sprite_error_message(int error_code)
 		return ("Unknown error");
 }
 
-void	sprite_next_frame(t_sprite *spr, uint32_t x, uint32_t y)
-{
-	spr->animate.tex.pixels = spr->frames[0].pixels;
-}
+// void	sprite_next_frame(t_sprite *spr, uint32_t x, uint32_t y)
+// {
+// 	if ()
+// 	spr->animate.tex.pixels = spr->frames[0];
+// }
 
-static int init_animate(t_animate *anim, t_sprite_header *header)
+static int init_animate(t_animate *anim, t_sprite *spr)
 {
-	anim->tex.width = header->max_width;
-	anim->tex.height = header->max_height;
+	anim->tex.width = spr->max_width;
+	anim->tex.height = spr->max_height;
 	anim->tex.bytes_per_pixel = sizeof(int32_t); // RGBA
 	anim->tex.pixels 
 		= calloc(anim->tex.width * anim->tex.height, sizeof(int32_t));
-	anim->frame_count = header->nb_frame;
+	anim->frame_count = spr->nb_frame;
 	anim->frame_index = 0;
 	anim->frame_duration = 1;
 	anim->elapsed_time = 0;
@@ -104,15 +105,15 @@ t_sprite	*load_sprite(const char *filename)
 	close(fd);
 	if (res != SPRITE_SUCCESS)
 	{
-		free_sprite(spr);
+		// free_sprite(spr);
 		printf("Error read sprite (%s): %s\n", 
 			filename, get_sprite_error_message(res));
 		return (NULL);
 	}
-	res = init_animate(&spr->animate, &spr->header);
+	res = init_animate(&spr->animate, spr);
 	if (res != SPRITE_SUCCESS)
 	{
-		free_sprite(spr);
+		// free_sprite(spr);
 		return (NULL);
 	}
 	return (spr);
