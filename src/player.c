@@ -16,6 +16,7 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 
 	int map_x = (int)px;
 	int map_y = (int)py;
+	ray.is_vertical = 0;
 
 	// Avoid division by zero by making the another number comically large
 	float delta_dist_x = (dir_x == 0) ? 1e30 : fabs(1.0 / dir_x);
@@ -101,8 +102,6 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 	if (ray.is_vertical == 5)
 		return ray;
 	// else determine wall type
-	if (side == 0)
-		ray.is_vertical = 0;
 	if (side == 0) // vertical wall
     {
         if (step_x == 1)
