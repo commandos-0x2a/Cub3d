@@ -6,17 +6,16 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 12:05:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:19:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPRITE_TEST_H
-# define SPRITE_TEST_H
+#ifndef SPRITE_H
+# define SPRITE_H
 
 # include <stdio.h>
 # include <stdint.h>
 # include <MLX42/MLX42.h>
-# include "animate.h"
 
 typedef struct __attribute__((packed))	s_sprite_header
 {
@@ -56,21 +55,20 @@ typedef struct s_rgb
 
 typedef struct s_frame
 {
-	int	type;
 	union u_frame
 	{
 		t_group_frame	group;
 		mlx_texture_t	single;
 	}	u;
+	int	type;
 }	t_frame;
 
 typedef struct s_sprite
 {
-	t_animate		animate;
 	int				max_width;
 	int				max_height;
 	int				text_format;
-	
+
 	t_rgb			palette[256];
 
 	size_t			nb_frame;

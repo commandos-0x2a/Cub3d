@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 13:58:18 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:52:41 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@
 #include "game.h"
 #include "libft.h"
 #include "sprite.h"
+#include "animate.h"
 
 void       	*mlx;
 mlx_image_t	*frame;
-t_sprite	*spr;
-size_t		frame_index;
-
+t_animate *anim;
 double last;
 
 void    render_sprites(void *param)
@@ -38,19 +37,19 @@ void    render_sprites(void *param)
 		mlx_close_window(mlx);
 		exit(0);
 	}
-	if (mlx_get_time() - last > spr->frames[0].u.group.intervals[0])
-		frame_index = (frame_index + 1) % (spr->frames[0].u.group.nb_frame);
+	if (mlx_get_time() - last > anim->frame_duration)
+		anim->frame_index = (anim->frame_index + 1) % (anim->frame_count);
 	else
 		return ;
 
-	
+	anim->next_frame(anim, anim->ctx);
 	last = mlx_get_time();
 	
 	mlx_texture_t	*tex;
 	
 	// tex = &spr->frames[frame_index].u.single;
 
-	tex = &spr->frames[0].u.group.frames[frame_index];
+	tex = &anim->tex;
 
 	for (int y = 0; y < tex->height; y++)
 	{
@@ -72,16 +71,13 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	filename = argv[1];
-	printf("Testing sprite reader with file: %s\n", filename);
-	printf("===========================================\n");
-	spr = load_sprite(filename);
-	if (!spr)
+	anim = (void *)load_animate_sprite(filename, 0);
+	if (!anim)
 	{
 		printf("read spr error\n");
 		return (1);
 	}
-	printf("\n=== TEST COMPLETE ===\n");
-
+	printf("test\n");
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
@@ -102,6 +98,8 @@ int	main(int argc, char **argv)
 	}
 
     mlx_loop_hook(mlx, render_sprites, NULL);
+
+	
 
 	mlx_loop(mlx);
 	// free map

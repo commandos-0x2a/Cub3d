@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/23 19:00:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:21:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "map.h"
 # include "utils.h"
 # include <MLX42/MLX42.h>
-
+# include "animate.h"
 
 enum	e_direction
 {
@@ -62,17 +62,20 @@ typedef struct	s_game
 	t_player		player;
 	t_debug			debug;
 	mlx_texture_t	*texture[4];
+	
+	int				nb_animate;
+	t_animate		*animates[16];
 	double			last_render;
 	double			time_delta;
 	int				rays_number;
 	int				width;
 	int				height;
-}	t_game;
+}	t_so_long1;
 
 void			render(void* param);
 void			player_control(void *param);
 unsigned long	time_now_ms(void);
-void			update_player_pos(t_game *game);
+void			update_player_pos(t_so_long1 *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 
 #endif

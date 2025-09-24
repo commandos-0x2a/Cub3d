@@ -28,6 +28,7 @@ SRC += 	src/main.c							\
 		src/image/image.c					\
 		src/image/sprite_reader.c			\
 		src/image/sprite.c					\
+		src/image/sprite_to_animate.c		\
 
 OBJ = $(SRC:%.c=build/%.o)
 

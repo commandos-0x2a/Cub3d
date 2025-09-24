@@ -6,7 +6,7 @@
 
 void resize_hook(int32_t width, int32_t height, void *param)
 {
-	t_game	*game;
+	t_so_long1	*game;
 
 	game = param;
 	game->rays_number = width;
@@ -16,7 +16,7 @@ void resize_hook(int32_t width, int32_t height, void *param)
 
 int main(int argc, char *argv[])
 {
-	t_game	game;
+	t_so_long1	game;
 
 	if (argc != 2)
 	{
@@ -64,10 +64,19 @@ int main(int argc, char *argv[])
 	game.debug.sec = 0;
 	game.debug.fps = 0;
 
-	game.texture[WALL_NORTH] = mlx_load_png("./textures/test/NO.png");
-    game.texture[WALL_SOUTH] = mlx_load_png("./textures/test/SO.png");
-    game.texture[WALL_WEST]  = mlx_load_png("./textures/test/WE.png");
-    game.texture[WALL_EAST]  = mlx_load_png("./textures/test/EA.png");
+    // game.texture[WALL_EAST]  = mlx_load_png("./textures/test/EA.png");
+	
+	game.animates[0] = (void *)load_animate_sprite("bonfire.spr", 0);
+	if (!game.animates[0])
+	{
+		printf("read spr error\n");
+		return (1);
+	}
+	game.nb_animate = 1;
+	game.texture[WALL_EAST] = &game.animates[0]->tex;
+	game.texture[WALL_NORTH] = &game.animates[0]->tex;
+	game.texture[WALL_SOUTH] = &game.animates[0]->tex;
+	game.texture[WALL_WEST]  = &game.animates[0]->tex;
 
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop_hook(game.mlx, player_control, &game);

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/23 16:06:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:21:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <math.h>
 
-void	mouse_control(t_game *game, t_player *player)
+void	mouse_control(t_so_long1 *game, t_player *player)
 {
 	int	x;
 	int	y;
@@ -30,7 +30,7 @@ void	mouse_control(t_game *game, t_player *player)
 
 }
 
-void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
+void	keyboard_control(t_so_long1 *game, t_player *player, t_vector *vec)
 {
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W) || mlx_is_key_down(game->mlx, MLX_KEY_UP)) // front
 	{
@@ -54,7 +54,7 @@ void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
 	}
 }
 
-void	wall_collision(t_game *game, t_player *player, t_vector *vec)
+void	wall_collision(t_so_long1 *game, t_player *player, t_vector *vec)
 {
 	int	new_x;
 	int	new_y;
@@ -66,8 +66,8 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 	old_x = player->pos.x;
 	old_y = player->pos.y;
 	
-	printf("%+d, %+d --- ", new_x - old_x, new_y - old_y);
-	printf("%.2f, %.2f --- ", vec->x, vec->y);
+	// printf("%+d, %+d --- ", new_x - old_x, new_y - old_y);
+	// printf("%.2f, %.2f --- ", vec->x, vec->y);
 	if (new_x != old_x && game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1')
 		vec->x = 0;
 	if (new_y != old_y && game->map->grid.raw[new_y * game->map->grid.w + old_x] == '1')
@@ -77,7 +77,7 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 // simple player control
 void	player_control(void *param)
 {
-	t_game		*game;
+	t_so_long1		*game;
 	t_player	*player;
 	t_vector	vec;
 
@@ -108,7 +108,7 @@ void	player_control(void *param)
 	// 	vec.x /= magnitude;
 	// 	vec.y /= magnitude;
 	// }
-	printf("%.2f, %.2f\n", vec.x, vec.y);
+	// printf("%.2f, %.2f\n", vec.x, vec.y);
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
 }

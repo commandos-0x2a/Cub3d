@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 12:04:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:24:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "animate.h"
 
 // void	free_sprite(t_sprite *spr)
 // {
@@ -70,20 +71,7 @@ const char	*get_sprite_error_message(int error_code)
 // 	spr->animate.tex.pixels = spr->frames[0];
 // }
 
-static int init_animate(t_animate *anim, t_sprite *spr)
-{
-	anim->tex.width = spr->max_width;
-	anim->tex.height = spr->max_height;
-	anim->tex.bytes_per_pixel = sizeof(int32_t); // RGBA
-	anim->tex.pixels 
-		= calloc(anim->tex.width * anim->tex.height, sizeof(int32_t));
-	anim->frame_count = spr->nb_frame;
-	anim->frame_index = 0;
-	anim->frame_duration = 1;
-	anim->elapsed_time = 0;
-	// anim->next_frame = sprite_next_frame;
-	return (SPRITE_SUCCESS);
-}
+
 
 t_sprite	*load_sprite(const char *filename)
 {
@@ -110,16 +98,6 @@ t_sprite	*load_sprite(const char *filename)
 			filename, get_sprite_error_message(res));
 		return (NULL);
 	}
-	res = init_animate(&spr->animate, spr);
-	if (res != SPRITE_SUCCESS)
-	{
-		// free_sprite(spr);
-		return (NULL);
-	}
 	return (spr);
 }
 
-void	sprite_put_frame(t_sprite *spr, int frame_index)
-{
-	
-}
