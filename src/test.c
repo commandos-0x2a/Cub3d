@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/23 19:29:50 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:39:05 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ void    render_sprites(void *param)
 		for (int x = 0; x < tex->width; x++)
 		{
 			uint32_t	c = ((uint32_t *)tex->pixels)[y * tex->width + x];
-			printf("%d ", c);
 			mlx_put_pixel(frame, x, y, c);
 		}
-		printf("\n");
 	}
 
 }
