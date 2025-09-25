@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:47:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:08:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 09:23:25 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void sprite_next_frame(t_sprite_animate *anim, t_sprite *spr)
 	}
 	index = (index + 1) % anim->anim.frame_count;
 	anim->anim.frame_index = index;
-	printf("%s: %p      %d\n", __func__, anim->anim.tex.pixels, anim->anim.frame_count);
+	// printf("%s: %p      %d\n", __func__, anim->anim.tex.pixels, anim->anim.frame_count);
 }
 
 t_sprite_animate *sprite_to_animate(t_sprite *spr, int group_idx)

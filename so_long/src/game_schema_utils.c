@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:47:44 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:37:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:06:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,34 @@
 int	open_xpm_file(t_image *image,\
 						char *filename, const char *img_name)
 {
+	mlx_texture_t	*tex;
+
 	ft_strlcpy((char *)image, img_name, NAME_SIZE);
-	image->tex = (void *)mlx_load_xpm42(filename);
-	if (!image->tex)
+	tex = (void *)mlx_load_xpm42(filename);
+	if (!tex)
+	{
+		printf("error: %s\n", filename);
 		return (-1);
+	}
+	image->tex = *tex;
+	free(tex);
+	return (0);
+}
+
+int	open_png_file(t_image *image,\
+						char *filename, const char *img_name)
+{
+	mlx_texture_t	*tex;
+
+	ft_strlcpy((char *)image, img_name, NAME_SIZE);
+	tex = mlx_load_png(filename);
+	if (!tex)
+	{
+		printf("error: %s\n", filename);
+		return (-1);
+	}
+	image->tex = *tex;
+	free(tex);
 	return (0);
 }
 

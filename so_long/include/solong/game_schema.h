@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:35:07 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:06:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_game_schema	*init_game_schema(void);
 void			load_banner(t_banner *banner, t_game_schema *gs, int theme);
 
 int				open_xpm_file(t_image *image, \
+						char *filename, const char *img_name);
+int	open_png_file(t_image *image,\
 						char *filename, const char *img_name);
 t_object		*pop_player(t_object *components);
 void			insert_player(t_object *current, t_object *prev, \

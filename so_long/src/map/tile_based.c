@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 07:53:04 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:48:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 07:29:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	render_tile(t_tile *tile, t_image *frame, int layer)
 		while (++cur.x < 64)
 		{
 			draw_loc = add_point(tile->spr.obj.draw_location, cur);
-			if (draw_loc.x < 0 || draw_loc.x >= frame->tex->width
-				|| draw_loc.y < 0 || draw_loc.y >= frame->tex->height)
+			if (draw_loc.x < 0 || draw_loc.x >= frame->tex.width
+				|| draw_loc.y < 0 || draw_loc.y >= frame->tex.height)
 				continue ;
 			index = (cur.y / (64 / MASK_SIZE)) * MASK_SIZE \
 					+ (cur.x / (64 / MASK_SIZE));
 			if (tile->mask[index] == '*')
-				frame->tex->pixels[draw_loc.y * frame->tex->width + draw_loc.x] \
+				frame->tex.pixels[draw_loc.y * frame->tex.width + draw_loc.x] \
 									|= 0xf0ff0000;
 		}
 	}

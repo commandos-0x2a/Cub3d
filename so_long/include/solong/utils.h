@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:47:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:01:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <libft.h>
 # include "ft_printf.h"
 # include <MLX42/MLX42.h>
+# include <stdio.h>
 
 # define NAME_SIZE 16
 
@@ -25,7 +26,7 @@ typedef unsigned long		t_clock;
 typedef struct s_image
 {
 	char			name[NAME_SIZE];
-	mlx_texture_t	*tex;
+	mlx_texture_t	tex;
 }	t_image;
 
 typedef struct s_point

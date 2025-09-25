@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 18:08:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:09:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ride_boat(t_so_long1 *game)
 
 int	game_init(t_so_long1 *game, const char *map_path, int width, int height)
 {
-	ft_bzero(game, sizeof(*game));
 	game->gs = init_game_schema();
 	if (game->gs == NULL)
 		return (-1);
@@ -77,36 +76,44 @@ int	game_init(t_so_long1 *game, const char *map_path, int width, int height)
 	game->width = width;
 	game->height = height;
 
-	game->frame.tex->width = game->width;
-	game->frame.tex->height = game->height;
-	game->frame.tex->bytes_per_pixel = sizeof(int);
-	game->frame.tex->pixels = malloc(game->width * game->height * sizeof(int));
+	game->frame.tex.width = game->width;
+	game->frame.tex.height = game->height;
+	game->frame.tex.bytes_per_pixel = sizeof(int);
+	game->frame.tex.pixels = malloc(game->width * game->height * sizeof(int));
 	return (0);
 }
 
 t_so_long1	*init_so_long1(const char *map_path, int width, int height)
 {
-	t_so_long1	*game;
+	t_so_long1	*so;
 	t_boat		*boat;
 	
-	game = calloc(1, sizeof(*game));
-	if(!game)
+	so = calloc(1, sizeof(*so));
+	if(!so)
 		return (NULL);
-	if (game_init(game, map_path, width, height) != 0)
-		end_program(&game, 1);
-	if (load_schema(game->gs) != 0)
-		end_program(&game, 1);
-	game->player = (void *)get_children_by_name(&game->gs->components, "player");
-	boat = (t_boat *)get_children_by_name(&game->gs->components, "boat");
-	boat->game = &game;
+	if (game_init(so, map_path, width, height) != 0)
+	{
+		end_program(so, 1);
+		return (NULL);
+	}
+	
+	if (load_schema(so->gs) != 0)
+	{
+		end_program(so, 1);
+		return (NULL);
+	}
+	
+	so->player = (void *)get_children_by_name(&so->gs->components, "player");
+	boat = (t_boat *)get_children_by_name(&so->gs->components, "boat");
+	boat->game = so;
 	
 	// mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	// mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, &game);
 	// mlx_hook(game->win_ptr, DestroyNotify, 0, cross_button, &game);
-	game->last_rander = 0;
-	game->time = 0;
+	so->last_rander = 0;
+	so->time = 0;
 	// mlx_loop_hook(game->mlx_ptr, rander, &game);
 	// mlx_loop(game->mlx_ptr);
-	return (0);
+	return (so);
 }
 

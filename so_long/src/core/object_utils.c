@@ -6,11 +6,12 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:01:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:01:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:07:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "object.h"
+#include <stdio.h>
 
 t_object	*get_children_by_name(void *_parent, const char *name)
 {

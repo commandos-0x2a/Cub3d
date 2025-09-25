@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:35:26 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 23:03:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 07:06:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 #include "components.h"
 #include "config.h"
 
-void	player_walk(t_player *player, int keycode)
-{
-	if (keycode == KEY_UP)
-		player->direction = BACK;
-	else if (keycode == KEY_DOWN)
-		player->direction = FRONT;
-	else if (keycode == KEY_RIGHT)
-		player->direction = RIGHT;
-	else if (keycode == KEY_LEFT)
-		player->direction = LEFT;
-	else
-		return ;
-	if (player->movement != WALK)
-	{
-		player->movement = WALK;
-		((t_sprites *)player)->index = 0;
-		((t_sprites *)player)->max_index = 9;
-		player->spr.delay = 1;
-	}
-	player->is_walk = 1;
-	return ;
-}
+// void	player_walk(void *)
+// {
+	
+// 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+// 		player->direction = BACK;
+// 	else if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+// 		player->direction = FRONT;
+// 	else if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+// 		player->direction = RIGHT;
+// 	else if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+// 		player->direction = LEFT;
+// 	else
+// 		return ;
+// 	if (player->movement != WALK)
+// 	{
+// 		player->movement = WALK;
+// 		((t_sprites *)player)->index = 0;
+// 		((t_sprites *)player)->max_index = 9;
+// 		player->spr.delay = 1;
+// 	}
+// 	player->is_walk = 1;
+// 	return ;
+// }
 
 void	player_slash(t_player *player)
 {

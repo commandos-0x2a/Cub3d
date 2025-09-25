@@ -1,19 +1,29 @@
-NAME = libso_long.a
+NAME = libsolong.a
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -O2
-CPPFLAGS += -I./include -I../libft/include -I ../MLX42/include
+CFLAGS += -Wall -Wextra -Werror -g3 -fsanitize=address
+CPPFLAGS += -I./include/solong -I../libft/include -I ../MLX42/include
+
+LDFLAGS = -g3 -lmlx42 -lglfw -lm -L../build -L../libft -lft -fsanitize=address
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+	LDFLAGS += -ldl -pthread
+else ifeq ($(UNAME_S), Darwin)
+	LDFLAGS += -L"/opt/homebrew/Cellar/glfw/3.4/lib"
+endif
 
 OBJECT_DIR = obj
 SOURCE_DIR = src
 BINARY_DIR = .
 
-FILES =	so_long							\
+FILES =	main							\
+		hooks							\
+		so_long							\
 		utils							\
 		camera							\
 		game_schema						\
 		game_schema_utils				\
-		hooks							\
 		core/object						\
 		core/object_utils				\
 		core/put_image_to_image			\
@@ -46,6 +56,9 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
+
+so_long: $(OBJECTS)
+	$(CC) -o so_long $^ $(LDFLAGS)
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@mkdir -p $(dir $@)

@@ -6,13 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:43:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 07:47:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "schema.h"
 
-int	load_schema(void *_schema)
+int	 load_schema(void *_schema)
 {
 	int			(*load_schema_ptr)(t_schema *);
 	t_schema	*schema;
@@ -54,7 +54,7 @@ void	destroy_schema(void **_schema)
 	{
 		i = -1;
 		while (++i < schema->resources.nb_images)
-				free(schema->resources.images[i].tex->pixels);
+				free(schema->resources.images[i].tex.pixels);
 		free(schema->resources.images);
 	}
 	schema->resources.images = NULL;

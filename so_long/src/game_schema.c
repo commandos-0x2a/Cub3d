@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:36:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:08:07 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	load_images(t_game_schema *gs)
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
 	i = -1;
 	while (++i < nb_images)
-		if (open_xpm_file(&gs->schema.resources.images[i], \
+		if (open_png_file(&gs->schema.resources.images[i], \
 						images[i].path, images[i].name) != 0)
 			return (-1);
 	return (0);

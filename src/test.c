@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 16:52:41 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:07:32 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void    render_sprites(void *param)
 
 	tex = &anim->tex;
 
-	for (int y = 0; y < tex->height; y++)
+	for (int y = 0; y < tex.height; y++)
 	{
-		for (int x = 0; x < tex->width; x++)
+		for (int x = 0; x < tex.width; x++)
 		{
-			uint32_t	c = ((uint32_t *)tex->pixels)[y * tex->width + x];
+			uint32_t	c = ((uint32_t *)tex.pixels)[y * tex.width + x];
 			mlx_put_pixel(frame, x, y, c);
 		}
 	}
@@ -104,8 +104,6 @@ int	main(int argc, char **argv)
 	mlx_loop(mlx);
 	// free map
 	mlx_terminate(mlx);
-	return (0);
-
-	
+		
 	return (0);
 }

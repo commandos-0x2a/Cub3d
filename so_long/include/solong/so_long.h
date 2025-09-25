@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:32:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 07:42:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	end_program(void *_game, int exit_status);
 
 int		key_press(int keycode, t_so_long1 *game);
 int		key_release(int keycode, t_so_long1 *game);
-int		rander(t_so_long1 *game);
-int		cross_button(t_so_long1 *game);
+void	rander_solong1(void *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 16:19:11 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 09:22:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@
 # include <stdio.h>
 # include <stdint.h>
 # include <MLX42/MLX42.h>
+
+# define SPRITE_SUCCESS			0
+# define SPRITE_ERROR_NULL_PTR		-1
+# define SPRITE_ERROR_FILE_OPEN		-2
+# define SPRITE_ERROR_HEADER		-3
+# define SPRITE_ERROR_INVALID		-4
+# define SPRITE_ERROR_PALETTE		-5
+# define SPRITE_ERROR_FRAME		-6
+# define SPRITE_ERROR_DIMENSIONS	-7
+# define SPRITE_ERROR_MEMORY		-8
+# define SPRITE_ERROR_PIXEL_DATA	-9
 
 typedef struct __attribute__((packed))	s_sprite_header
 {
@@ -46,13 +57,6 @@ typedef struct s_group_frame
 	mlx_texture_t	*frames;
 }	t_group_frame;
 
-typedef struct s_rgb
-{
-	uint8_t	r;
-	uint8_t	g;
-	uint8_t	b;
-}	t_rgb;
-
 typedef struct s_frame
 {
 	union u_frame
@@ -62,6 +66,13 @@ typedef struct s_frame
 	}	u;
 	int	type;
 }	t_frame;
+
+typedef struct s_rgb
+{
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+}	t_rgb;
 
 typedef struct s_sprite
 {
@@ -78,16 +89,5 @@ typedef struct s_sprite
 int			load_sprite_file(int fd, t_sprite *spr);
 void		free_sprite(t_sprite *spr);
 t_sprite	*load_sprite(const char *filename);
-
-# define SPRITE_SUCCESS			0
-# define SPRITE_ERROR_NULL_PTR		-1
-# define SPRITE_ERROR_FILE_OPEN		-2
-# define SPRITE_ERROR_HEADER		-3
-# define SPRITE_ERROR_INVALID		-4
-# define SPRITE_ERROR_PALETTE		-5
-# define SPRITE_ERROR_FRAME		-6
-# define SPRITE_ERROR_DIMENSIONS	-7
-# define SPRITE_ERROR_MEMORY		-8
-# define SPRITE_ERROR_PIXEL_DATA	-9
 
 #endif
