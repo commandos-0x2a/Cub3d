@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:26:08 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 10:46:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:55:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static t_point	get_new_location(t_player *player, t_boat *boat)
 	else if (player->direction == BACK)
 		new_location.y -= player->speed;
 	else if (player->direction == LEFT)
-		new_location.x += player->speed;
-	else if (player->direction == RIGHT)
 		new_location.x -= player->speed;
+	else if (player->direction == RIGHT)
+		new_location.x += player->speed;
 	return (new_location);
 }
 

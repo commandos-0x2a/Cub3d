@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:13:19 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 10:45:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:53:54 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 enum e_directions
 {
 	BACK,
-	RIGHT,
+	LEFT,
 	FRONT,
-	LEFT
+	RIGHT
 };
 
 enum e_move_type
