@@ -5,7 +5,7 @@
 #define PI 3.14159265359
 
 // Cast ray using DDA
-t_ray_hit cast_ray(t_so_long1 *game, double angle, int draw_ray)
+t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 {
 	t_ray_hit ray;
 	float px = game->player.pos.x;
@@ -109,7 +109,7 @@ t_ray_hit cast_ray(t_so_long1 *game, double angle, int draw_ray)
 	return ray;
 }
 
-void draw_wall(t_so_long1 *game, t_ray_hit ray_hit, int ray)
+void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 {
 	int		x, y;
 	int		wall_height;
@@ -168,7 +168,7 @@ void draw_wall(t_so_long1 *game, t_ray_hit ray_hit, int ray)
 	}
 }
 
-void draw_player_vision(t_so_long1 *game)
+void draw_player_vision(t_game *game)
 {
 	int			i;
 	double		fov_rad;
@@ -189,7 +189,7 @@ void draw_player_vision(t_so_long1 *game)
 	}
 }
 
-void update_minimap(t_so_long1 *game)
+void update_minimap(t_game *game)
 {
 	int const	minimap_size = game->width / 6;
 	int const	player_size = minimap_size / 9;
@@ -218,7 +218,7 @@ void update_minimap(t_so_long1 *game)
 	}
 }
 
-void update_player_pos(t_so_long1 *game)
+void update_player_pos(t_game *game)
 {
 	draw_player_vision(game);
 	update_minimap(game);

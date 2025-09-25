@@ -1,12 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/09/25 10:35:19 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "utils.h"
 #include "map.h"
 #include <stdio.h>
 #include <MLX42/MLX42.h>
 #include "game.h"
 #include "libft.h"
 
+void	*init_so_long1(void *mlx, const char *map_path, int width, int height);
+void	rander_solong1(void *params);
+void	solong1_key_hook(void *params);
+
 void resize_hook(int32_t width, int32_t height, void *param)
 {
-	t_so_long1	*game;
+	t_game	*game;
 
 	game = param;
 	game->rays_number = width;
@@ -16,7 +33,8 @@ void resize_hook(int32_t width, int32_t height, void *param)
 
 int main(int argc, char *argv[])
 {
-	t_so_long1	game;
+	t_game	game;
+	void	*so;
 
 	if (argc != 2)
 	{
@@ -29,7 +47,6 @@ int main(int argc, char *argv[])
 		return (1);
 	if (!validate_map(game.map))
 		return (1);
-	// print_map(game.map);
 
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
@@ -51,6 +68,12 @@ int main(int argc, char *argv[])
 		mlx_close_window(game.mlx);
 		puts(mlx_strerror(mlx_errno));
 		return(1);
+	}
+	so = init_so_long1(game.mlx, "so_long/maps/map.ber", WIDTH, HEIGHT);
+	if (!so)
+	{
+		printf("solong init error\n");
+		return (1);
 	}
 
 	game.last_render = mlx_get_time();
@@ -76,10 +99,12 @@ int main(int argc, char *argv[])
 	game.texture[WALL_EAST] = &game.animates[0]->tex;
 	game.texture[WALL_NORTH] = &game.animates[0]->tex;
 	game.texture[WALL_SOUTH] = &game.animates[0]->tex;
-	game.texture[WALL_WEST]  = &game.animates[0]->tex;
+	game.texture[WALL_WEST]  = so;
 
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop_hook(game.mlx, player_control, &game);
+	mlx_loop_hook(game.mlx, rander_solong1, so);
+	mlx_loop_hook(game.mlx, solong1_key_hook, so);
 	mlx_resize_hook(game.mlx, resize_hook, &game);
 
 	mlx_loop(game.mlx);

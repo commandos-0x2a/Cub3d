@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:06:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	animate_sprites(void *_spr)
 		animate_sprites(spr->next);
 }
 
-int	render_sprites(void *_spr, t_image *frame, int layer)
+int	render_sprites(void *_spr, mlx_texture_t *frame, int layer)
 {
 	t_sprites	*spr;
 	int			i;
@@ -60,7 +60,7 @@ int	render_sprites(void *_spr, t_image *frame, int layer)
 	while (spr->clips && i < spr->nb_clips)
 	{
 		if (spr->clips[i].layer == layer)
-			put_image_to_image(frame, spr->image, \
+			put_image_to_image(frame, &spr->image->tex, \
 						spr->obj.draw_location, spr->clips[i]);
 		i++;
 	}

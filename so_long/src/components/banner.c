@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:25:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:07:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	digit_count(unsigned int number)
 	return (nb);
 }
 
-static void	put_digits(t_banner *banner, t_image *frame, \
+static void	put_digits(t_banner *banner, mlx_texture_t *frame, \
 						unsigned int number, t_point offset)
 {
 	t_clip	clip;
@@ -48,24 +48,24 @@ static void	put_digits(t_banner *banner, t_image *frame, \
 		clip = get_digit_clip(number % 10);
 		offset = add_point(offset, banner->obj.draw_location);
 		offset = add_point(offset, (t_point){32, 0});
-		put_image_to_image(frame, banner->image, offset, clip);
+		put_image_to_image(frame, &banner->image->tex, offset, clip);
 		cursor.x -= 15;
 		number /= 10;
 		nb--;
 	}
 }
 
-static int	render_banner(t_banner *banner, t_image *frame, int layer)
+static int	render_banner(t_banner *banner, mlx_texture_t *frame, int layer)
 {
 	t_clip	dst_clip;
 
 	if (layer != 2)
 		return (0);
 	dst_clip = (t_clip){banner->offset.x, banner->offset.y, 4 * 32, 32, 2};
-	put_image_to_image(frame, banner->image, \
+	put_image_to_image(frame, &banner->image->tex, \
 			banner->obj.draw_location, \
 			dst_clip);
-	put_image_to_image(frame, banner->image, \
+	put_image_to_image(frame, &banner->image->tex, \
 			add_point(banner->obj.draw_location, (t_point){0, 32 + 8}), \
 			dst_clip);
 	put_digits(banner, frame, *banner->logs_collected, (t_point){10, 0});

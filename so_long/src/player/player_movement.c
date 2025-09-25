@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:35:26 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 07:06:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:43:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,56 @@
 #include "components.h"
 #include "config.h"
 
-// void	player_walk(void *)
-// {
-	
-// 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-// 		player->direction = BACK;
-// 	else if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-// 		player->direction = FRONT;
-// 	else if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-// 		player->direction = RIGHT;
-// 	else if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-// 		player->direction = LEFT;
-// 	else
-// 		return ;
-// 	if (player->movement != WALK)
-// 	{
-// 		player->movement = WALK;
-// 		((t_sprites *)player)->index = 0;
-// 		((t_sprites *)player)->max_index = 9;
-// 		player->spr.delay = 1;
-// 	}
-// 	player->is_walk = 1;
-// 	return ;
-// }
+void	player_walk(t_player *player, void *mlx)
+{
+	if (mlx_is_key_down(mlx, MLX_KEY_KP_8))
+	{
+		player->direction = BACK;
+		player->movement = WALK;
+	}
+	else if (mlx_is_key_down(mlx, MLX_KEY_KP_5))
+	{
+		player->direction = FRONT;
+		player->movement = WALK;
+	}
+	else if (mlx_is_key_down(mlx, MLX_KEY_KP_6))
+	{
+		player->direction = RIGHT;
+		player->movement = WALK;
+	}
+	else if (mlx_is_key_down(mlx, MLX_KEY_KP_4))
+	{
+		player->direction = LEFT;
+		player->movement = WALK;
+	}
+	else if (mlx_is_key_down(mlx, MLX_KEY_SPACE))
+	{
+		player->is_walk = 0;
+		player_slash(player);
+		// if (player->logs_count >= nb_collect)
+		// 	if (is_surround_boat(so))
+		// 		ride_boat(so);
+		return ;
+	}
+	else
+	{
+		player->is_walk = 0;
+		player->movement = WALK;
+		player->spr.max_index = 9;
+		player->spr.index = 0;
+		return ;
+	}
+	// printf("move: %d | dir: %d\n", player->movement, player->direction);
+	if (player->movement != WALK)
+	{
+		player->movement = WALK;
+		((t_sprites *)player)->index = 0;
+		((t_sprites *)player)->max_index = 9;
+		player->spr.delay = 1;
+	}
+	player->is_walk = 1;
+	return ;
+}
 
 void	player_slash(t_player *player)
 {

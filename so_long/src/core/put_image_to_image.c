@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 23:22:42 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 09:05:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:05:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ uint32_t	blend_color(uint32_t dst, uint32_t src)
            (b_out & 0xFF);
 }
 
-void	put_image_to_image(t_image *dst, t_image *src, \
+void	put_image_to_image(mlx_texture_t *dst, mlx_texture_t *src, \
 						t_point dst_loc, t_clip clip)
 {
 	uint32_t	x;
@@ -50,19 +50,19 @@ void	put_image_to_image(t_image *dst, t_image *src, \
 	if (!dst || !src || clip.height < 0 || clip.width < 0)
 		return ;
 	y = -1;
-	while (++y < clip.height && y + clip.y < src->tex.height \
-								&& y + dst_loc.y < dst->tex.height)
+	while (++y < clip.height && y + clip.y < src->height \
+								&& y + dst_loc.y < dst->height)
 	{
 		if (y + clip.y < 0 || y + dst_loc.y < 0)
 			continue ;
 		x = -1;
-		while (++x < clip.width && x + clip.x < src->tex.width \
-								&& x + dst_loc.x < dst->tex.width)
+		while (++x < clip.width && x + clip.x < src->width \
+								&& x + dst_loc.x < dst->width)
 		{
 			if (x + clip.x < 0 || x + dst_loc.x < 0)
 				continue ;
-			dc = &((uint32_t *)dst->tex.pixels)[(y + dst_loc.y) * dst->tex.width + (x + dst_loc.x)];
-			sc = ((uint32_t *)src->tex.pixels)[(y + clip.y) * src->tex.width + (x + clip.x)];
+			dc = &((uint32_t *)dst->pixels)[(y + dst_loc.y) * dst->width + (x + dst_loc.x)];
+			sc = ((uint32_t *)src->pixels)[(y + clip.y) * src->width + (x + clip.x)];
 			*dc = blend_color(*dc, sc);
 		}
 	}

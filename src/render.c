@@ -23,7 +23,7 @@ void	render_floor_ceiling(mlx_image_t *frame,
 	}
 }
 
-void	animate(t_so_long1 *game, double now)
+void	animate(t_game *game, double now)
 {
 	int	i;
 	t_animate	*anim;
@@ -46,7 +46,7 @@ void	animate(t_so_long1 *game, double now)
 
 void render(void* param)
 {
-	t_so_long1	*game;
+	t_game	*game;
 	double	now;
 
 	game = param;

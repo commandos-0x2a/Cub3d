@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:04:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_sprites
 }	t_sprites;
 
 void	load_sprites(void *_spr);
-int		render_sprites(void *_spr, t_image *frame, int layer);
+int		render_sprites(void *_spr, mlx_texture_t *frame, int layer);
 void	animate_sprites(void *_spr);
 
 #endif

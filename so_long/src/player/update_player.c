@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 01:25:31 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/02 10:47:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:47:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	set_new_location(t_game_schema *gs, t_player *player)
 	else if (player->direction == BACK)
 		new_location.y -= player->speed;
 	else if (player->direction == LEFT)
-		new_location.x -= player->speed;
-	else if (player->direction == RIGHT)
 		new_location.x += player->speed;
+	else if (player->direction == RIGHT)
+		new_location.x -= player->speed;
 	new_location = valid_move(gs, player, new_location);
 	player->spr.obj.relative_location = new_location;
 }

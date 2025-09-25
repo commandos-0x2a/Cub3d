@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 08:01:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:06:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_clip
 
 t_point	point_to_center(t_point center, t_point size);
 
-void	put_image_to_image(t_image *dst, t_image *src, \
+void	put_image_to_image(mlx_texture_t *dst, mlx_texture_t *src, \
 						t_point dst_loc, t_clip clip);
 
 t_point	add_point(t_point p1, t_point p2);

@@ -2,9 +2,9 @@ NAME = cub3d
 
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror 
-CFLAGS += -g #-fsanitize=address
-CPPFLAGS = -IMLX42/include -Ilibft/include -Idebug -Iinclude
-LDFLAGS =  -lmlx42 -lglfw -lm -Lbuild -Llibft -lft # -fsanitize=address
+CFLAGS += -g -fsanitize=address
+CPPFLAGS = -IMLX42/include -Ilibft/include -Iso_long/include -Idebug -Iinclude
+LDFLAGS =   -Lso_long -lsolong -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
 
 include debug/log.mk
 

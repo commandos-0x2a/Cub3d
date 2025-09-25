@@ -1,7 +1,7 @@
 #include "map.h"
 #include <stdio.h>
 
-void	print_grid(t_grid *grid)
+void	print_grid2(t_grid *grid)
 {
 	printf("Map Width: %zu\n", grid->w);
     printf("Map Height: %zu\n", grid->h);
@@ -24,5 +24,5 @@ void print_map(t_map *map)
     printf("Floor Color: %6X\n", map->floor_color);
     printf("Ceiling Color: %6X\n", map->ceiling_color);
     printf("first_map_line: %zu\n", map->first_map_line);
-	print_grid(&map->grid);
+	print_grid2(&map->grid);
 }

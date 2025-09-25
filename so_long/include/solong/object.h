@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 19:47:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:04:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_object
 int			is_object_type(void *obj, const char *type);
 void		add_children(void *_parent, void *_child);
 void		load_object(void *_obj);
-void		render_object(void *obj, t_image *frame, int layer);
+void		render_object(void *obj, mlx_texture_t *frame, int layer);
 void		update_object(void *_obj);
 void		destroy_object(void **_obj);
 void		defult_destroy_object(void **_obj);

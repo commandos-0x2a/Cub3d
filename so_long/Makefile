@@ -17,8 +17,7 @@ OBJECT_DIR = obj
 SOURCE_DIR = src
 BINARY_DIR = .
 
-FILES =	main							\
-		hooks							\
+FILES =	hooks							\
 		so_long							\
 		utils							\
 		camera							\
@@ -57,7 +56,7 @@ all: $(NAME)
 $(NAME): $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 
-so_long: $(OBJECTS)
+so_long: $(OBJECTS) main.o
 	$(CC) -o so_long $^ $(LDFLAGS)
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c

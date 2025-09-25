@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:13:19 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/02 01:35:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:45:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 enum e_directions
 {
 	BACK,
-	LEFT,
+	RIGHT,
 	FRONT,
-	RIGHT
+	LEFT
 };
 
 enum e_move_type
@@ -48,6 +48,6 @@ typedef struct s_player
 
 t_player	*init_player(void *game_schema);
 void		player_slash(t_player *player);
-void		player_walk(t_player *player, int keycode);
+void		player_walk(t_player *player, void *mlx);
 
 #endif

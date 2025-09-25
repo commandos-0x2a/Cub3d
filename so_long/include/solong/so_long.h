@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 07:42:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:16:18 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@
 # include "game_schema.h"
 # include <math.h>
 
-typedef struct s_game
+typedef struct s_so_long1
 {
+	mlx_texture_t	frame;
+	void			*mlx;
 	t_game_schema	*gs;
 	int				width;
 	int				height;
 	t_player		*player;
-	t_image			frame;
 	t_clock			last_rander;
 	t_clock			time;
 }	t_so_long1;

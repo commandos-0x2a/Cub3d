@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:21:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:39:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <math.h>
 
-void	mouse_control(t_so_long1 *game, t_player *player)
+void	mouse_control(t_game *game, t_player *player)
 {
 	int	x;
 	int	y;
@@ -30,7 +30,7 @@ void	mouse_control(t_so_long1 *game, t_player *player)
 
 }
 
-void	keyboard_control(t_so_long1 *game, t_player *player, t_vector *vec)
+void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
 {
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W) || mlx_is_key_down(game->mlx, MLX_KEY_UP)) // front
 	{
@@ -54,7 +54,7 @@ void	keyboard_control(t_so_long1 *game, t_player *player, t_vector *vec)
 	}
 }
 
-void	wall_collision(t_so_long1 *game, t_player *player, t_vector *vec)
+void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 {
 	int	new_x;
 	int	new_y;
@@ -77,7 +77,7 @@ void	wall_collision(t_so_long1 *game, t_player *player, t_vector *vec)
 // simple player control
 void	player_control(void *param)
 {
-	t_so_long1		*game;
+	t_game		*game;
 	t_player	*player;
 	t_vector	vec;
 

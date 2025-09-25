@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 08:09:28 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:30:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ int	game_init(t_so_long1 *game, const char *map_path, int width, int height)
 	game->width = width;
 	game->height = height;
 
-	game->frame.tex.width = game->width;
-	game->frame.tex.height = game->height;
-	game->frame.tex.bytes_per_pixel = sizeof(int);
-	game->frame.tex.pixels = malloc(game->width * game->height * sizeof(int));
+	game->frame.width = game->width;
+	game->frame.height = game->height;
+	game->frame.bytes_per_pixel = sizeof(int);
+	game->frame.pixels = malloc(game->width * game->height * sizeof(int));
 	return (0);
 }
 
-t_so_long1	*init_so_long1(const char *map_path, int width, int height)
+t_so_long1	*init_so_long1(void *mlx, const char *map_path, int width, int height)
 {
 	t_so_long1	*so;
 	t_boat		*boat;
@@ -91,6 +91,7 @@ t_so_long1	*init_so_long1(const char *map_path, int width, int height)
 	so = calloc(1, sizeof(*so));
 	if(!so)
 		return (NULL);
+	so->mlx = mlx;
 	if (game_init(so, map_path, width, height) != 0)
 	{
 		end_program(so, 1);
@@ -116,4 +117,3 @@ t_so_long1	*init_so_long1(const char *map_path, int width, int height)
 	// mlx_loop(game->mlx_ptr);
 	return (so);
 }
-

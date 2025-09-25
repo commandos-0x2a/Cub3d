@@ -6,13 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 07:53:04 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 07:29:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:04:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tile.h"
 
-int	render_tile(t_tile *tile, t_image *frame, int layer)
+int	render_tile(t_tile *tile, mlx_texture_t *frame, int layer)
 {
 	t_point	cur;
 	t_point	draw_loc;
@@ -28,13 +28,13 @@ int	render_tile(t_tile *tile, t_image *frame, int layer)
 		while (++cur.x < 64)
 		{
 			draw_loc = add_point(tile->spr.obj.draw_location, cur);
-			if (draw_loc.x < 0 || draw_loc.x >= frame->tex.width
-				|| draw_loc.y < 0 || draw_loc.y >= frame->tex.height)
+			if (draw_loc.x < 0 || draw_loc.x >= frame->width
+				|| draw_loc.y < 0 || draw_loc.y >= frame->height)
 				continue ;
 			index = (cur.y / (64 / MASK_SIZE)) * MASK_SIZE \
 					+ (cur.x / (64 / MASK_SIZE));
 			if (tile->mask[index] == '*')
-				frame->tex.pixels[draw_loc.y * frame->tex.width + draw_loc.x] \
+				frame->pixels[draw_loc.y * frame->width + draw_loc.x] \
 									|= 0xf0ff0000;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 17:21:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 09:30:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ typedef struct	s_game
 	int				rays_number;
 	int				width;
 	int				height;
-}	t_so_long1;
+}	t_game;
 
 void			render(void* param);
 void			player_control(void *param);
 unsigned long	time_now_ms(void);
-void			update_player_pos(t_so_long1 *game);
+void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 
 #endif

@@ -21,7 +21,7 @@ t_image_type	get_image_type(const char *path)
 	return (IT_NONE);
 }
 
-mlx_texture_t   *open_image(t_so_long1 *game, const char *path)
+mlx_texture_t   *open_image(t_game *game, const char *path)
 {
 	t_image_type	type;
 	mlx_texture_t	*tex;

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 23:05:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:03:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	load_object(void *obj)
 	ft_strlcpy((char *)obj, "object", NAME_SIZE);
 }
 
-void	render_object(void *_obj, t_image *frame, int layer)
+void	render_object(void *_obj, mlx_texture_t *frame, int layer)
 {
 	t_object	*obj;
-	int			(*render)(void *, t_image *, int);
+	int			(*render)(void *, mlx_texture_t *, int);
 
 	obj = (t_object *)_obj;
 	if (obj->next)
