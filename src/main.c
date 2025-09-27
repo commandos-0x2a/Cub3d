@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:12:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:30:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,10 @@ int main(int argc, char *argv[])
 	}
 	ft_bzero(&game, sizeof(game));
 	game.map = read_map(argv[1]);
-<<<<<<< HEAD
 	if (!game.map)
 		return (1);
 	if (!validate_map(game.map))
 		return (1);
-=======
-	// if (!game.map)
-	// 	return (1);
-	// if (!validate_map(game.map))
-	// 	return (1);
-	// print_map(game.map);
->>>>>>> 517120e (Fixed near-wall collision and added door texture | moving to adding its logic)
 
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
@@ -87,19 +79,11 @@ int main(int argc, char *argv[])
 	game.last_render = mlx_get_time();
 	init_player(&game);
 
-<<<<<<< HEAD
 	if (load_textures(&game) != 0)
 	{
 		printf("Error load textures\n");
 		return (1);
 	}
-=======
-	game.texture[WALL_NORTH] = mlx_load_png("./textures/test/NO.png");
-    game.texture[WALL_SOUTH] = mlx_load_png("./textures/test/SO.png");
-    game.texture[WALL_WEST]  = mlx_load_png("./textures/test/WE.png");
-    game.texture[WALL_EAST]  = mlx_load_png("./textures/test/EA.png");
-	game.texture[4] = mlx_load_png("textures/bigdoor2.png");
->>>>>>> 517120e (Fixed near-wall collision and added door texture | moving to adding its logic)
 
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop_hook(game.mlx, player_control, &game);

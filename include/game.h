@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:24:20 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:30:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 # include "utils.h"
 # include <MLX42/MLX42.h>
 # include <math.h>
-<<<<<<< HEAD
 # include "animate.h"
-=======
->>>>>>> 517120e (Fixed near-wall collision and added door texture | moving to adding its logic)
 
 enum	e_direction
 {
@@ -60,14 +57,12 @@ typedef struct	s_player
 
 typedef struct	s_game
 {
-<<<<<<< HEAD
 	t_map				*map;
 	mlx_t				*mlx;
 	mlx_image_t			*frame;
 	t_player			player;
 	t_debug				debug;
 	
-	mlx_texture_t		*texture[4];
 	int					nb_animate;
 	t_sprite_animate	*animates[16];
 
@@ -78,20 +73,8 @@ typedef struct	s_game
 
 	int					width;
 	int					height;
-=======
-	t_map			*map;
-	mlx_t			*mlx;
-	mlx_image_t		*frame;
-	t_player		player;
-	t_debug			debug;
-	mlx_texture_t	*texture[5];
-	double			last_render;
-	double			time_delta;
-	int				rays_number;
-	int				width;
-	int				height;
-	bool			interact;
->>>>>>> 517120e (Fixed near-wall collision and added door texture | moving to adding its logic)
+	mlx_texture_t		*texture[5];
+	bool				interact;
 }	t_game;
 
 void			render(void* param);

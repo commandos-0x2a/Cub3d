@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:24:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:31:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,6 @@ void wall_collision(t_game *game, t_player *player, t_vector *vec)
     float new_x = player->pos.x + vec->x;
     float new_y = player->pos.y + vec->y;
 
-<<<<<<< HEAD
-	new_x = player->pos.x + vec->x;
-	new_y = player->pos.y + vec->y;
-	old_x = player->pos.x;
-	old_y = player->pos.y;
-	
-	// printf("%+d, %+d --- ", new_x - old_x, new_y - old_y);
-	// printf("%.2f, %.2f --- ", vec->x, vec->y);
-	if (new_x != old_x && game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1')
-		vec->x = 0;
-	if (new_y != old_y && game->map->grid.raw[new_y * game->map->grid.w + old_x] == '1')
-		vec->y = 0;
-=======
     int tile_w = game->map->grid.w;
     int tile_h = game->map->grid.h;
     char *grid = game->map->grid.raw;
@@ -113,7 +100,6 @@ void wall_collision(t_game *game, t_player *player, t_vector *vec)
     // clamp
     vec->x = new_x - player->pos.x;
     vec->y = new_y - player->pos.y;
->>>>>>> 517120e (Fixed near-wall collision and added door texture | moving to adding its logic)
 }
 
 // simple player control
