@@ -2,7 +2,7 @@ NO ./bonfire.spr
 SO ./bonfire.spr
 WE ./bonfire.spr
 EA ./bonfire.spr
-DO textures/bigdoor2.png
+DO textures/closed_door.png
 
 F 255, 255, 255
 C 178, 190, 181
