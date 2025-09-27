@@ -16,12 +16,12 @@ t_image_type	get_image_type(const char *path)
 		return (IT_PNG);
 	else if (ft_strcmp(ext, ".xpm") == 0)
 		return (IT_XPM);
-	else if (ft_strcmp(ext, ".xpm") == 0)
+	else if (ft_strcmp(ext, ".spr") == 0)
 		return (IT_SRP);
 	return (IT_NONE);
 }
 
-mlx_texture_t   *open_image(t_game *game, const char *path)
+static mlx_texture_t   *load_texture(t_game *game, const char *path)
 {
 	t_image_type	type;
 	mlx_texture_t	*tex;
@@ -31,16 +31,40 @@ mlx_texture_t   *open_image(t_game *game, const char *path)
 	if (type == IT_PNG)
 		tex = mlx_load_png(path);
 	else if (type == IT_XPM)
-		tex = mlx_load_xpm42(path);
+		tex = (void *)mlx_load_xpm42(path);
 	else if (type == IT_SRP)
 	{
-		tex = load_sprite(path);
+		tex = (void *)load_animate_sprite(path, 0);
 		if (tex)
 		{
-			
+			game->animates[game->nb_animate] = (void *)tex;
+			game->nb_animate++;
 		}
 	}
 	else
 		tex = NULL;
 	return (tex);	
+}
+
+int	load_textures(t_game *game)
+{
+	t_map *map;
+
+	game->nb_animate = 0;
+	map = game->map;
+	if (!map->west[0] || !map->south[0] || !map->north[0] || !map->east[0])
+		return (-1);
+	game->texture[WALL_EAST] = load_texture(game, map->east);
+	if (!game->texture[WALL_EAST])
+		return (-1);
+	game->texture[WALL_WEST] = load_texture(game, map->east);
+	if (!game->texture[WALL_WEST])
+		return (-1);
+	game->texture[WALL_NORTH] = load_texture(game, map->east);
+	if (!game->texture[WALL_NORTH])
+		return (-1);
+	game->texture[WALL_SOUTH] = load_texture(game, map->east);
+	if (!game->texture[WALL_SOUTH])
+		return (-1);
+	return (0);
 }

@@ -109,6 +109,14 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 	return ray;
 }
 
+uint32_t    get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
+{
+    uint8_t *pixel = texture->pixels + (tex_y * texture->width + tex_x) * 4;
+	uint32_t color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+    
+    return (color);
+}
+
 void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 {
 	int		x, y;

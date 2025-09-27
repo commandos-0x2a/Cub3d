@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 09:30:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:14:59 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,23 @@ typedef struct	s_player
 
 typedef struct	s_game
 {
-	t_map			*map;
-	mlx_t			*mlx;
-	mlx_image_t		*frame;
-	t_player		player;
-	t_debug			debug;
-	mlx_texture_t	*texture[4];
+	t_map				*map;
+	mlx_t				*mlx;
+	mlx_image_t			*frame;
+	t_player			player;
+	t_debug				debug;
 	
-	int				nb_animate;
-	t_animate		*animates[16];
-	double			last_render;
-	double			time_delta;
-	int				rays_number;
-	int				width;
-	int				height;
+	mlx_texture_t		*texture[4];
+	int					nb_animate;
+	t_sprite_animate	*animates[16];
+
+	double				last_render;
+	double				time_delta;
+
+	int					rays_number;
+
+	int					width;
+	int					height;
 }	t_game;
 
 void			render(void* param);
@@ -77,5 +80,6 @@ void			player_control(void *param);
 unsigned long	time_now_ms(void);
 void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
+int				load_textures(t_game *game);
 
 #endif

@@ -3,8 +3,8 @@ NAME = cub3d
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror 
 CFLAGS += -g -fsanitize=address
-CPPFLAGS = -IMLX42/include -Ilibft/include -Iso_long/include -Idebug -Iinclude
-LDFLAGS =   -Lso_long -lsolong -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
+CPPFLAGS = -IMLX42/include -Ilibft/include -Idebug -Iinclude
+LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
 
 include debug/log.mk
 
@@ -25,10 +25,10 @@ SRC += 	src/main.c							\
 		src/controls.c						\
 		src/utils.c							\
 		src/player.c						\
-		src/image/image.c					\
 		src/image/sprite_reader.c			\
 		src/image/sprite.c					\
 		src/image/sprite_to_animate.c		\
+		src/image/read_image.c				\
 
 OBJ = $(SRC:%.c=build/%.o)
 

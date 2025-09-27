@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 10:35:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:12:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 #include <MLX42/MLX42.h>
 #include "game.h"
 #include "libft.h"
-
-void	*init_so_long1(void *mlx, const char *map_path, int width, int height);
-void	rander_solong1(void *params);
-void	solong1_key_hook(void *params);
 
 void resize_hook(int32_t width, int32_t height, void *param)
 {
@@ -34,7 +30,6 @@ void resize_hook(int32_t width, int32_t height, void *param)
 int main(int argc, char *argv[])
 {
 	t_game	game;
-	void	*so;
 
 	if (argc != 2)
 	{
@@ -69,12 +64,6 @@ int main(int argc, char *argv[])
 		puts(mlx_strerror(mlx_errno));
 		return(1);
 	}
-	so = init_so_long1(game.mlx, "so_long/maps/map.ber", WIDTH, HEIGHT);
-	if (!so)
-	{
-		printf("solong init error\n");
-		return (1);
-	}
 
 	game.last_render = mlx_get_time();
 
@@ -87,28 +76,17 @@ int main(int argc, char *argv[])
 	game.debug.sec = 0;
 	game.debug.fps = 0;
 
-    // game.texture[WALL_EAST]  = mlx_load_png("./textures/test/EA.png");
-	
-	game.animates[0] = (void *)load_animate_sprite("bonfire.spr", 0);
-	if (!game.animates[0])
+	if (load_textures(&game) != 0)
 	{
-		printf("read spr error\n");
+		printf("Error load textures\n");
 		return (1);
 	}
-	game.nb_animate = 1;
-	game.texture[WALL_EAST] = &game.animates[0]->tex;
-	game.texture[WALL_NORTH] = &game.animates[0]->tex;
-	game.texture[WALL_SOUTH] = &game.animates[0]->tex;
-	game.texture[WALL_WEST]  = so;
 
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop_hook(game.mlx, player_control, &game);
-	mlx_loop_hook(game.mlx, rander_solong1, so);
-	mlx_loop_hook(game.mlx, solong1_key_hook, so);
 	mlx_resize_hook(game.mlx, resize_hook, &game);
 
 	mlx_loop(game.mlx);
-	// free map
 	mlx_terminate(game.mlx);
 	return (0);
 }
