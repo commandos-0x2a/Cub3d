@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 17:39:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:40:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void wall_collision(t_game *game, t_player *player, t_vector *vec)
 }
 
 // handles interaction with doors (at least only doors rn)
-void	handle_interaction(t_game *game, t_player *player, t_vector *vec)
+void	handle_interaction(t_game *game, t_player *player)
 {
 	int		tile_w = game->map->grid.w;
 	int		tile_h = game->map->grid.h;
@@ -165,7 +165,7 @@ void	player_control(void *param)
 	vec.x *= player->speed * game->time_delta;
 	vec.y *= player->speed * game->time_delta;
 
-	handle_interaction(game, player, &vec);
+	handle_interaction(game, player);
 	wall_collision(game, player, &vec);
 
 	player->pos.x += vec.x;
