@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 22:30:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/14 23:08:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/16 09:26:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ const char *get_sprite_error_message(int error_code)
  */
 int test_sprite_file(const char *filename)
 {
-	t_sprite				*sprite;
+	t_sprite_header				*sprite;
 	t_sprite_frame_header	*frame_header;
 	unsigned char			*palette;
 	unsigned char			*pixel_data;

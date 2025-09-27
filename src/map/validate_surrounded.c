@@ -115,7 +115,7 @@ int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
 	return (1);
 }
 
-t_grid	*copy_grid(t_grid *grid)
+t_grid	*copy_grid2(t_grid *grid)
 {
 	t_grid	*new_grid;
 
@@ -149,7 +149,7 @@ int	valid_surrounded_wall(t_map *map)
 	t_grid	*tmp_grid;
 	char	*c;
 
-	tmp_grid = copy_grid(&map->grid);
+	tmp_grid = copy_grid2(&map->grid);
 	if (!tmp_grid)
 		return (0);
 	cur = add_player_position(tmp_grid);

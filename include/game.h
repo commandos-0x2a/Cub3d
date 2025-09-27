@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/15 14:17:22 by hassende         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:30:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "utils.h"
 # include <MLX42/MLX42.h>
 # include <math.h>
+# include "animate.h"
 
 enum	e_direction
 {
@@ -56,18 +57,24 @@ typedef struct	s_player
 
 typedef struct	s_game
 {
-	t_map			*map;
-	mlx_t			*mlx;
-	mlx_image_t		*frame;
-	t_player		player;
-	t_debug			debug;
-	mlx_texture_t	*texture[5];
-	double			last_render;
-	double			time_delta;
-	int				rays_number;
-	int				width;
-	int				height;
-	bool			interact;
+	t_map				*map;
+	mlx_t				*mlx;
+	mlx_image_t			*frame;
+	t_player			player;
+	t_debug				debug;
+	
+	int					nb_animate;
+	t_sprite_animate	*animates[16];
+
+	double				last_render;
+	double				time_delta;
+
+	int					rays_number;
+
+	int					width;
+	int					height;
+	mlx_texture_t		*texture[5];
+	bool				interact;
 }	t_game;
 
 void			render(void* param);
@@ -76,5 +83,6 @@ unsigned long	time_now_ms(void);
 void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);
+int				load_textures(t_game *game);
 
 #endif

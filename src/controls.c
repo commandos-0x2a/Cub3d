@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/15 18:58:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:31:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ void	player_control(void *param)
 	t_game		*game;
 	t_player	*player;
 	t_vector	vec;
-	int			new_x;
-	int			mapy;
 
 	game = param;
 	player = &game->player;
@@ -138,7 +136,7 @@ void	player_control(void *param)
 	// 	vec.x /= magnitude;
 	// 	vec.y /= magnitude;
 	// }
-	printf("%.2f, %.2f\n", vec.x, vec.y);
+	// printf("%.2f, %.2f\n", vec.x, vec.y);
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
 }
