@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 15:01:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:40:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct	s_game
 	mlx_image_t			*frame;
 	t_player			player;
 	t_debug				debug;
-
-	int					nb_animate;
+	
+	size_t				nb_animate;
 	t_sprite_animate	*animates[16];
 
 	double				last_render;

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 16:24:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 15:17:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,42 @@
 #include <unistd.h>
 #include "animate.h"
 
-// void	free_sprite(t_sprite *spr)
-// {
-// 	size_t	i;
+void	free_group_frames(t_group_frame *gframes)
+{
+	int	i;
 
-// 	if (spr->frames)
-// 	{
-// 		i = 0;
-// 		while (i < spr->nb_frame)
-// 		{
-// 			free(spr->frames[i].pixels);
-// 			spr->frames[i].pixels = NULL;
-// 			i++;
-// 		}
-// 		free(spr->frames);
-// 	}
-// 	free(spr);
-// }
+	i = 0;
+	while (i < gframes->nb_frame)
+	{
+		free(gframes[i].frames[i].pixels);
+		gframes[i].frames[i].pixels = NULL;
+		i++;
+	}
+	free(gframes->frames);
+	free(gframes->intervals);
+}
+
+void	free_sprite(t_sprite *spr)
+{
+	size_t	i;
+
+	if (spr->frames)
+	{
+		i = 0;
+		while (i < spr->nb_frame)
+		{
+			if (spr->frames[i].type == 2)
+				free_group_frames(&spr->frames[i].u.group);
+			else
+			{
+				free(spr->frames[i].u.single.pixels);
+				spr->frames[i].u.single.pixels = NULL;
+			}
+		}
+		free(spr->frames);
+	}
+	free(spr);
+}
 
 /**
  * @brief Get error message from error code

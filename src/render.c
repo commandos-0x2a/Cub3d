@@ -25,7 +25,7 @@ void	render_floor_ceiling(mlx_image_t *frame,
 
 void	animate(t_game *game, double now)
 {
-	int	i;
+	size_t		i;
 	t_animate	*anim;
 
 	i = 0;

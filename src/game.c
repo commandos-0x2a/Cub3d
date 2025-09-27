@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 14:49:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 15:18:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ void	free_textures(t_game *game)
 		game->texture[i]->pixels = NULL;
 		i++;
 	}
+	i = 0;
+	while (i < game->nb_animate)
+	{
+		if (game->animates[i]->spr)
+			free_sprite(game->animates[i]->spr);
+		i++;
+	}
+	
 }
 
 void	*end_game(t_game *game, int status)
