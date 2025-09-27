@@ -74,11 +74,21 @@ int	is_emtpy_line(char *line)
 	return (!*line);
 }
 
+
+void	copy_line(t_grid *grid, size_t i, char *line)
+{
+	char	*cur;
+
+	cur = &grid->raw[i * grid->w];
+	while (*line && *line != '\n')
+		*cur++ = *line++;
+	ft_memset(cur, ' ', &grid->raw[(i + 1) * grid->w] - cur);
+}
+
 int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 {
 	int		err;
 	size_t	w;
-	char	*cur;
 
 	err = 0;
 	if (!line)
@@ -95,10 +105,9 @@ int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 	err = read_grid_iter(fd, i + 1, grid, get_next_line(fd));
 	if (err != 0)
 		return (err);
-	cur = &grid->raw[i * grid->w];
-	while (*line && *line != '\n')
-		*cur++ = *line++;
-	ft_memset(cur, ' ', &grid->raw[(i + 1) * grid->w] - cur);
+	copy_line(grid, i, line);
+	if (i > 0)
+		free(line);
 	return (0);
 }
 
@@ -125,6 +134,7 @@ int	read_map_iter(int fd, int i, t_map *map)
 		;
 	else
 		err = read_grid_iter(fd, 0, &map->grid, line);
+	free(line);
 	if (err != 0)
 		return (err);
 	err = read_map_iter(fd, i + 1, map);

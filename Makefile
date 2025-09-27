@@ -1,10 +1,10 @@
 NAME = cub3d
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror 
-CFLAGS += -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror 
+CFLAGS += -g #-fsanitize=address
 CPPFLAGS = -IMLX42/include -Ilibft/include -Idebug -Iinclude
-LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
+LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild #-fsanitize=address
 
 include debug/log.mk
 
@@ -23,7 +23,8 @@ SRC += 	src/main.c							\
 		src/map/print_map.c					\
 		src/render.c 						\
 		src/controls.c						\
-		src/utils.c							\
+		src/game.c							\
+		src/hooks.c							\
 		src/player.c						\
 		src/image/sprite_reader.c			\
 		src/image/sprite.c					\

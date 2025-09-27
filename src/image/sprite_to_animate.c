@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:47:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 09:23:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 15:04:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "libft.h"
 
-static void sprite_next_frame(t_sprite_animate *anim, t_sprite *spr)
+static void sprite_next_frame(t_sprite_animate *anim)
 {
 	int index;
 	t_frame *frame;
@@ -45,7 +45,7 @@ static void sprite_next_frame(t_sprite_animate *anim, t_sprite *spr)
 t_sprite_animate *sprite_to_animate(t_sprite *spr, int group_idx)
 {
 	t_sprite_animate	*sanim;
-	int 				i;
+	size_t 				i;
 	int 				gi;
 
 	sanim = calloc(1, sizeof(t_sprite_animate));

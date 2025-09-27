@@ -6,7 +6,7 @@
 # define FOV_RAD (FOV * PI / 180.0)
 
 // Cast ray using DDA
-t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
+t_ray_hit cast_ray(t_game *game, double angle)
 {
 	t_ray_hit ray;
 	float px = game->player.pos.x;
@@ -67,8 +67,8 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 		}
 
 		// Check bounds
-		if (map_x < 0 || map_x >= game->map->grid.w ||
-			map_y < 0 || map_y >= game->map->grid.h)
+		if (map_x < 0 || map_x >= (int)game->map->grid.w ||
+			map_y < 0 || map_y >= (int)game->map->grid.h)
 			break; // out of bounds = hit (out of bounds)
 
 		// Check if wall
@@ -206,7 +206,7 @@ void draw_player_vision(t_game *game)
 	while (i < game->rays_number)
 	{
 		current_angle = sangle + i * angle_step;
-		ray_hit = cast_ray(game, current_angle, 0);
+		ray_hit = cast_ray(game, current_angle);
 		draw_wall(game, ray_hit, i);
 		i++;
 	}

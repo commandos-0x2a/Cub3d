@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:45:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:39:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	mouse_control(t_game *game, t_player *player)
 
 }
 
-void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
+void	player_walk(t_game *game, t_player *player, t_vector *vec)
 {
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W) || mlx_is_key_down(game->mlx, MLX_KEY_UP)) // front
 	{
@@ -59,8 +59,6 @@ void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
 	else
 		game->interact = false;
 }
-
-#define SAFE_MARGIN 0.35f  // set between 0.1 and 0.3
 
 void wall_collision(t_game *game, t_player *player, t_vector *vec)
 {
@@ -156,7 +154,7 @@ void	player_control(void *param)
 		mlx_close_window(game->mlx);
 
 	mouse_control(game, player);
-	keyboard_control(game, player, &vec);
+	player_walk(game, player, &vec);
 
 	// The math function uses radians (PI for 180d) instead of normal degress
 	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
@@ -170,13 +168,6 @@ void	player_control(void *param)
 	handle_interaction(game, player, &vec);
 	wall_collision(game, player, &vec);
 
-	// float magnitude = sqrtf(vec.x * vec.x + vec.y * vec.y);
-	// if (magnitude > 0)
-	// {
-	// 	vec.x /= magnitude;
-	// 	vec.y /= magnitude;
-	// }
-	// printf("%.2f, %.2f\n", vec.x, vec.y);
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
 }

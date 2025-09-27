@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 12:02:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 15:03:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static int	read_frame_pixels(int fd, uint32_t *pixels,
 {
 	uint8_t		*pixels_data;
 	int			res;
-	uint32_t	x;
-	uint32_t	y;
+	int			x;
+	int			y;
 
 	pixels_data = malloc(header->width * header->height);
 	if (!pixels_data)
@@ -118,7 +118,7 @@ int	read_single_frame(int fd, mlx_texture_t *frame, t_rgb *palette)
 
 int	read_group_frame(int fd, t_group_frame *group, t_rgb *palette)
 {
-	size_t			i;
+	int				i;
 	mlx_texture_t	*frame;
 	int				res;
 
@@ -151,7 +151,6 @@ static int	read_frames(int fd, t_sprite *spr)
 	size_t			i;
 	t_frame			*frame;
 	int				res;
-	t_dspriteframe	header;
 
 	spr->frames = calloc(spr->nb_frame, sizeof(*spr->frames));
 	if (!spr->frames)

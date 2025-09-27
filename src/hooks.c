@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 13:52:18 by yaltayeh         ###   ########.fr       */
+/*   Created: 2025/09/27 13:51:37 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/09/27 14:28:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include "map.h"
-#include <stdio.h>
-#include <MLX42/MLX42.h>
 #include "game.h"
-#include "libft.h"
 
-int main(int argc, char *argv[])
+void resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;
 
-	if (argc != 2)
-	{
-		printf("%s map_file\n", argv[0]);
-		return (1);
-	}
-	game = start_game(argv[1]);
-	if (!game)
-		return (1);
-	if (open_window(game) != 0)
-		return (1);	
+	game = param;
+	game->rays_number = width;
+	game->width = width;
+	game->height = height;
+}
 
-	game_hooks(game);
-
-	mlx_loop(game->mlx);
-	mlx_terminate(game->mlx);
-	return (0);
+void    game_hooks(t_game *game)
+{
+    mlx_loop_hook(game->mlx, render, game);
+	mlx_loop_hook(game->mlx, player_control, game);
+	mlx_resize_hook(game->mlx, resize_hook, game);
 }

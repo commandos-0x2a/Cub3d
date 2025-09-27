@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 09:02:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 15:01:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <math.h>
 # include <math.h>
 # include "animate.h"
+
+#define SAFE_MARGIN 0.35f  // Tune between 0.1 and 0.3
 
 enum	e_direction
 {
@@ -81,10 +83,16 @@ typedef struct	s_game
 
 void			render(void* param);
 void			player_control(void *param);
-unsigned long	time_now_ms(void);
+void			player_rotation(double xpos, double ypos, void *param);
+ 
 void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);
 int				load_textures(t_game *game);
+
+t_game		*start_game(const char *map_path);
+void		*end_game(t_game *game, int status);
+int32_t		open_window(t_game *game);
+void    	game_hooks(t_game *game);
 
 #endif
