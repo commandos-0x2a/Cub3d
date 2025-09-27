@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:48:20 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 08:56:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@
 #include <MLX42/MLX42.h>
 #include "game.h"
 #include "libft.h"
-
-void static init_player(t_game *game)
-{
-	game->player.speed = 4;
-	game->player.r = 0;
-	game->player.pos.x = 4;
-	game->player.pos.y = 4;
-	game->debug.sec = 0;
-	game->debug.fps = 0;
-}
 
 void static init_player(t_game *game)
 {
@@ -60,8 +50,8 @@ int main(int argc, char *argv[])
 	game.map = read_map(argv[1]);
 	if (!game.map)
 		return (1);
-	if (!validate_map(game.map))
-		return (1);
+	// if (!validate_map(game.map))
+	// 	return (1);
 
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
