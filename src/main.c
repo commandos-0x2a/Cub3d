@@ -71,7 +71,8 @@ int main(int argc, char *argv[])
     game.texture[WALL_SOUTH] = mlx_load_png("./textures/test/SO.png");
     game.texture[WALL_WEST]  = mlx_load_png("./textures/test/WE.png");
     game.texture[WALL_EAST]  = mlx_load_png("./textures/test/EA.png");
-	game.texture[4] = mlx_load_png("textures/bigdoor2.png");
+	game.texture[4] = mlx_load_png("textures/closed_door.png");
+	game.texture[5] = mlx_load_png("textures/open_door.png");
 
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop_hook(game.mlx, player_control, &game);

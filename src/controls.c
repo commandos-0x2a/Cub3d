@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <math.h>
 
+# define INTERACT_RANGE 1.5f
+
 void	mouse_control(t_game *game, t_player *player)
 {
 	int	x;
@@ -52,9 +54,13 @@ void	keyboard_control(t_game *game, t_player *player, t_vector *vec)
 		vec->x -= sinf(player->r);
 		vec->y += cosf(player->r);
 	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_F))
+		game->interact = true;
+	else
+		game->interact = false;
 }
 
-#define SAFE_MARGIN 0.35f  // Tune between 0.1 and 0.3
+#define SAFE_MARGIN 0.35f  // set between 0.1 and 0.3
 
 void wall_collision(t_game *game, t_player *player, t_vector *vec)
 {
@@ -102,6 +108,39 @@ void wall_collision(t_game *game, t_player *player, t_vector *vec)
     vec->y = new_y - player->pos.y;
 }
 
+// handles interaction with doors (at least only doors rn)
+void	handle_interaction(t_game *game, t_player *player, t_vector *vec)
+{
+	int		tile_w = game->map->grid.w;
+	int		tile_h = game->map->grid.h;
+	char	*grid = game->map->grid.raw;
+    float	interact_x = player->pos.x + cosf(player->r) * INTERACT_RANGE;
+    float	interact_y = player->pos.y + sinf(player->r) * INTERACT_RANGE;
+	int		interact_tile_x = (int)(interact_x);
+	int		interact_tile_y = (int)(interact_y);
+
+    if (!game->interact)
+        return;
+    if (interact_tile_x >= 0 && interact_tile_x < tile_w &&
+        interact_tile_y >= 0 && interact_tile_y < tile_h)
+    {
+        fprintf(stderr, "interacting at (%d, %d), char: %c\n",
+            interact_tile_x, interact_tile_y,
+            grid[interact_tile_y * tile_w + interact_tile_x]);
+
+        if (grid[interact_tile_y * tile_w + interact_tile_x] == 'D')
+        {
+            // Interact with door - toggle it
+            fprintf(stderr, "Door found! Opening/closing door at (%d, %d)\n",
+                interact_tile_x, interact_tile_y);
+
+            // Toggle door state (you might want to track door states separately)
+            grid[interact_tile_y * tile_w + interact_tile_x] = '0'; // Open door
+            // Or implement proper door state management
+        }
+    }
+}
+
 // simple player control
 void	player_control(void *param)
 {
@@ -130,6 +169,7 @@ void	player_control(void *param)
 	vec.x *= player->speed * game->time_delta;
 	vec.y *= player->speed * game->time_delta;
 
+	handle_interaction(game, player, &vec);
 	wall_collision(game, player, &vec);
 
 	// float magnitude = sqrtf(vec.x * vec.x + vec.y * vec.y);

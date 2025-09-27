@@ -61,7 +61,7 @@ typedef struct	s_game
 	mlx_image_t		*frame;
 	t_player		player;
 	t_debug			debug;
-	mlx_texture_t	*texture[5];
+	mlx_texture_t	*texture[6];
 	double			last_render;
 	double			time_delta;
 	int				rays_number;
