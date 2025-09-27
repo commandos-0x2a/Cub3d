@@ -52,19 +52,23 @@ int	load_textures(t_game *game)
 
 	game->nb_animate = 0;
 	map = game->map;
-	if (!map->west[0] || !map->south[0] || !map->north[0] || !map->east[0])
+	if (!map->west_path[0] || !map->south_path[0] || !map->north_path[0] 
+		|| !map->east_path[0] || !map->door_path[0])
 		return (-1);
-	game->texture[WALL_EAST] = load_texture(game, map->east);
+	game->texture[WALL_EAST] = load_texture(game, map->east_path);
 	if (!game->texture[WALL_EAST])
 		return (-1);
-	game->texture[WALL_WEST] = load_texture(game, map->east);
+	game->texture[WALL_WEST] = load_texture(game, map->west_path);
 	if (!game->texture[WALL_WEST])
 		return (-1);
-	game->texture[WALL_NORTH] = load_texture(game, map->east);
+	game->texture[WALL_NORTH] = load_texture(game, map->north_path);
 	if (!game->texture[WALL_NORTH])
 		return (-1);
-	game->texture[WALL_SOUTH] = load_texture(game, map->east);
+	game->texture[WALL_SOUTH] = load_texture(game, map->south_path);
 	if (!game->texture[WALL_SOUTH])
+		return (-1);
+	game->texture[WALL_DOOR] = load_texture(game, map->door_path);
+	if (!game->texture[WALL_DOOR])
 		return (-1);
 	return (0);
 }

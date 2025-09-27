@@ -31,7 +31,7 @@ void	animate(t_game *game, double now)
 	i = 0;
 	while (i < game->nb_animate)
 	{
-		anim = game->animates[i];
+		anim = (void *)game->animates[i];
 		if (anim->next_frame)
 		{
 			if (now - anim->last_animate > anim->frame_duration)

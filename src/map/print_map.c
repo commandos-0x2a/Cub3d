@@ -17,10 +17,11 @@ void	print_grid2(t_grid *grid)
 
 void print_map(t_map *map)
 {
-    printf("North Texture: %s\n", map->north);
-    printf("South Texture: %s\n", map->south);
-    printf("West Texture: %s\n", map->west);
-    printf("East Texture: %s\n", map->east);
+    printf("North Texture: %s\n", map->north_path);
+    printf("South Texture: %s\n", map->south_path);
+    printf("West Texture: %s\n", map->west_path);
+    printf("East Texture: %s\n", map->east_path);
+    printf("Door Texture: %s\n", map->door_path);
     printf("Floor Color: %6X\n", map->floor_color);
     printf("Ceiling Color: %6X\n", map->ceiling_color);
     printf("first_map_line: %zu\n", map->first_map_line);

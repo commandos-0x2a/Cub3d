@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/25 09:54:38 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 09:00:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ typedef struct	s_grid
 
 typedef struct	s_map
 {
-	char	north[PATH_MAX];
-	char	south[PATH_MAX];
-	char	west[PATH_MAX];
-	char	east[PATH_MAX];
+	char	north_path[PATH_MAX];
+	char	south_path[PATH_MAX];
+	char	west_path[PATH_MAX];
+	char	east_path[PATH_MAX];
+	char	door_path[PATH_MAX];
 
 	int		floor_color;
 	int		ceiling_color;

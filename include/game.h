@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:47:48 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 09:02:32 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ typedef enum	e_wall_side
 	WALL_EAST,
 	WALL_WEST,
 	WALL_NORTH,
-	WALL_SOUTH
+	WALL_SOUTH,
+	WALL_DOOR,
 }	t_wall_side;
 
 typedef struct	s_ray_hit
