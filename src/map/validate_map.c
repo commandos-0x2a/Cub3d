@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:04:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/09 21:27:11 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/09/27 09:08:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	print_valid_char_error(t_grid *grid)
 		while (x < grid->w)
 		{
 			c = grid->raw[y * grid->w + x];
-			if (ft_strchr("01 NSEW", c) == NULL)
+			if (ft_strchr("01 D NSEW", c) == NULL)
 				printf(RED"%c"RESET, c);
 			else
 				printf("%c", c);
@@ -94,7 +94,7 @@ int	valid_char(t_grid *grid)
 		while (x < grid->w)
 		{
 			c = grid->raw[y * grid->w + x];
-			if (ft_strchr("01 ", c))
+			if (ft_strchr("01 D", c))
 				;
 			else if (ft_strchr("NSEW", c))
 				nb_player++;

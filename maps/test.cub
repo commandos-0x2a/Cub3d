@@ -1,10 +1,11 @@
-NO ./textures/test/NO.png
-SO ./textures/test/SO.png
-WE ./textures/test/WE.png
-EA ./textures/test/EA.png
+NO ./bonfire.spr
+SO ./bonfire.spr
+WE ./bonfire.spr
+EA ./bonfire.spr
+DO textures/bigdoor2.png
 
-F 0,255,255
-C 0,255,0
+F 255, 255, 255
+C 178, 190, 181
 
 1111111111111111111111
 1000000000000000000001

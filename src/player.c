@@ -16,6 +16,7 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 
 	int map_x = (int)px;
 	int map_y = (int)py;
+	ray.is_vertical = 0;
 
 	// Avoid division by zero by making the another number comically large
 	float delta_dist_x = (dir_x == 0) ? 1e30 : fabs(1.0 / dir_x);
@@ -101,8 +102,6 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
 	if (ray.is_vertical == 5)
 		return ray;
 	// else determine wall type
-	if (side == 0)
-		ray.is_vertical = 0;
 	if (side == 0) // vertical wall
     {
         if (step_x == 1)
@@ -118,6 +117,14 @@ t_ray_hit cast_ray(t_game *game, double angle, int draw_ray)
             ray.is_vertical = WALL_NORTH;
     }
 	return ray;
+}
+
+uint32_t    get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
+{
+    uint8_t *pixel = texture->pixels + (tex_y * texture->width + tex_x) * 4;
+	uint32_t color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+    
+    return (color);
 }
 
 void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
@@ -204,7 +211,6 @@ void draw_player_vision(t_game *game)
 		i++;
 	}
 }
-
 
 void update_player_pos(t_game *game)
 {

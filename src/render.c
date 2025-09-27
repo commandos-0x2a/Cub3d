@@ -23,14 +23,37 @@ void	render_floor_ceiling(mlx_image_t *frame,
 	}
 }
 
+void	animate(t_game *game, double now)
+{
+	int	i;
+	t_animate	*anim;
+
+	i = 0;
+	while (i < game->nb_animate)
+	{
+		anim = (void *)game->animates[i];
+		if (anim->next_frame)
+		{
+			if (now - anim->last_animate > anim->frame_duration)
+			{
+				anim->next_frame(anim, anim->ctx);
+				anim->last_animate = now;
+			}
+		}
+		i++;
+	}
+}
+
 void render(void* param)
 {
 	t_game	*game;
 	double	now;
 
 	game = param;
+
 	// get delta time
 	now = mlx_get_time();
+	animate(game, now);
 	game->time_delta = now - game->last_render;
 	game->last_render = now;
 	game->debug.sec += game->time_delta;

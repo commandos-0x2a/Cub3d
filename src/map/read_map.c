@@ -12,13 +12,15 @@ int	copy_file_path(t_map *map, char *line, char *dir)
 	size_t	len;
 
 	if (ft_strcmp(dir, "NO ") == 0)
-		path = map->north;
+		path = map->north_path;
 	else if (ft_strcmp(dir, "SO ") == 0)
-		path = map->south;
+		path = map->south_path;
 	else if (ft_strcmp(dir, "WE ") == 0)
-		path = map->west;
+		path = map->west_path;
 	else if (ft_strcmp(dir, "EA ") == 0)
-		path = map->east;
+		path = map->east_path;
+	else if (ft_strcmp(dir, "DO ") == 0)
+		path = map->door_path;
 	else
 		return (-1);
 	if (*path)
@@ -112,7 +114,7 @@ int	read_map_iter(int fd, int i, t_map *map)
 	if (!line)
 		return (0);
 	ft_strlcpy(dir, line, sizeof(dir));
-	if (ft_strnstr("NO SO WE EA ", dir, -1))
+	if (ft_strnstr("NO SO WE EA DO ", dir, -1))
 		err = copy_file_path(map, line + 3, dir);
 	else if (ft_strncmp(line, "F ", 2) == 0)
 		err = copy_color(&map->floor_color, line + 2);
@@ -142,10 +144,11 @@ t_map	*init_map()
 	map = malloc(sizeof(*map));
 	if (!map)
 		return (NULL);
-	map->north[0] = 0;
-	map->south[0] = 0;
-	map->west[0] = 0;
-	map->east[0] = 0;
+	map->north_path[0] = 0;
+	map->south_path[0] = 0;
+	map->west_path[0] = 0;
+	map->east_path[0] = 0;
+	map->door_path[0] = 0;
 	map->floor_color = 0;
 	map->ceiling_color = 0;
 	map->grid.w = 0;
