@@ -122,16 +122,8 @@ void	handle_interaction(t_game *game, t_player *player)
     if (interact_tile_x >= 0 && interact_tile_x < tile_w &&
         interact_tile_y >= 0 && interact_tile_y < tile_h)
     {
-        fprintf(stderr, "interacting at (%d, %d), char: %c\n",
-            interact_tile_x, interact_tile_y,
-            grid[interact_tile_y * tile_w + interact_tile_x]);
-
         if (grid[interact_tile_y * tile_w + interact_tile_x] == 'D')
         {
-            // Interact with door - toggle it
-            fprintf(stderr, "Door found! Opening/closing door at (%d, %d)\n",
-                interact_tile_x, interact_tile_y);
-
             // Toggle door state (you might want to track door states separately)
             grid[interact_tile_y * tile_w + interact_tile_x] = '0'; // Open door
             // Or implement proper door state management

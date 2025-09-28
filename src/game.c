@@ -51,7 +51,7 @@ void	*end_game(t_game *game, int status)
 	exit(status);
 }
 
-void static	init_player(t_player *player, t_debug *debug)
+static void	init_player(t_player *player, t_debug *debug)
 {
 	player->speed = 4;
 	player->r = 0;

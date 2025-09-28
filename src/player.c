@@ -1,122 +1,136 @@
 #include "game.h"
-#include <stdio.h>
 
 #define PI 3.14159265359
-#define MAX(a,b) (a > b ? a : b)
+#define MAX(a, b) (a > b ? a : b)
 #define FOV_RAD (FOV * PI / 180.0)
 
-// Cast ray using DDA
-t_ray_hit cast_ray(t_game *game, double angle)
+static void	init_ray_params(t_game *game, double angle, t_ray_cast *rc)
 {
-	t_ray_hit ray;
-	float px = game->player.pos.x;
-	float py = game->player.pos.y;
-	float dir_x = cos(angle);
-	float dir_y = sin(angle);
+	rc->px = game->player.pos.x;
+	rc->py = game->player.pos.y;
+	rc->dir_x = cos(angle);
+	rc->dir_y = sin(angle);
+	rc->map_x = (int)rc->px;
+	rc->map_y = (int)rc->py;
+	if (rc->dir_x == 0)
+		rc->delta_dist_x = 1e30;
+	else
+		rc->delta_dist_x = fabs(1.0 / rc->dir_x);
+	if (rc->dir_y == 0)
+		rc->delta_dist_y = 1e30;
+	else
+		rc->delta_dist_y = fabs(1.0 / rc->dir_y);
+}
 
-	int map_x = (int)px;
-	int map_y = (int)py;
-	ray.is_vertical = 0;
-
-	// Avoid division by zero by making the another number comically large
-	float delta_dist_x = (dir_x == 0) ? 1e30 : fabs(1.0 / dir_x);
-	float delta_dist_y = (dir_y == 0) ? 1e30 : fabs(1.0 / dir_y);
-
-	float side_dist_x, side_dist_y;
-	float step_x, step_y;
-
-	// Initialize step and sideDist
-	if (dir_x < 0)
+static void	set_step_and_side_dist(t_ray_cast *rc)
+{
+	if (rc->dir_x < 0)
 	{
-		step_x = -1;
-		side_dist_x = (px - map_x) * delta_dist_x;
+		rc->step_x = -1;
+		rc->side_dist_x = (rc->px - rc->map_x) * rc->delta_dist_x;
 	}
 	else
 	{
-		step_x = 1;
-		side_dist_x = (map_x + 1.0 - px) * delta_dist_x;
+		rc->step_x = 1;
+		rc->side_dist_x = (rc->map_x + 1.0 - rc->px) * rc->delta_dist_x;
 	}
-
-	if (dir_y < 0)
+	if (rc->dir_y < 0)
 	{
-		step_y = -1;
-		side_dist_y = (py - map_y) * delta_dist_y;
+		rc->step_y = -1;
+		rc->side_dist_y = (rc->py - rc->map_y) * rc->delta_dist_y;
 	}
 	else
 	{
-		step_y = 1;
-		side_dist_y = (map_y + 1.0 - py) * delta_dist_y;
+		rc->step_y = 1;
+		rc->side_dist_y = (rc->map_y + 1.0 - rc->py) * rc->delta_dist_y;
 	}
+}
 
-	int hit = 0;
-	int side;
+static int	check_wall_hit(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
+{
+	if (rc->map_x < 0 || rc->map_x >= (int)game->map->grid.w
+		|| rc->map_y < 0 || rc->map_y >= (int)game->map->grid.h)
+		return (1);
+	if (game->map->grid.raw[rc->map_y * game->map->grid.w + rc->map_x] == '1')
+		return (1);
+	if (game->map->grid.raw[rc->map_y * game->map->grid.w + rc->map_x] == 'D')
+	{
+		ray->is_vertical = 5;
+		return (1);
+	}
+	return (0);
+}
 
+static void	perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
+{
+	int	hit;
+
+	hit = 0;
 	while (!hit)
 	{
-		if (side_dist_x < side_dist_y)
+		if (rc->side_dist_x < rc->side_dist_y)
 		{
-			side_dist_x += delta_dist_x;
-			map_x += (int)step_x;
-			side = 0; // vertical wall
+			rc->side_dist_x += rc->delta_dist_x;
+			rc->map_x += (int)rc->step_x;
+			rc->side = 0;
 		}
 		else
 		{
-			side_dist_y += delta_dist_y;
-			map_y += (int)step_y;
-			side = 1; // horizontal wall
+			rc->side_dist_y += rc->delta_dist_y;
+			rc->map_y += (int)rc->step_y;
+			rc->side = 1;
 		}
-
-		// Check bounds
-		if (map_x < 0 || map_x >= (int)game->map->grid.w ||
-			map_y < 0 || map_y >= (int)game->map->grid.h)
-			break; // out of bounds = hit (out of bounds)
-
-		// Check if wall
-		if (game->map->grid.raw[map_y * game->map->grid.w + map_x] == '1')
-			hit = 1;
-		if (game->map->grid.raw[map_y * game->map->grid.w + map_x] == 'D')
-		{
-			hit = 1;
-			ray.is_vertical = 5; // door
-		}
+		hit = check_wall_hit(game, rc, ray);
 	}
+}
 
-
-	// Calculate perpendicular wall distance (for fisheye correction)
-	if (side == 0)
-		ray.distance = (map_x - px + (1 - step_x) / 2) / dir_x;
+static void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
+{
+	if (rc->side == 0)
+		ray->distance = (rc->map_x - rc->px + (1 - rc->step_x) / 2) / rc->dir_x;
 	else
-		ray.distance = (map_y - py + (1 - step_y) / 2) / dir_y;
-
-	// Calculate wall texture coordinate
-	if (side == 0)
-		ray.wall_x = py + ray.distance * dir_y;
+		ray->distance = (rc->map_y - rc->py + (1 - rc->step_y) / 2) / rc->dir_y;
+	if (rc->side == 0)
+		ray->wall_x = rc->py + ray->distance * rc->dir_y;
 	else
-		ray.wall_x = px + ray.distance * dir_x;
+		ray->wall_x = rc->px + ray->distance * rc->dir_x;
+	ray->wall_x -= floor(ray->wall_x);
+	if (ray->wall_x < 0)
+		ray->wall_x += 1.0f;
+}
 
-	// Keep fractional part only for texture
-	ray.wall_x -= floor(ray.wall_x);
-	if (ray.wall_x < 0) ray.wall_x += 1.0f;
+static void	determine_wall_type(t_ray_cast *rc, t_ray_hit *ray)
+{
+	if (ray->is_vertical == 5)
+		return ;
+	if (rc->side == 0)
+	{
+		if (rc->step_x == 1)
+			ray->is_vertical = WALL_EAST;
+		else
+			ray->is_vertical = WALL_WEST;
+	}
+	else
+	{
+		if (rc->step_y == 1)
+			ray->is_vertical = WALL_SOUTH;
+		else
+			ray->is_vertical = WALL_NORTH;
+	}
+}
 
-	// if door, return now
-	if (ray.is_vertical == 5)
-		return ray;
-	// else determine wall type
-	if (side == 0) // vertical wall
-	{
-		if (step_x == 1)
-			ray.is_vertical = WALL_EAST;
-		else
-			ray.is_vertical = WALL_WEST;
-	}
-	else // horizontal wall
-	{
-		if (step_y == 1)
-			ray.is_vertical = WALL_SOUTH;
-		else
-			ray.is_vertical = WALL_NORTH;
-	}
-	return ray;
+t_ray_hit	cast_ray(t_game *game, double angle)
+{
+	t_ray_hit	ray;
+	t_ray_cast	rc;
+
+	ray.is_vertical = 0;
+	init_ray_params(game, angle, &rc);
+	set_step_and_side_dist(&rc);
+	perform_dda(game, &rc, &ray);
+	calculate_distance_and_texture(&rc, &ray);
+	determine_wall_type(&rc, &ray);
+	return (ray);
 }
 
 uint32_t	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
@@ -129,69 +143,87 @@ uint32_t	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
 	return (color);
 }
 
-void	draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
+static void	init_wall_params(t_game *game, t_ray_hit ray_hit, int ray,
+			t_wall_draw *wd)
 {
-	int		x, y;
-	int		wall_height;
-	int		wall_start;
-	int		wall_end;
-	int		x_start;
-	int		x_end;
 	double	angle_offset;
-	float	corrected_distance;
 
-	// Fish-eye correction
-	angle_offset = (ray - game->rays_number / 2) * (FOV * PI / 180.0 / game->rays_number);
-	corrected_distance = ray_hit.distance * cos(angle_offset);
+	angle_offset = (ray - game->rays_number / 2) * (FOV * PI / 180.0
+			/ game->rays_number);
+	wd->corrected_distance = ray_hit.distance * cos(angle_offset);
+	if (wd->corrected_distance <= 0.1f)
+		wd->corrected_distance = 0.1f;
+	wd->wall_height = (int)(game->height * TILE_SIZE / wd->corrected_distance);
+	if (wd->wall_height > game->height)
+		wd->wall_height = game->height;
+	if (wd->wall_height < 1)
+		wd->wall_height = 1;
+	wd->wall_start = (game->height - wd->wall_height) / 2;
+	wd->wall_end = wd->wall_start + wd->wall_height;
+	wd->x_start = (ray * game->width) / game->rays_number;
+	wd->x_end = ((ray + 1) * game->width) / game->rays_number;
+}
 
-	// Avoid division by zero
-	if (corrected_distance <= 0.1f)
-		corrected_distance = 0.1f;
+static mlx_texture_t	*get_wall_texture(t_game *game, t_ray_hit ray_hit)
+{
+	mlx_texture_t	*texture;
 
-	wall_height = (int)(game->height * TILE_SIZE / corrected_distance);
-	if (wall_height > game->height) wall_height = game->height;
-	if (wall_height < 1) wall_height = 1;
-
-	wall_start = (game->height - wall_height) / 2;
-	wall_end = wall_start + wall_height;
-
-	x_start = (ray * game->width) / game->rays_number;
-	x_end = ((ray + 1) * game->width) / game->rays_number;
-
-	mlx_texture_t *texture;
-	if (ray_hit.is_vertical == 5){
-		// Door texture
+	if (ray_hit.is_vertical == 5)
 		texture = game->texture[4];
-	}
 	else
 		texture = game->texture[ray_hit.is_vertical];
-	if (!texture || !texture->pixels)
-		return;
+	return (texture);
+}
 
-	for (x = x_start; x < x_end; x++)
+static void	draw_wall_column(t_game *game, t_wall_draw *wd,
+			mlx_texture_t *texture, t_ray_hit ray_hit)
+{
+	int	x;
+	int	y;
+	int	tex_x;
+	int	tex_y;
+
+	x = wd->x_start;
+	while (x < wd->x_end)
 	{
-		if (x < 0 || x >= game->width) continue;
-
-		for (y = wall_start; y < wall_end; y++)
+		if (x >= 0 && x < game->width)
 		{
-			if (y < 0 || y >= game->height) continue;
-
-			// Map texture X: get texture column coordinate
-			int tex_x = (int)(ray_hit.wall_x * texture->width);
-			if (tex_x < 0) tex_x = 0;
-			if (tex_x >= (int)texture->width) tex_x = texture->width - 1;
-
-			// Map texture Y: get texture row coordinate
-			float tex_y_float = (float)(y - wall_start) / (float)wall_height * texture->height;
-			int tex_y = (int)tex_y_float;
-			if (tex_y < 0) tex_y = 0;
-			if (tex_y >= (int)texture->height) tex_y = texture->height - 1;
-
-			// Get pixel color (RGBA)
-			uint32_t color = get_pixel_color(texture, tex_x, tex_y);
-			mlx_put_pixel(game->frame, x, y, color);
+			y = wd->wall_start;
+			while (y < wd->wall_end)
+			{
+				if (y >= 0 && y < game->height)
+				{
+					tex_x = (int)(ray_hit.wall_x * texture->width);
+					if (tex_x < 0)
+						tex_x = 0;
+					if (tex_x >= (int)texture->width)
+						tex_x = texture->width - 1;
+					tex_y = (int)((float)(y - wd->wall_start)
+							/ (float)wd->wall_height * texture->height);
+					if (tex_y < 0)
+						tex_y = 0;
+					if (tex_y >= (int)texture->height)
+						tex_y = texture->height - 1;
+					mlx_put_pixel(game->frame, x, y,
+						get_pixel_color(texture, tex_x, tex_y));
+				}
+				y++;
+			}
 		}
+		x++;
 	}
+}
+
+void	draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
+{
+	t_wall_draw		wd;
+	mlx_texture_t	*texture;
+
+	init_wall_params(game, ray_hit, ray, &wd);
+	texture = get_wall_texture(game, ray_hit);
+	if (!texture || !texture->pixels)
+		return ;
+	draw_wall_column(game, &wd, texture, ray_hit);
 }
 
 void	draw_player_vision(t_game *game)

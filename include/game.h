@@ -39,6 +39,33 @@ typedef enum	e_wall_side
 	WALL_DOOR,
 }	t_wall_side;
 
+typedef struct s_ray_cast
+{
+	float	px;
+	float	py;
+	float	dir_x;
+	float	dir_y;
+	int		map_x;
+	int		map_y;
+	float	delta_dist_x;
+	float	delta_dist_y;
+	float	side_dist_x;
+	float	side_dist_y;
+	float	step_x;
+	float	step_y;
+	int		side;
+}	t_ray_cast;
+
+typedef struct s_wall_draw
+{
+	float	corrected_distance;
+	int		wall_height;
+	int		wall_start;
+	int		wall_end;
+	int		x_start;
+	int		x_end;
+}	t_wall_draw;
+
 typedef struct	s_ray_hit
 {
 	float	distance;
@@ -66,7 +93,7 @@ typedef struct	s_game
 	mlx_image_t			*frame;
 	t_player			player;
 	t_debug				debug;
-	
+
 	size_t				nb_animate;
 	t_sprite_animate	*animates[16];
 
@@ -84,7 +111,7 @@ typedef struct	s_game
 void			render(void* param);
 void			player_control(void *param);
 void			player_rotation(double xpos, double ypos, void *param);
- 
+
 void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);

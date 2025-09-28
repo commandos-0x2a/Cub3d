@@ -55,7 +55,7 @@ t_stack	*full_all_empty_space(t_grid *grid)
 		x = -1;
 		while (x <= grid->w)
 		{
-			if (x < 0 || y < 0 || x >= grid->w || y >= grid->h
+			if (x >= grid->w || y >= grid->h
 				|| grid->raw[y * grid->w + x] == ' ')
 			{
 				if (add_to_stack(&stack, x, y) == NULL)
@@ -96,7 +96,7 @@ int	save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y)
 	char	c;
 
 	c = grid->raw[y * grid->w + x];
-	if (x < 0 || y < 0 || x >= (int)grid->w || y >= (int)grid->h 
+	if (x < 0 || y < 0 || x >= (int)grid->w || y >= (int)grid->h
 		|| c == '@' || c == '1')
 		return (0);
 	// printf("%s(%d, %d) = %c\n", __func__, x, y, grid->raw[y * grid->w + x]);
@@ -139,7 +139,7 @@ void	print_stack(t_stack *stack, t_grid *grid)
 		printf("(%d, %d) = %c\n", stack->x, stack->y, c);
 		stack = stack->next;
 	}
-	
+
 }
 
 int	valid_surrounded_wall(t_map *map)
