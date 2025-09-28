@@ -17,7 +17,7 @@
 #include "game.h"
 #include "libft.h"
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_game	*game;
 
@@ -30,10 +30,8 @@ int main(int argc, char *argv[])
 	if (!game)
 		return (1);
 	if (open_window(game) != 0)
-		return (1);	
-
+		return (1);
 	game_hooks(game);
-
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
 	return (0);

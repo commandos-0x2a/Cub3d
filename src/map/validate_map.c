@@ -29,7 +29,7 @@ int	print_valid_char_error(t_grid *grid)
 	size_t	y;
 	size_t	x;
 	char	c;
-	
+
 	y = 0;
 	while (y < grid->h)
 	{

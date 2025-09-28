@@ -33,7 +33,6 @@ void	free_textures(t_game *game)
 			free_sprite(game->animates[i]->spr);
 		i++;
 	}
-	
 }
 
 void	*end_game(t_game *game, int status)
@@ -52,7 +51,7 @@ void	*end_game(t_game *game, int status)
 	exit(status);
 }
 
-void static init_player(t_player *player, t_debug *debug)
+void static	init_player(t_player *player, t_debug *debug)
 {
 	player->speed = 4;
 	player->r = 0;

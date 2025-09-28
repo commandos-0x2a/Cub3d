@@ -12,7 +12,7 @@
 
 #include "game.h"
 
-void resize_hook(int32_t width, int32_t height, void *param)
+void	resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;
 
@@ -22,9 +22,9 @@ void resize_hook(int32_t width, int32_t height, void *param)
 	game->height = height;
 }
 
-void    game_hooks(t_game *game)
+void	game_hooks(t_game *game)
 {
-    mlx_loop_hook(game->mlx, render, game);
+	mlx_loop_hook(game->mlx, render, game);
 	mlx_loop_hook(game->mlx, player_control, game);
 	mlx_resize_hook(game->mlx, resize_hook, game);
 }

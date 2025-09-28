@@ -44,14 +44,12 @@ void	animate(t_game *game, double now)
 	}
 }
 
-void render(void* param)
+void	render(void *param)
 {
 	t_game	*game;
 	double	now;
 
 	game = param;
-
-	// get delta time
 	now = mlx_get_time();
 	animate(game, now);
 	game->time_delta = now - game->last_render;
@@ -66,6 +64,7 @@ void render(void* param)
 	mlx_delete_image(game->mlx, game->frame);
 	game->frame = mlx_new_image(game->mlx, game->width, game->height);
 	mlx_image_to_window(game->mlx, game->frame, 0, 0);
-	render_floor_ceiling(game->frame, game->map->floor_color, game->map->ceiling_color);
+	render_floor_ceiling(game->frame, game->map->floor_color,
+		game->map->ceiling_color);
 	update_player_pos(game);
 }

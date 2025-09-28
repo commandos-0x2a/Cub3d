@@ -1,9 +1,9 @@
 #include "game.h"
 #include <stdio.h>
 
-# define PI 3.14159265359
-# define MAX(a,b) (a > b ? a : b)
-# define FOV_RAD (FOV * PI / 180.0)
+#define PI 3.14159265359
+#define MAX(a,b) (a > b ? a : b)
+#define FOV_RAD (FOV * PI / 180.0)
 
 // Cast ray using DDA
 t_ray_hit cast_ray(t_game *game, double angle)
@@ -103,31 +103,33 @@ t_ray_hit cast_ray(t_game *game, double angle)
 		return ray;
 	// else determine wall type
 	if (side == 0) // vertical wall
-    {
-        if (step_x == 1)
-            ray.is_vertical = WALL_EAST;
-        else
-            ray.is_vertical = WALL_WEST;
-    }
-    else // horizontal wall
-    {
-        if (step_y == 1)
-            ray.is_vertical = WALL_SOUTH;
-        else
-            ray.is_vertical = WALL_NORTH;
-    }
+	{
+		if (step_x == 1)
+			ray.is_vertical = WALL_EAST;
+		else
+			ray.is_vertical = WALL_WEST;
+	}
+	else // horizontal wall
+	{
+		if (step_y == 1)
+			ray.is_vertical = WALL_SOUTH;
+		else
+			ray.is_vertical = WALL_NORTH;
+	}
 	return ray;
 }
 
-uint32_t    get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
+uint32_t	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
 {
-    uint8_t *pixel = texture->pixels + (tex_y * texture->width + tex_x) * 4;
-	uint32_t color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
-    
-    return (color);
+	uint8_t		*pixel;
+	uint32_t	color;
+
+	pixel = texture->pixels + (tex_y * texture->width + tex_x) * 4;
+	color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+	return (color);
 }
 
-void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
+void	draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 {
 	int		x, y;
 	int		wall_height;
@@ -186,13 +188,13 @@ void draw_wall(t_game *game, t_ray_hit ray_hit, int ray)
 			if (tex_y >= (int)texture->height) tex_y = texture->height - 1;
 
 			// Get pixel color (RGBA)
-            uint32_t color = get_pixel_color(texture, tex_x, tex_y);
+			uint32_t color = get_pixel_color(texture, tex_x, tex_y);
 			mlx_put_pixel(game->frame, x, y, color);
 		}
 	}
 }
 
-void draw_player_vision(t_game *game)
+void	draw_player_vision(t_game *game)
 {
 	int			i;
 	double		sangle;
@@ -212,7 +214,7 @@ void draw_player_vision(t_game *game)
 	}
 }
 
-void update_player_pos(t_game *game)
+void	update_player_pos(t_game *game)
 {
 	draw_player_vision(game);
 	update_minimap(game);
