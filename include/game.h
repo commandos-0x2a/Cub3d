@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:11:50 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:49:56 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,8 @@ typedef struct	s_game
 
 void			render(void* param);
 void			player_control(void *param);
-void			player_rotation(double xpos, double ypos, void *param);
+void			draw_player_vision(t_game *game);
 
-void			update_player_pos(t_game *game);
 uint32_t    	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);
 int				load_textures(t_game *game);

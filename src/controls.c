@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:10:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:15:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	player_control(void *param)
 		player->r += 0.054;
 	vec.x *= player->speed * game->time_delta;
 	vec.y *= player->speed * game->time_delta;
-	handle_interaction(game, player);
 	wall_collision(game, player, &vec);
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;

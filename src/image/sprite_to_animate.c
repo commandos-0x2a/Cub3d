@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:47:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:24:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:15:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_sprite_animate	*sprite_to_animate(t_sprite *spr, int group_idx)
 	}
 	sanim->anim.frame_index = 0;
 	sanim->anim.last_animate = 0;
-	sanim->anim.next_frame = sprite_next_frame;
+	sanim->anim.next_frame = (void *)sprite_next_frame;
 	sanim->anim.ctx = spr;
 	return (sanim);
 }

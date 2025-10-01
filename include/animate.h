@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:22:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/24 16:50:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:15:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_animate
 	double			frame_duration;
 	double			last_animate;
 	void			*ctx;
-	void			(*next_frame)();
+	void			(*next_frame)(void *, void *);
 }	t_animate;
 
 typedef struct	s_sprite_animate

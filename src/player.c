@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:11:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:48:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,10 +252,4 @@ void	draw_player_vision(t_game *game)
 		draw_wall(game, ray_hit, i);
 		i++;
 	}
-}
-
-void	update_player_pos(t_game *game)
-{
-	draw_player_vision(game);
-	update_minimap(game);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:20:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:20:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:48:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ void	render(void *param)
 		game->debug.sec = 0;
 		game->debug.fps = 0;
 	}
-	mlx_delete_image(game->mlx, game->frame);
-	game->frame = mlx_new_image(game->mlx, game->width, game->height);
-	mlx_image_to_window(game->mlx, game->frame, 0, 0);
 	render_floor_ceiling(game->frame, game->map->floor_color,
 		game->map->ceiling_color);
-	update_player_pos(game);
+	draw_player_vision(game);
+	update_minimap(game);
 }
