@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 15:17:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 20:25:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,6 @@ const char	*get_sprite_error_message(int error_code)
 		return ("Unknown error");
 }
 
-// void	sprite_next_frame(t_sprite *spr, uint32_t x, uint32_t y)
-// {
-// 	if ()
-// 	spr->animate.tex.pixels = spr->frames[0];
-// }
-
-
-
 t_sprite	*load_sprite(const char *filename)
 {
 	t_sprite	*spr;
@@ -112,11 +104,10 @@ t_sprite	*load_sprite(const char *filename)
 	close(fd);
 	if (res != SPRITE_SUCCESS)
 	{
-		// free_sprite(spr);
-		printf("Error read sprite (%s): %s\n", 
+		free_sprite(spr);
+		printf("Error read sprite (%s): %s\n",
 			filename, get_sprite_error_message(res));
 		return (NULL);
 	}
 	return (spr);
 }
-

@@ -1,8 +1,16 @@
-#include "game.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/10/01 21:11:42 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define PI 3.14159265359
-#define MAX(a, b) (a > b ? a : b)
-#define FOV_RAD (FOV * PI / 180.0)
+#include "game.h"
 
 static void	init_ray_params(t_game *game, double angle, t_ray_cast *rc)
 {

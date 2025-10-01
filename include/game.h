@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 17:40:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:11:50 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,17 @@
 # include <math.h>
 # include "animate.h"
 
-#define SAFE_MARGIN 0.35f  // Tune between 0.1 and 0.3
+# define SAFE_MARGIN 0.35f  // Tune between 0.1 and 0.3
+# define MINIMAP_SIZE game->width / 6
+# define VIEW_RADIUS 3
+# define TILE_COUNT (VIEW_RADIUS * 2 + 1)
+# define TILE_PX_SIZE (MINIMAP_SIZE / TILE_COUNT)
+# define MINIMAP_X 10
+# define MINIMAP_Y 10
+# define INTERACT_RANGE 1.5f
+# define PI 3.14159265359
+# define MAX(a, b) (a > b ? a : b)
+# define FOV_RAD (FOV * PI / 180.0)
 
 enum	e_direction
 {

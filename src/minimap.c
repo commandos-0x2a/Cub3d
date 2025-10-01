@@ -1,11 +1,16 @@
-#include "game.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 20:20:30 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/10/01 20:21:50 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define MINIMAP_SIZE game->width / 6
-#define VIEW_RADIUS 3
-#define TILE_COUNT (VIEW_RADIUS * 2 + 1)
-#define TILE_PX_SIZE (MINIMAP_SIZE / TILE_COUNT)
-#define MINIMAP_X 10
-#define MINIMAP_Y 10
+#include "game.h"
 
 static void	clear_minimap_background(t_game *game, int minimap_x, int minimap_y,
 		int minimap_size)
@@ -19,7 +24,8 @@ static void	clear_minimap_background(t_game *game, int minimap_x, int minimap_y,
 		j = 0;
 		while (j < minimap_size)
 		{
-			mlx_put_pixel(game->frame, minimap_x + i, minimap_y + j, 0x000000FF);
+			mlx_put_pixel(game->frame, minimap_x + i, minimap_y + j,
+				0x000000FF);
 			j++;
 		}
 		i++;

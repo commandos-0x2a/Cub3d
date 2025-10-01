@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_image.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 20:25:27 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/10/01 20:26:27 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 #include <stdio.h>
 #include "libft.h"
@@ -21,13 +33,12 @@ t_image_type	get_image_type(const char *path)
 	return (IT_NONE);
 }
 
-static mlx_texture_t   *load_texture(t_game *game, const char *path)
+static mlx_texture_t	*load_texture(t_game *game, const char *path)
 {
 	t_image_type	type;
 	mlx_texture_t	*tex;
 
 	type = get_image_type(path);
-
 	if (type == IT_PNG)
 		tex = mlx_load_png(path);
 	else if (type == IT_XPM)
@@ -43,16 +54,16 @@ static mlx_texture_t   *load_texture(t_game *game, const char *path)
 	}
 	else
 		tex = NULL;
-	return (tex);	
+	return (tex);
 }
 
 int	load_textures(t_game *game)
 {
-	t_map *map;
+	t_map	*map;
 
 	game->nb_animate = 0;
 	map = game->map;
-	if (!map->west_path[0] || !map->south_path[0] || !map->north_path[0] 
+	if (!map->west_path[0] || !map->south_path[0] || !map->north_path[0]
 		|| !map->east_path[0] || !map->door_path[0])
 		return (-1);
 	game->texture[WALL_EAST] = load_texture(game, map->east_path);

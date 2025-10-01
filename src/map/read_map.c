@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 20:38:43 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/10/01 20:41:35 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 #include "get_next_line.h"
 #include <strings.h>
@@ -47,17 +59,15 @@ int	copy_color(int *dst, char *line)
 		line++;
 	if (color < 0 || color > 255 || *line != ',')
 		return (-1);
-	line++; // skip comma
+	line++;
 	*dst |= color << 24;
-
 	color = ft_atoi_r(&line);
 	while (*line && isspace(*line))
 		line++;
 	if (color < 0 || color > 255 || *line != ',')
 		return (-2);
-	line++; // skip comma
+	line++;
 	*dst |= color << 16;
-
 	color = ft_atoi_r(&line);
 	while (*line && isspace(*line))
 		line++;
@@ -73,7 +83,6 @@ int	is_emtpy_line(char *line)
 		line++;
 	return (!*line);
 }
-
 
 void	copy_line(t_grid *grid, size_t i, char *line)
 {
@@ -130,7 +139,6 @@ int	read_map_iter(int fd, int i, t_map *map)
 	else if (ft_strncmp(line, "C ", 2) == 0)
 		err = copy_color(&map->ceiling_color, line + 2);
 	else if (is_emtpy_line(line))
-		// printf("%i: emtpy line\n", i + 1)
 		;
 	else
 		err = read_grid_iter(fd, 0, &map->grid, line);
@@ -141,13 +149,13 @@ int	read_map_iter(int fd, int i, t_map *map)
 	return (err);
 }
 
-void print_read_error(t_map *map, int err)
+void	print_read_error(t_map *map, int err)
 {
 	(void)map;
 	printf("error: %d\n", err);
 }
 
-t_map	*init_map()
+t_map	*init_map(void)
 {
 	t_map	*map;
 

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 09:00:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/01 20:42:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_map	*read_map(const char *map_file);
 int		validate_map(t_map *map);
 int		valid_file_name(const char *map_file);
 int		valid_surrounded_wall(t_map *map);
-void	print_grid2(t_grid *grid);
+void	print_grid(t_grid *grid);
 void	print_map(t_map *map);
 
 
