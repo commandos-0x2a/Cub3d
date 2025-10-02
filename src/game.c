@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 15:18:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/02 10:00:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	free_textures(t_game *game)
 	i = 0;
 	while (i < sizeof(game->texture) / sizeof(game->texture[0]))
 	{
-		if (game->texture[i]->pixels)
-			free(game->texture[i]->pixels);
-		game->texture[i]->pixels = NULL;
+		if (game->texture[i])
+		{
+			if (game->texture[i]->pixels)
+				free(game->texture[i]->pixels);
+			game->texture[i]->pixels = NULL;
+		}
 		i++;
 	}
 	i = 0;
@@ -37,6 +40,7 @@ void	free_textures(t_game *game)
 
 void	*end_game(t_game *game, int status)
 {
+	// ((int *)NULL)[0] = 0;
 	if (mlx_errno != 0)
 		puts(mlx_strerror(mlx_errno));
 	if (game->mlx)

@@ -2,9 +2,9 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror 
-CFLAGS += -g #-fsanitize=address
+CFLAGS += -g -fsanitize=address
 CPPFLAGS = -IMLX42/include -Ilibft/include -Iinclude
-LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild #-fsanitize=address
+LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)

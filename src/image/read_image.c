@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:25:27 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:26:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/02 10:18:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,27 @@ t_image_type	get_image_type(const char *path)
 	return (IT_NONE);
 }
 
+static void	print_ext_not_exist(const char *path)
+{
+	const char	*ext;
+
+	ext = ft_strrchr(path, '.');
+	if (!ext)
+		printf("Error: cannot load '%s' ext not exist.\n", path);
+	else
+		printf("Error: cannot load '%s' ext '%s' not exist.\n", path, ext);
+}
+
+void	print_tex_loade_error(const char *path, t_image_type type)
+{
+	if (type == IT_PNG)
+		puts(mlx_strerror(mlx_errno));
+	else if (type == IT_XPM)
+		;
+	else if (type == IT_SRP)
+		;
+}
+
 static mlx_texture_t	*load_texture(t_game *game, const char *path)
 {
 	t_image_type	type;
@@ -53,7 +74,12 @@ static mlx_texture_t	*load_texture(t_game *game, const char *path)
 		}
 	}
 	else
-		tex = NULL;
+	{
+		print_ext_not_exist(path);
+		return (NULL);
+	}
+	if (!tex)
+		print_tex_loade_error(path, type);
 	return (tex);
 }
 
