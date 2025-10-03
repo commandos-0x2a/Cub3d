@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:38:15 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/02 12:12:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <limits.h>
+#include <libft.h>
 
 static int	read_exact(int fd, void *buffer, size_t size)
 {
@@ -125,14 +126,14 @@ int	read_group_frame(int fd, t_group_frame *group, t_rgb *palette)
 	res = read_exact(fd, &group->nb_frame, sizeof(group->nb_frame));
 	if (res != SPRITE_SUCCESS)
 		return (res);
-	group->intervals = calloc(group->nb_frame, sizeof(*group->intervals));
+	group->intervals = ft_calloc(group->nb_frame, sizeof(*group->intervals));
 	if (!group->intervals)
 		return (SPRITE_ERROR_MEMORY);
 	res = read_exact(fd, group->intervals,
 			sizeof(*group->intervals) * group->nb_frame);
 	if (res != SPRITE_SUCCESS)
 		return (res);
-	group->frames = calloc(group->nb_frame, sizeof(*group->frames));
+	group->frames = ft_calloc(group->nb_frame, sizeof(*group->frames));
 	if (!group->frames)
 		return (SPRITE_ERROR_MEMORY);
 	i = 0;
@@ -153,7 +154,7 @@ static int	read_frames(int fd, t_sprite *spr)
 	t_frame			*frame;
 	int				res;
 
-	spr->frames = calloc(spr->nb_frame, sizeof(*spr->frames));
+	spr->frames = ft_calloc(spr->nb_frame, sizeof(*spr->frames));
 	if (!spr->frames)
 		return (SPRITE_ERROR_MEMORY);
 	i = 0;

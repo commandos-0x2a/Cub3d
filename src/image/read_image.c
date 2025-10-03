@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:25:27 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/02 10:18:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/02 12:53:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,8 @@ static void	print_ext_not_exist(const char *path)
 
 void	print_tex_loade_error(const char *path, t_image_type type)
 {
-	if (type == IT_PNG)
-		puts(mlx_strerror(mlx_errno));
-	else if (type == IT_XPM)
-		;
-	else if (type == IT_SRP)
-		;
+	if (type == IT_PNG || type == IT_XPM)
+		printf("Error: load image (%s): %s\n", path, mlx_strerror(mlx_errno));
 }
 
 static mlx_texture_t	*load_texture(t_game *game, const char *path)

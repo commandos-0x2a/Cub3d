@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 15:03:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/02 12:06:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 # include <stdint.h>
 # include <MLX42/MLX42.h>
 
-# define SPRITE_SUCCESS			0
-# define SPRITE_ERROR_NULL_PTR		-1
-# define SPRITE_ERROR_FILE_OPEN		-2
-# define SPRITE_ERROR_HEADER		-3
-# define SPRITE_ERROR_INVALID		-4
-# define SPRITE_ERROR_PALETTE		-5
-# define SPRITE_ERROR_FRAME		-6
-# define SPRITE_ERROR_DIMENSIONS	-7
-# define SPRITE_ERROR_MEMORY		-8
-# define SPRITE_ERROR_PIXEL_DATA	-9
+# define SPRITE_SUCCESS				0
+# define SPRITE_ERROR_NULL_PTR		1
+# define SPRITE_ERROR_FILE_OPEN		2
+# define SPRITE_ERROR_HEADER		3
+# define SPRITE_ERROR_INVALID		4
+# define SPRITE_ERROR_PALETTE		5
+# define SPRITE_ERROR_FRAME			6
+# define SPRITE_ERROR_DIMENSIONS	7
+# define SPRITE_ERROR_MEMORY		8
+# define SPRITE_ERROR_PIXEL_DATA	9
 
 typedef struct __attribute__((packed))	s_sprite_header
 {

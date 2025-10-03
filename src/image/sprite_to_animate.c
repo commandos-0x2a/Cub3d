@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:47:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:15:12 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/02 12:13:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_sprite_animate	*sprite_to_animate(t_sprite *spr, int group_idx)
 	size_t				i;
 	int					gi;
 
-	sanim = calloc(1, sizeof(t_sprite_animate));
+	sanim = ft_calloc(1, sizeof(t_sprite_animate));
 	if (!sanim)
 		return (NULL);
 	sanim->spr = spr;

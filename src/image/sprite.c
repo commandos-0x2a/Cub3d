@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:25:20 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/03 15:15:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "animate.h"
+#include <libft.h>
 
 void	free_group_frames(t_group_frame *gframes)
 {
@@ -58,30 +59,24 @@ void	free_sprite(t_sprite *spr)
  * @param error_code Error code returned by sprite functions
  * @return String description of the error
  */
-const char	*get_sprite_error_message(int error_code)
+const char	*get_sprite_error_message(size_t error_code)
 {
-	if (error_code == SPRITE_SUCCESS)
-		return ("Success");
-	else if (error_code == SPRITE_ERROR_NULL_PTR)
-		return ("Null pointer error");
-	else if (error_code == SPRITE_ERROR_FILE_OPEN)
-		return ("File open error");
-	else if (error_code == SPRITE_ERROR_HEADER)
-		return ("Header read error");
-	else if (error_code == SPRITE_ERROR_INVALID)
-		return ("Invalid sprite format");
-	else if (error_code == SPRITE_ERROR_PALETTE)
-		return ("Palette read error");
-	else if (error_code == SPRITE_ERROR_FRAME)
-		return ("Frame header read error");
-	else if (error_code == SPRITE_ERROR_DIMENSIONS)
-		return ("Invalid frame dimensions");
-	else if (error_code == SPRITE_ERROR_MEMORY)
-		return ("Memory allocation error");
-	else if (error_code == SPRITE_ERROR_PIXEL_DATA)
-		return ("Pixel data read error");
-	else
+	static const char *sprite_error_messages[] = {
+		"Success",
+		"Null pointer error",
+		"File open error",
+		"Header read error",
+		"Invalid sprite format",
+		"Palette read error",
+		"Frame header read error",
+		"Invalid frame dimensions",
+		"Memory allocation error",
+		"Pixel data read error"
+	};
+	if (error_code >= sizeof(sprite_error_messages)
+		/ sizeof(sprite_error_messages[0]))
 		return ("Unknown error");
+	return (sprite_error_messages[error_code]);
 }
 
 t_sprite	*load_sprite(const char *filename)
@@ -93,19 +88,18 @@ t_sprite	*load_sprite(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	spr = malloc(sizeof(t_sprite));
+	spr = ft_calloc(1, sizeof(t_sprite));
 	if (!spr)
 	{
 		close(fd);
 		return (NULL);
 	}
-	spr->frames = NULL;
 	res = load_sprite_file(fd, spr);
 	close(fd);
 	if (res != SPRITE_SUCCESS)
 	{
 		free_sprite(spr);
-		printf("Error read sprite (%s): %s\n",
+		printf("Error: load sprite (%s): %s\n",
 			filename, get_sprite_error_message(res));
 		return (NULL);
 	}
