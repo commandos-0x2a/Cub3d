@@ -1,0 +1,108 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player1.c                                           :+:      :+:    :+:  */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
+/*   Updated: 2025/10/01 21:48:24 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "game.h"
+
+void	init_ray_params(t_game *game, double angle, t_ray_cast *rc)
+{
+	rc->px = game->player.pos.x;
+	rc->py = game->player.pos.y;
+	rc->dir_x = cos(angle);
+	rc->dir_y = sin(angle);
+	rc->map_x = (int)rc->px;
+	rc->map_y = (int)rc->py;
+	if (rc->dir_x == 0)
+		rc->delta_dist_x = 1e30;
+	else
+		rc->delta_dist_x = fabs(1.0 / rc->dir_x);
+	if (rc->dir_y == 0)
+		rc->delta_dist_y = 1e30;
+	else
+		rc->delta_dist_y = fabs(1.0 / rc->dir_y);
+}
+
+void	set_step_and_side_dist(t_ray_cast *rc)
+{
+	if (rc->dir_x < 0)
+	{
+		rc->step_x = -1;
+		rc->side_dist_x = (rc->px - rc->map_x) * rc->delta_dist_x;
+	}
+	else
+	{
+		rc->step_x = 1;
+		rc->side_dist_x = (rc->map_x + 1.0 - rc->px) * rc->delta_dist_x;
+	}
+	if (rc->dir_y < 0)
+	{
+		rc->step_y = -1;
+		rc->side_dist_y = (rc->py - rc->map_y) * rc->delta_dist_y;
+	}
+	else
+	{
+		rc->step_y = 1;
+		rc->side_dist_y = (rc->map_y + 1.0 - rc->py) * rc->delta_dist_y;
+	}
+}
+
+static int	check_wall_hit(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
+{
+	if (rc->map_x < 0 || rc->map_x >= (int)game->map->grid.w
+		|| rc->map_y < 0 || rc->map_y >= (int)game->map->grid.h)
+		return (1);
+	if (game->map->grid.raw[rc->map_y * game->map->grid.w + rc->map_x] == '1')
+		return (1);
+	if (game->map->grid.raw[rc->map_y * game->map->grid.w + rc->map_x] == 'D')
+	{
+		ray->is_vertical = 5;
+		return (1);
+	}
+	return (0);
+}
+
+void	perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
+{
+	int	hit;
+
+	hit = 0;
+	while (!hit)
+	{
+		if (rc->side_dist_x < rc->side_dist_y)
+		{
+			rc->side_dist_x += rc->delta_dist_x;
+			rc->map_x += (int)rc->step_x;
+			rc->side = 0;
+		}
+		else
+		{
+			rc->side_dist_y += rc->delta_dist_y;
+			rc->map_y += (int)rc->step_y;
+			rc->side = 1;
+		}
+		hit = check_wall_hit(game, rc, ray);
+	}
+}
+
+void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
+{
+	if (rc->side == 0)
+		ray->distance = (rc->map_x - rc->px + (1 - rc->step_x) / 2) / rc->dir_x;
+	else
+		ray->distance = (rc->map_y - rc->py + (1 - rc->step_y) / 2) / rc->dir_y;
+	if (rc->side == 0)
+		ray->wall_x = rc->py + ray->distance * rc->dir_y;
+	else
+		ray->wall_x = rc->px + ray->distance * rc->dir_x;
+	ray->wall_x -= floor(ray->wall_x);
+	if (ray->wall_x < 0)
+		ray->wall_x += 1.0f;
+}

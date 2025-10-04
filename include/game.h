@@ -131,4 +131,14 @@ void		*end_game(t_game *game, int status);
 int32_t		open_window(t_game *game);
 void    	game_hooks(t_game *game);
 
+//player functions
+t_ray_hit	cast_ray(t_game *game, double angle);
+mlx_texture_t	*get_wall_texture(t_game *game, t_ray_hit ray_hit);
+void	init_wall_params(t_game *game, t_ray_hit ray_hit, int ray,
+			t_wall_draw *wd);
+void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray);
+void	perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray);
+void	set_step_and_side_dist(t_ray_cast *rc);
+void	init_ray_params(t_game *game, double angle, t_ray_cast *rc);
+
 #endif

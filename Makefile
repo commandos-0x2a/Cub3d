@@ -1,7 +1,7 @@
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g -fsanitize=address
 CPPFLAGS = -IMLX42/include -Ilibft/include -Iinclude
 LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
@@ -23,7 +23,9 @@ SRC += 	src/main.c							\
 		src/controls.c						\
 		src/game.c							\
 		src/hooks.c							\
-		src/player.c						\
+		src/player/player.c					\
+		src/player/player1.c				\
+		src/player/player2.c				\
 		src/image/sprite_reader.c			\
 		src/image/sprite.c					\
 		src/image/sprite_to_animate.c		\
