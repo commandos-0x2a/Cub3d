@@ -16,7 +16,7 @@
 # include <MLX42/MLX42.h>
 # include "sprite.h"
 
-typedef struct	s_animate
+typedef struct s_animate
 {
 	mlx_texture_t	tex;
 	int				frame_count;
@@ -27,7 +27,7 @@ typedef struct	s_animate
 	void			(*next_frame)(void *, void *);
 }	t_animate;
 
-typedef struct	s_sprite_animate
+typedef struct s_sprite_animate
 {
 	t_animate		anim;
 	t_sprite		*spr;

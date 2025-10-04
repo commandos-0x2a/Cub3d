@@ -30,32 +30,29 @@
 
 typedef unsigned long int	size_t;
 
-typedef struct	s_stack
+typedef struct s_stack
 {
 	int				x;
 	int				y;
 	struct s_stack	*next;
 }	t_stack;
 
-
-typedef struct	s_grid
+typedef struct s_grid
 {
 	size_t	w;
 	size_t	h;
 	char	*raw;
 }	t_grid;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	north_path[PATH_MAX];
 	char	south_path[PATH_MAX];
 	char	west_path[PATH_MAX];
 	char	east_path[PATH_MAX];
 	char	door_path[PATH_MAX];
-
 	int		floor_color;
 	int		ceiling_color;
-
 	size_t	first_map_line;
 	t_grid	grid;
 	int		player_x;
@@ -68,6 +65,5 @@ int		valid_file_name(const char *map_file);
 int		valid_surrounded_wall(t_map *map);
 void	print_grid(t_grid *grid);
 void	print_map(t_map *map);
-
 
 #endif

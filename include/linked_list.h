@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	LIST_H
-# define LIST_H
+#ifndef LINKED_LIST_H
+# define LINKED_LIST_H
 
 typedef struct s_list
 {

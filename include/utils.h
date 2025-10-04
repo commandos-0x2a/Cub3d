@@ -27,7 +27,7 @@
 
 # define TILE_SIZE 1
 
-typedef struct	s_vector
+typedef struct s_vector
 {
 	float	x;
 	float	y;

@@ -12,19 +12,20 @@
 
 #include "game.h"
 
-static void	clear_minimap_background(t_game *game, int minimap_x, int minimap_y,
-		int minimap_size)
+#define MINIMAP_SIZE_FIXED 150
+
+static void	clear_minimap_background(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < minimap_size)
+	while (i < MINIMAP_SIZE_FIXED)
 	{
 		j = 0;
-		while (j < minimap_size)
+		while (j < MINIMAP_SIZE_FIXED)
 		{
-			mlx_put_pixel(game->frame, minimap_x + i, minimap_y + j,
+			mlx_put_pixel(game->frame, MINIMAP_X + i, MINIMAP_Y + j,
 				0x000000FF);
 			j++;
 		}
@@ -32,107 +33,119 @@ static void	clear_minimap_background(t_game *game, int minimap_x, int minimap_y,
 	}
 }
 
-static void	draw_local_map_tiles(t_game *game, int minimap_x, int minimap_y,
-		int tile_px_size, int player_tile_x, int player_tile_y, int view_radius)
+static void	set_tile_properties(t_tileMap *tm, t_game *game, int tile_px_size)
 {
-	int	dx;
-	int	dy;
-	int	map_x;
-	int	map_y;
-	int	tile_start_x;
-	int	tile_start_y;
-	int	screen_x;
-	int	screen_y;
-	int	px;
-	int	py;
-	int	map_w;
-	int	map_h;
-	char	tile;
-	uint32_t color;
+	tm->tile = game->map->grid.raw[tm->map_y * tm->map_w + tm->map_x];
+	if (tm->tile == '1')
+		tm->color = 0xFFFFFFFF;
+	else
+		tm->color = 0x444444FF;
+	tm->tile_start_x = (tm->dx + VIEW_RADIUS) * tile_px_size;
+	tm->tile_start_y = (tm->dy + VIEW_RADIUS) * tile_px_size;
+}
 
-	map_w = game->map->grid.w;
-	map_h = game->map->grid.h;
-	dy = -view_radius;
-	while (dy <= view_radius)
+static int	is_valid_screen_pos(int screen_x, int screen_y, int tile_px_size)
+{
+	return (screen_x >= MINIMAP_X
+		&& screen_x < MINIMAP_X + (VIEW_RADIUS * 2 + 1) * tile_px_size
+		&& screen_y >= MINIMAP_Y
+		&& screen_y < MINIMAP_Y + (VIEW_RADIUS * 2 + 1) * tile_px_size);
+}
+
+static void	draw_single_tile_pixels(t_game *game, t_tileMap *tm,
+		int tile_px_size)
+{
+	tm->py = 0;
+	while (tm->py < tile_px_size)
 	{
-		dx = -view_radius;
-		while (dx <= view_radius)
+		tm->px = 0;
+		while (tm->px < tile_px_size)
 		{
-			map_x = player_tile_x + dx;
-			map_y = player_tile_y + dy;
-			if (map_x >= 0 && map_x < map_w && map_y >= 0 && map_y < map_h)
-			{
-				tile = game->map->grid.raw[map_y * map_w + map_x];
-				color = (tile == '1') ? 0xFFFFFFFF : 0x444444FF;
-				tile_start_x = (dx + view_radius) * tile_px_size;
-				tile_start_y = (dy + view_radius) * tile_px_size;
-				py = 0;
-				while (py < tile_px_size)
-				{
-					px = 0;
-					while (px < tile_px_size)
-					{
-						screen_x = minimap_x + tile_start_x + px;
-						screen_y = minimap_y + tile_start_y + py;
-						if (screen_x >= minimap_x
-							&& screen_x < minimap_x + (view_radius * 2 + 1)
-								* tile_px_size
-							&& screen_y >= minimap_y
-							&& screen_y < minimap_y + (view_radius * 2 + 1)
-								* tile_px_size)
-							mlx_put_pixel(game->frame, screen_x, screen_y, color);
-						px++;
-					}
-					py++;
-				}
-			}
-			dx++;
+			tm->screen_x = MINIMAP_X + tm->tile_start_x + tm->px;
+			tm->screen_y = MINIMAP_Y + tm->tile_start_y + tm->py;
+			if (is_valid_screen_pos(tm->screen_x, tm->screen_y, tile_px_size))
+				mlx_put_pixel(game->frame, tm->screen_x,
+					tm->screen_y, tm->color);
+			tm->px++;
 		}
-		dy++;
+		tm->py++;
 	}
 }
 
-static void	draw_player_on_minimap(t_game *game, int minimap_x, int minimap_y,
-		int center_px, int tile_px_size)
+static void	process_map_tile(t_game *game, t_tileMap *tm, int tile_px_size)
 {
-	int	dx;
-	int	dy;
-	int	psize;
-	int	screen_x;
-	int	screen_y;
-	int	step;
-	int	lx;
-	int	ly;
-
-	psize = 3;
-	dy = -psize / 2;
-	while (dy <= psize / 2)
+	if (tm->map_x >= 0 && tm->map_x < tm->map_w
+		&& tm->map_y >= 0 && tm->map_y < tm->map_h)
 	{
-		dx = -psize / 2;
-		while (dx <= psize / 2)
+		set_tile_properties(tm, game, tile_px_size);
+		draw_single_tile_pixels(game, tm, tile_px_size);
+	}
+}
+
+static void	draw_local_map_tiles(t_game *game, int player_tile_x,
+		int player_tile_y, int tile_px_size)
+{
+	t_tileMap	tm;
+
+	tm.map_w = game->map->grid.w;
+	tm.map_h = game->map->grid.h;
+	tm.dy = -VIEW_RADIUS;
+	while (tm.dy <= VIEW_RADIUS)
+	{
+		tm.dx = -VIEW_RADIUS;
+		while (tm.dx <= VIEW_RADIUS)
 		{
-			screen_x = minimap_x + center_px + dx;
-			screen_y = minimap_y + center_px + dy;
-			if (screen_x >= minimap_x && screen_x < minimap_x + 600
-				&& screen_y >= minimap_y && screen_y < minimap_y + 600)
-				mlx_put_pixel(game->frame, screen_x, screen_y, 0xFF0000FF);
-			dx++;
+			tm.map_x = player_tile_x + tm.dx;
+			tm.map_y = player_tile_y + tm.dy;
+			process_map_tile(game, &tm, tile_px_size);
+			tm.dx++;
 		}
-		dy++;
+		tm.dy++;
 	}
+}
 
-	step = 1;
-	while (step <= tile_px_size)
+void	draw_player_vision_on_minimap(t_game *game, int center_px,
+			t_DDAmap *dda, int tile_px_size)
+{
+	dda->step = 1;
+	while (dda->step <= tile_px_size)
 	{
-		lx = center_px + (int)(cos(game->player.r) * step);
-		ly = center_px + (int)(sin(game->player.r) * step);
-		screen_x = minimap_x + lx;
-		screen_y = minimap_y + ly;
-		if (screen_x >= minimap_x && screen_x < minimap_x + 600
-			&& screen_y >= minimap_y && screen_y < minimap_y + 600)
-			mlx_put_pixel(game->frame, screen_x, screen_y, 0x00FF00FF);
-		step++;
+		dda->lx = center_px + (int)(cos(game->player.r) * dda->step);
+		dda->ly = center_px + (int)(sin(game->player.r) * dda->step);
+		dda->screen_x = MINIMAP_X + dda->lx;
+		dda->screen_y = MINIMAP_Y + dda->ly;
+		if (dda->screen_x >= MINIMAP_X && dda->screen_x < MINIMAP_X + 600
+			&& dda->screen_y >= MINIMAP_Y && dda->screen_y < MINIMAP_Y + 600)
+			mlx_put_pixel(game->frame, dda->screen_x,
+				dda->screen_y, 0x00FF00FF);
+		dda->step++;
 	}
+}
+
+void	draw_player_square(t_game *game, int center_px, t_DDAmap *dda)
+{
+	dda->screen_x = MINIMAP_X + center_px + dda->dx;
+	dda->screen_y = MINIMAP_Y + center_px + dda->dy;
+	if (dda->screen_x >= MINIMAP_X && dda->screen_x < MINIMAP_X + 600
+		&& dda->screen_y >= MINIMAP_Y && dda->screen_y < MINIMAP_Y + 600)
+		mlx_put_pixel(game->frame, dda->screen_x, dda->screen_y, 0xFF0000FF);
+	dda->dx++;
+}
+
+static void	draw_player_on_minimap(t_game *game, int center_px,
+		int tile_px_size)
+{
+	t_DDAmap	dda;
+
+	dda.psize = 3;
+	dda.dy = -dda.psize / 2;
+	while (dda.dy++ <= dda.psize / 2)
+	{
+		dda.dx = -dda.psize / 2;
+		while (dda.dx++ <= dda.psize / 2)
+			draw_player_square(game, center_px, &dda);
+	}
+	draw_player_vision_on_minimap(game, center_px, &dda, tile_px_size);
 }
 
 void	update_minimap(t_game *game)
@@ -140,13 +153,13 @@ void	update_minimap(t_game *game)
 	int	player_tile_x;
 	int	player_tile_y;
 	int	center_px;
+	int	tile_px_size;
 
 	player_tile_x = (int)game->player.pos.x;
 	player_tile_y = (int)game->player.pos.y;
-	center_px = VIEW_RADIUS * TILE_PX_SIZE;
-
-	clear_minimap_background(game, MINIMAP_X, MINIMAP_Y, MINIMAP_SIZE);
-	draw_local_map_tiles(game, MINIMAP_X, MINIMAP_Y, TILE_PX_SIZE,
-		player_tile_x, player_tile_y, VIEW_RADIUS);
-	draw_player_on_minimap(game, MINIMAP_X, MINIMAP_Y, center_px, TILE_PX_SIZE);
+	tile_px_size = MINIMAP_SIZE_FIXED / (VIEW_RADIUS * 2 + 1);
+	center_px = VIEW_RADIUS * tile_px_size;
+	clear_minimap_background(game);
+	draw_local_map_tiles(game, player_tile_x, player_tile_y, tile_px_size);
+	draw_player_on_minimap(game, center_px, tile_px_size);
 }

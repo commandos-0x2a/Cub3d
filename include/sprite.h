@@ -28,7 +28,7 @@
 # define SPRITE_ERROR_MEMORY		8
 # define SPRITE_ERROR_PIXEL_DATA	9
 
-typedef struct __attribute__((packed))	s_sprite_header
+typedef struct __attribute__((packed)) s_sprite_header
 {
 	int		id;
 	int		version;
@@ -43,11 +43,11 @@ typedef struct __attribute__((packed))	s_sprite_header
 	short	palette_color_count;
 }	t_sprite_header;
 
-typedef struct __attribute__((packed))	s_dspriteframe
+typedef struct __attribute__((packed)) s_dspriteframe
 {
-	int		origin[2];  // X and Y offset from the origin (usually [0,0])
-	int		width;      // Width of the frame in pixels
-	int		height;     // Height of the frame in pixels
+	int	origin[2];	// X and Y offset from the origin (usually [0,0])
+	int	width;		// Width of the frame in pixels
+	int	height;		// Height of the frame in pixels
 }	t_dspriteframe;
 
 typedef struct s_group_frame
