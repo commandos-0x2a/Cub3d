@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:49:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:21:02 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,9 @@ void			player_control(void *param);
 void			draw_player_vision(t_game *game);
 uint32_t		get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);
+void			clear_minimap_background(t_game *game);
+void			draw_local_map_tiles(t_game *game, int player_tile_x,
+		int player_tile_y, int tile_px_size);
 int				load_textures(t_game *game);
 t_game			*start_game(const char *map_path);
 void			*end_game(t_game *game, int status);

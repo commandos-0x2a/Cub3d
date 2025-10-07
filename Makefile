@@ -30,7 +30,9 @@ SRC += 	src/main.c							\
 		src/image/sprite.c					\
 		src/image/sprite_to_animate.c		\
 		src/image/read_image.c				\
-		src/minimap.c
+		src/minimap/minimap.c				\
+		src/minimap/minimap_utils.c			\
+		src/minimap/minimap_utils2.c
 
 OBJ = $(SRC:%.c=build/%.o)
 
