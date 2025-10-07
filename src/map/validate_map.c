@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:04:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 09:08:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/04 11:02:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,41 @@ int	valid_char(t_grid *grid)
 	return (1);
 }
 
+void	get_player_init(t_grid *grid, 
+	int *player_x, 
+	int *player_y, 
+	char *player_r)
+{
+	size_t	x;
+	size_t	y;
+
+	y = 0;
+	while (y < grid->h)
+	{
+		x = 0;
+		while (x < grid->w)
+		{
+			if ((ft_strchr("WESN", grid->raw[y * grid->w + x])))
+			{
+				*player_x = x;
+				*player_y = y;
+				*player_r = grid->raw[y * grid->w + x];
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 int	validate_map(t_map *map)
 {
 	if (valid_char(&map->grid) == 0)
 		return (0);
 	if (valid_surrounded_wall(map) == 0)
 		return (0);
+	get_player_init(&map->grid, 
+		&map->player_x,
+		&map->player_y,
+		&map->player_r);
 	return (1);
 }

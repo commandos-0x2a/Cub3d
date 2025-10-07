@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:42:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:51:59 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_map
 	t_grid	grid;
 	int		player_x;
 	int		player_y;
+	char	player_r;	
 }	t_map;
 
 t_map	*read_map(const char *map_file);

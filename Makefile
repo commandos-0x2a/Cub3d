@@ -15,6 +15,7 @@ else ifeq ($(UNAME_S), Darwin)
 endif
 
 SRC += 	src/main.c							\
+		src/utils.c							\
 		src/map/read_map.c					\
 		src/map/validate_map.c				\
 		src/map/validate_surrounded.c		\

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/02 10:00:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/04 11:17:14 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,20 @@ void	*end_game(t_game *game, int status)
 	exit(status);
 }
 
-static void	init_player(t_player *player, t_debug *debug)
+static void	init_player(t_map *map, t_player *player, t_debug *debug)
 {
 	player->speed = 4;
 	player->r = 0;
-	player->pos.x = 4;
-	player->pos.y = 4;
+	player->pos.x = map->player_x + 0.5f;
+	player->pos.y = map->player_y + 0.5f;
+	if (map->player_r == 'E')
+		player->r = 0.f * PI / 180.f;
+	else if (map->player_r == 'W')
+		player->r = 90.f * PI / 180.f;
+	else if (map->player_r == 'N')
+		player->r = 180.f * PI / 180.f;
+	else if (map->player_r == 'S')
+		player->r = 270.f * PI / 180.f;
 	debug->sec = 0;
 	debug->fps = 0;
 }
@@ -79,11 +87,10 @@ t_game	*start_game(const char *map_path)
 		end_game(game, 1);
 	game->width = WIDTH;
 	game->height = HEIGHT;
-	game->rays_number = WIDTH;
 	game->interact = false;
 	if (load_textures(game) != 0)
 		end_game(game, 1);
-	init_player(&game->player, &game->debug);
+	init_player(game->map, &game->player, &game->debug);
 	return (game);
 }
 

@@ -1,7 +1,7 @@
-NO ./textures/bonfire.spr
-SO ./textures/bonfire.spr
-WE ./textures/bonfire.spr
-EA ./textures/bonfire.spr
+NO ./textures/test/NO.png
+SO ./textures/test/SO.png
+WE ./textures/test/WE.png
+EA ./textures/test/EA.png
 DO textures/closed_door.png
 
 F 255, 255, 255

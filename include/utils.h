@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:05:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/27 08:08:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:00:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,9 @@ typedef enum e_image_type
 	IT_XPM,
 	IT_SRP,
 }	t_image_type;
+
+int		iclamp(int value, int min, int max);
+float	fclamp(float value, float min, float max);
+double	clamp(double value, double min, double max);
 
 #endif

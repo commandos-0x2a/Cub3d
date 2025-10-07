@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:15:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/04 11:26:38 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	player_control(void *param)
 	vec = (t_vector){0, 0};
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
-	mouse_control(game, player);
+	// mouse_control(game, player);
 	player_walk(game, player, &vec);
 	if(game->interact)
 	{
@@ -122,9 +122,9 @@ void	player_control(void *param)
 		handle_door(game);
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
-		player->r -= 0.054;
+		player->r -= (180.f * game->time_delta * PI) / 180.f;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
-		player->r += 0.054;
+		player->r += (180.f * game->time_delta * PI) / 180.f;
 	vec.x *= player->speed * game->time_delta;
 	vec.y *= player->speed * game->time_delta;
 	wall_collision(game, player, &vec);

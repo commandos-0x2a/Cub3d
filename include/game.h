@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/07 14:21:02 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:37:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ typedef struct s_wall_draw
 typedef struct s_ray_hit
 {
 	float	distance;
-	float	wall_x;			// texture coordinate along wall
-	int		is_vertical;	// 1 if vertical wall, 0 if horizontal
+	float	wall_x;        // texture coordinate along wall
+	int		tex_i;
 }	t_ray_hit;
 
 typedef struct s_debug
@@ -139,8 +139,6 @@ typedef struct s_game
 	double				last_render;
 	double				time_delta;
 
-	int					rays_number;
-
 	int					width;
 	int					height;
 	mlx_texture_t		*texture[6];
@@ -150,7 +148,8 @@ typedef struct s_game
 int				max(int a, int b);
 void			render(void *param);
 void			player_control(void *param);
-void			draw_player_vision(t_game *game);
+void			render_schema(t_game *game);
+
 uint32_t		get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);
 void			clear_minimap_background(t_game *game);
