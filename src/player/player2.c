@@ -64,8 +64,8 @@ void	init_wall_params(t_game *game, t_ray_hit ray_hit, int ray,
 	angle_offset = (ray - game->rays_number / 2) * (FOV * PI / 180.0
 			/ game->rays_number);
 	wd->corrected_distance = ray_hit.distance * cos(angle_offset);
-	if (wd->corrected_distance <= 0.1f)
-		wd->corrected_distance = 0.1f;
+	if (wd->corrected_distance <= 1)
+		wd->corrected_distance = 1;
 	wd->wall_height = (int)(game->height * TILE_SIZE / wd->corrected_distance);
 	if (wd->wall_height > game->height)
 		wd->wall_height = game->height;
