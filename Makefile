@@ -24,16 +24,18 @@ SRC += 	src/main.c							\
 		src/controls.c						\
 		src/game.c							\
 		src/hooks.c							\
-		src/player/player.c					\
-		src/player/player1.c				\
-		src/player/player2.c				\
 		src/image/sprite_reader.c			\
 		src/image/sprite.c					\
 		src/image/sprite_to_animate.c		\
 		src/image/read_image.c				\
 		src/minimap/minimap.c				\
 		src/minimap/minimap_utils.c			\
-		src/minimap/minimap_utils2.c
+		src/minimap/minimap_utils2.c		\
+		src/player.c
+		
+# 		src/player/player.c					\
+# 		src/player/player1.c				\
+# 		src/player/player2.c				\
 
 OBJ = $(SRC:%.c=build/%.o)
 

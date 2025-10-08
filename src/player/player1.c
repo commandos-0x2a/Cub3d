@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player1.c                                           :+:      :+:    :+:  */
+/*   player1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:48:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:39:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	check_wall_hit(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
 		return (1);
 	if (game->map->grid.raw[rc->map_y * game->map->grid.w + rc->map_x] == 'D')
 	{
-		ray->is_vertical = 5;
+		ray->tex_i = 4;
 		return (1);
 	}
 	return (0);

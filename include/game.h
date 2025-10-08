@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/07 17:37:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/08 20:20:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,6 @@ typedef struct s_ray_cast
 	float	step_y;
 	int		side;
 }	t_ray_cast;
-
-typedef struct s_wall_draw
-{
-	float	corrected_distance;
-	int		wall_height;
-	int		wall_start;
-	int		wall_end;
-	int		x_start;
-	int		x_end;
-}	t_wall_draw;
 
 typedef struct s_ray_hit
 {

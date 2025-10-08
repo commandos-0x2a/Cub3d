@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 21:48:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:39:32 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ void	draw_player_vision(t_game *game)
 	t_ray_hit	ray_hit;
 
 	sangle = game->player.r - (FOV_RAD / 2.0);
-	angle_step = FOV_RAD / game->rays_number;
+	angle_step = FOV_RAD / game->width;
 	i = 0;
-	while (i < game->rays_number)
+	while (i < game->width)
 	{
 		current_angle = sangle + i * angle_step;
 		ray_hit = cast_ray(game, current_angle);
