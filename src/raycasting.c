@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player1.c                                          :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/07 17:39:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/08 20:31:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
-void	init_ray_params(t_game *game, double angle, t_ray_cast *rc)
+static void	init_ray_params(t_game *game, double angle, t_ray_cast *rc)
 {
 	rc->px = game->player.pos.x;
 	rc->py = game->player.pos.y;
@@ -30,7 +30,7 @@ void	init_ray_params(t_game *game, double angle, t_ray_cast *rc)
 		rc->delta_dist_y = fabs(1.0 / rc->dir_y);
 }
 
-void	set_step_and_side_dist(t_ray_cast *rc)
+static void	set_step_and_side_dist(t_ray_cast *rc)
 {
 	if (rc->dir_x < 0)
 	{
@@ -69,7 +69,7 @@ static int	check_wall_hit(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
 	return (0);
 }
 
-void	perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
+static void	perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
 {
 	int	hit;
 
@@ -92,7 +92,7 @@ void	perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray)
 	}
 }
 
-void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
+static void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
 {
 	if (rc->side == 0)
 		ray->distance = (rc->map_x - rc->px + (1 - rc->step_x) / 2) / rc->dir_x;
@@ -105,4 +105,35 @@ void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
 	ray->wall_x -= floor(ray->wall_x);
 	if (ray->wall_x < 0)
 		ray->wall_x += 1.0f;
+	
+	if (ray->tex_i == 4)
+		return ;
+	if (rc->side == 0)
+	{
+		if (rc->step_x == 1)
+			ray->tex_i = WALL_EAST;
+		else
+			ray->tex_i = WALL_WEST;
+	}
+	else
+	{
+		if (rc->step_y == 1)
+			ray->tex_i = WALL_SOUTH;
+		else
+			ray->tex_i = WALL_NORTH;
+	}
 }
+
+t_ray_hit	cast_ray(t_game *game, double angle)
+{
+	t_ray_hit	ray;
+	t_ray_cast	rc;
+
+	ray.tex_i = 0;
+	init_ray_params(game, angle, &rc);
+	set_step_and_side_dist(&rc);
+	perform_dda(game, &rc, &ray);
+	calculate_distance_and_texture(&rc, &ray);
+	return (ray);
+}
+

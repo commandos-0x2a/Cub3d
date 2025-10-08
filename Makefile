@@ -31,11 +31,8 @@ SRC += 	src/main.c							\
 		src/minimap/minimap.c				\
 		src/minimap/minimap_utils.c			\
 		src/minimap/minimap_utils2.c		\
-		src/player.c
-		
-# 		src/player/player.c					\
-# 		src/player/player1.c				\
-# 		src/player/player2.c				\
+		src/player.c						\
+		src/raycasting.c					\
 
 OBJ = $(SRC:%.c=build/%.o)
 

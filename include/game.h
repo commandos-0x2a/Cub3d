@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/08 20:20:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/08 20:27:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void			render(void *param);
 void			player_control(void *param);
 void			render_schema(t_game *game);
 
-uint32_t		get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y);
 void			update_minimap(t_game *game);
 void			clear_minimap_background(t_game *game);
 void			draw_local_map_tiles(t_game *game, int player_tile_x,
@@ -152,11 +151,9 @@ void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
 t_ray_hit		cast_ray(t_game *game, double angle);
 mlx_texture_t	*get_wall_texture(t_game *game, t_ray_hit ray_hit);
-void			init_wall_params(t_game *game, t_ray_hit ray_hit, int ray,
-					t_wall_draw *wd);
-void			calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray);
-void			perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray);
-void			set_step_and_side_dist(t_ray_cast *rc);
-void			init_ray_params(t_game *game, double angle, t_ray_cast *rc);
+// void			calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray);
+// void			perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray);
+// void			set_step_and_side_dist(t_ray_cast *rc);
+// void			init_ray_params(t_game *game, double angle, t_ray_cast *rc);
 
 #endif
