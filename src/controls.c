@@ -68,11 +68,39 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 	old_x = player->pos.x;
 	old_y = player->pos.y;
 	if (new_x != old_x
-		&& game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1')
+		&& (game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1'
+		|| game->map->grid.raw[old_y * game->map->grid.w + new_x] == 'D'))
 		vec->x = 0;
 	if (new_y != old_y
-		&& game->map->grid.raw[new_y * game->map->grid.w + old_x] == '1')
+		&& (game->map->grid.raw[new_y * game->map->grid.w + old_x] == '1'
+		|| game->map->grid.raw[new_y * game->map->grid.w + old_x] == 'D'))
 		vec->y = 0;
+}
+
+void	handle_door(t_game *game)
+{
+	int	door_x;
+	int	door_y;
+	int	w;
+	int	h;
+
+	w = game->map->grid.w;
+	h = game->map->grid.h;
+	door_x = (int)(game->player.pos.x + cosf(game->player.r) * 1.5);
+	door_y = (int)(game->player.pos.y + sinf(game->player.r) * 1.5);
+	if (door_x < 0 || door_x >= w
+		|| door_y < 0 || door_y >= h)
+		return ;
+	if (game->map->grid.raw[door_y * game->map->grid.w + door_x] == 'D')
+	{
+		game->map->grid.raw[door_y * w + door_x] = 'O';
+		return ;
+	}
+	if (game->map->grid.raw[door_y * w + door_x] == 'O')
+	{
+		game->map->grid.raw[door_y * w + door_x] = 'D';
+		return ;
+	}
 }
 
 void	player_control(void *param)
@@ -88,6 +116,11 @@ void	player_control(void *param)
 		mlx_close_window(game->mlx);
 	mouse_control(game, player);
 	player_walk(game, player, &vec);
+	if(game->interact)
+	{
+		game->interact = false;
+		handle_door(game);
+	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
 		player->r -= 0.054;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
