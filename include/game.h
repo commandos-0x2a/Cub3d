@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/08 20:27:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:57:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ typedef struct s_ray_cast
 	float	delta_dist_y;
 	float	side_dist_x;
 	float	side_dist_y;
-	float	step_x;
-	float	step_y;
+	int		step_x;
+	int		step_y;
 	int		side;
 }	t_ray_cast;
 

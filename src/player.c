@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/08 20:27:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/08 20:43:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static int	get_wall_height(t_game *game, float distance, int x)
 	angle_offset = (x - game->width / 2) * (FOV * PI / 180.0
 			/ game->width);
 	corrected_distance = distance * cos(angle_offset);
-	if (corrected_distance <= 0.1f)
-		corrected_distance = 0.1f;
+	corrected_distance = fclamp(corrected_distance, 1.f, MAXFLOAT);
 	wall_height = (int)(game->height * TILE_SIZE / corrected_distance);
 	return (iclamp(wall_height, 0, game->height));
 }
