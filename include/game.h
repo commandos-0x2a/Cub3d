@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/09 09:57:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:03:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef enum e_wall_side
 	WALL_DOOR,
 }	t_wall_side;
 
-typedef struct s_DDAmap
+typedef struct s_dda_map
 {
 	int	dx;
 	int	dy;
@@ -58,9 +58,9 @@ typedef struct s_DDAmap
 	int	step;
 	int	lx;
 	int	ly;
-}	t_DDAmap;
+}	t_dda_map;
 
-typedef struct s_tileMap
+typedef struct s_tile_map
 {
 	int			dx;
 	int			dy;
@@ -76,7 +76,7 @@ typedef struct s_tileMap
 	int			map_h;
 	char		tile;
 	uint32_t	color;
-}	t_tileMap;
+}	t_tile_map;
 
 typedef struct s_ray_cast
 {
@@ -135,7 +135,6 @@ typedef struct s_game
 	bool				interact;
 }	t_game;
 
-int				max(int a, int b);
 void			render(void *param);
 void			player_control(void *param);
 void			render_schema(t_game *game);
@@ -151,9 +150,5 @@ void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
 t_ray_hit		cast_ray(t_game *game, double angle);
 mlx_texture_t	*get_wall_texture(t_game *game, t_ray_hit ray_hit);
-// void			calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray);
-// void			perform_dda(t_game *game, t_ray_cast *rc, t_ray_hit *ray);
-// void			set_step_and_side_dist(t_ray_cast *rc);
-// void			init_ray_params(t_game *game, double angle, t_ray_cast *rc);
 
 #endif

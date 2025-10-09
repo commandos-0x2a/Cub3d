@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:19:05 by hassende          #+#    #+#             */
-/*   Updated: 2025/10/07 14:22:58 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:03:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define MINIMAP_SIZE_FIXED 150
 
-static void	set_tile_properties(t_tileMap *tm, t_game *game, int tile_px_size)
+static void	set_tile_properties(t_tile_map *tm, t_game *game, int tile_px_size)
 {
 	tm->tile = game->map->grid.raw[tm->map_y * tm->map_w + tm->map_x];
 	if (tm->tile == '1')
@@ -33,7 +33,7 @@ static int	is_valid_screen_pos(int screen_x, int screen_y, int tile_px_size)
 		&& screen_y < MINIMAP_Y + (VIEW_RADIUS * 2 + 1) * tile_px_size);
 }
 
-static void	draw_single_tile_pixels(t_game *game, t_tileMap *tm,
+static void	draw_single_tile_pixels(t_game *game, t_tile_map *tm,
 		int tile_px_size)
 {
 	tm->py = 0;
@@ -53,7 +53,7 @@ static void	draw_single_tile_pixels(t_game *game, t_tileMap *tm,
 	}
 }
 
-static void	process_map_tile(t_game *game, t_tileMap *tm, int tile_px_size)
+static void	process_map_tile(t_game *game, t_tile_map *tm, int tile_px_size)
 {
 	if (tm->map_x >= 0 && tm->map_x < tm->map_w
 		&& tm->map_y >= 0 && tm->map_y < tm->map_h)
@@ -66,7 +66,7 @@ static void	process_map_tile(t_game *game, t_tileMap *tm, int tile_px_size)
 void	draw_local_map_tiles(t_game *game, int player_tile_x,
 		int player_tile_y, int tile_px_size)
 {
-	t_tileMap	tm;
+	t_tile_map	tm;
 
 	tm.map_w = game->map->grid.w;
 	tm.map_h = game->map->grid.h;
