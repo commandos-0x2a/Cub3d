@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 14:20:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 07:22:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 08:12:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	transform_point(t_point *result, float mat[3][3], t_point point)
 	result->y = mat[1][0] * point.x + mat[1][1] * point.y + mat[1][2];
 }
 
-void	draw_circle(mlx_image_t *frame, t_minimap *minimap, int radius)
+void	draw_circle(mlx_image_t *frame, t_point p, int radius, uint32_t color)
 {
 	int	x;
 	int	y;
@@ -59,13 +59,32 @@ void	draw_circle(mlx_image_t *frame, t_minimap *minimap, int radius)
 		x = 0;
 		while (x < radius * 2)
 		{
-			draw_x = minimap->x + x - radius;
-			draw_y = minimap->y + y - radius;
-			
+			draw_x = p.x + x - radius;
+			draw_y = p.y + y - radius;
+			if (is_in_circle(x - radius, y - radius, radius)
+				&& is_in_box(draw_x, draw_y, frame->width, frame->height))
+				mlx_put_pixel(frame, draw_x, draw_y, color);
 			x++;
 		}
 		y++;
 	}
+}
+
+uint32_t	get_map_color(t_grid *grid, int map_x, int map_y)
+{
+	uint32_t	color;
+
+	// map_x = grid->w - map_x;
+	// map_y = grid->h - map_y;
+	if (!is_in_box(map_x, map_y, grid->w, grid->h))
+		color = 0x000000ff;
+	else if (grid->raw[map_y * grid->w + map_x] == '1')
+		color = 0x00ff00ff;
+	else if (grid->raw[map_y * grid->w + map_x] == '0')
+		color = 0x000000ff;
+	else
+		color = 0x111111ff;
+	return (color);
 }
 
 void	draw_minimap(mlx_image_t *frame, t_minimap *minimap,
@@ -86,21 +105,15 @@ void	draw_minimap(mlx_image_t *frame, t_minimap *minimap,
 			point.x = x - minimap->width / 2;
 			point.y = y - minimap->height / 2;
 			transform_point(&point, minimap->mat, point);	
-			if (is_out_box(point.x, point.y, frame->width, frame->height))
+			if (!is_in_box(point.x, point.y, frame->width, frame->height))
 				continue;
 			map_x = player->pos.x - (x - minimap->width / 2) / DRAWING_SCALE;
 			map_y = player->pos.y - (y - minimap->height / 2) / DRAWING_SCALE;
-			if (is_out_box(map_x, map_y, grid->w, grid->h))
-				color = 0x0 ;
-			else if (grid->raw[map_y * grid->w + map_x] == '1')
-				color = 0xff00ff;
-			else if (grid->raw[map_y * grid->w + map_x] == '0')
-				color = 0x0000ff;
-			else
-				color = 0x0000ff;			
+			color = get_map_color(grid, map_x, map_y);			
 			mlx_put_pixel(frame, point.x, point.y, color);
 		}
 	}
+	draw_circle(frame, (t_point){minimap->x, minimap->y}, 16, 0xff0000ff);
 }
 
 void	minimap_render(t_game *game)

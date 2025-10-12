@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:44:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 07:22:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 08:02:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y)
 	char	c;
 
 	c = grid->raw[y * grid->w + x];
-	if (is_out_box(x, y, grid->w, grid->h) || c == '@' || c == '1')
+	if (!is_in_box(x, y, grid->w, grid->h) || c == '@' || c == '1')
 		return (0);
 	if (add_to_stack(stack, x, y) == NULL)
 		return (-1);
@@ -172,7 +172,7 @@ int	valid_surrounded_wall(t_map *map)
 	{
 		next = cur->next;
 		c = &tmp_grid->raw[cur->y * tmp_grid->w + cur->x];
-		if (*c == ' ' || is_out_box(cur->x, cur->y, tmp_grid->w, tmp_grid->h))
+		if (*c == ' ' || !is_in_box(cur->x, cur->y, tmp_grid->w, tmp_grid->h))
 		{
 			free(tmp_grid->raw);
 			free(tmp_grid);

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 07:22:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 08:02:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	handle_door(t_game *game)
 	h = game->map->grid.h;
 	door_x = (int)(game->player.pos.x + cosf(game->player.r) * 1.5);
 	door_y = (int)(game->player.pos.y + sinf(game->player.r) * 1.5);
-	if (is_out_box(door_x, door_y, w, h))
+	if (!is_in_box(door_x, door_y, w, h))
 		return ;
 	if (game->map->grid.raw[door_y * game->map->grid.w + door_x] == 'D')
 	{

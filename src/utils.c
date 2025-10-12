@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 09:54:04 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 07:22:15 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 08:10:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ double	clamp(double value, double min, double max)
 
 int	is_in_box(int x, int y, int w, int h)
 {
-	return (x > 0 && x < w && y > 0 && y < h);
+	return (x >= 0 && x < w && y >= 0 && y < h);
 }
 
-int	is_out_box(int x, int y, int w, int h)
+int	is_in_circle(float x, float y, float radius)
 {
-	return (x < 0 || x >= w || y < 0 || y >= h);
+	return (powf(x, 2) + powf(y, 2) <= radius * 2);
 }
-
