@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 03:13:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 03:16:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 07:14:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 
 # define DRAWING_SCALE 50
 
-typedef struct s_point
-{
-	float	x;
-	float	y;
-}	t_point;
+# include "utils.h"
 
 typedef struct	s_minimap
 {
