@@ -31,6 +31,7 @@ SRC += 	src/main.c							\
 		src/minimap/minimap.c				\
 		src/minimap/minimap_utils.c			\
 		src/minimap/minimap_utils2.c		\
+		src/minimap2/minimap_render.c		\
 		src/player.c						\
 		src/raycasting.c					\
 

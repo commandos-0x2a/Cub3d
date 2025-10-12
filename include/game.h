@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/09 10:03:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 03:14:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,5 @@ void			*end_game(t_game *game, int status);
 void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
 t_ray_hit		cast_ray(t_game *game, double angle);
-mlx_texture_t	*get_wall_texture(t_game *game, t_ray_hit ray_hit);
 
 #endif

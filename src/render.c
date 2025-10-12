@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:20:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/04 10:21:16 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:51:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	animate(t_game *game, double now)
 	}
 }
 
+void	minimap_render(t_game *game);
+
 void	render(void *param)
 {
 	t_game	*game;
@@ -76,5 +78,5 @@ void	render(void *param)
 	render_floor_ceiling(game->frame, game->map->floor_color,
 		game->map->ceiling_color);
 	render_schema(game);
-	update_minimap(game);
+	minimap_render(game);
 }
