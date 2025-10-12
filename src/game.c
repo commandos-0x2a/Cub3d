@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/09 12:18:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:17:21 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ void	free_textures(t_game *game)
 	}
 }
 
-void	*end_game(t_game *game, int status)
+void	end_game(t_game *game, int status)
 {
 	if (mlx_errno != 0)
 		puts(mlx_strerror(mlx_errno));
 	if (game->mlx)
 	{
-		mlx_close_window(game->mlx);
-		mlx_destroy_cursor(game->mlx);
+		// mlx_destroy_cursor(game->mlx);
+		// mlx_close_window(game->mlx);
+		mlx_terminate(game->mlx);
 		game->mlx = NULL;
 	}
 	free_textures(game);
@@ -57,6 +58,7 @@ void	*end_game(t_game *game, int status)
 		free(game->map);
 	}
 	free(game);
+	(void)status;
 	exit(status);
 }
 
