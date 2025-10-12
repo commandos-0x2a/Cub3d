@@ -50,9 +50,9 @@ void	player_walk(t_game *game, t_player *player, t_vector *vec)
 		vec->y += cosf(player->r);
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		player->r -= 0.001;
+		player->r -= (180.f * game->time_delta * PI) / 180.f;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		player->r += 0.001;
+		player->r += (180.f * game->time_delta * PI) / 180.f;
 	game->interact = mlx_is_key_down(game->mlx, MLX_KEY_F);
 }
 
@@ -112,7 +112,7 @@ void	player_control(void *param)
 	player = &game->player;
 	vec = (t_vector){0, 0};
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx);
+		end_game(game, 0);
 	// mouse_control(game, player);
 	player_walk(game, player, &vec);
 	if(game->interact)
