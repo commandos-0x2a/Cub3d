@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/09 09:58:04 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 08:02:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static void	set_step_and_side_dist(t_ray_cast *rc)
 
 static int	check_wall_hit(t_map *map, t_ray_cast *rc, t_ray_hit *ray)
 {
-	if (rc->map_x < 0 || rc->map_x >= (int)map->grid.w
-		|| rc->map_y < 0 || rc->map_y >= (int)map->grid.h)
+	if (!is_in_box(rc->map_x, rc->map_y, map->grid.w, map->grid.h))
 		return (1);
 	if (map->grid.raw[rc->map_y * map->grid.w + rc->map_x] == '1')
 		return (1);
