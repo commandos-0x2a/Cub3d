@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/04 11:17:14 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:18:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	free_textures(t_game *game)
 		{
 			if (game->texture[i]->pixels)
 				free(game->texture[i]->pixels);
-			game->texture[i]->pixels = NULL;
+			free(game->texture[i]);
+			printf("%s: %zu\n", __func__, i);
+			game->texture[i] = NULL;
 		}
 		i++;
 	}
@@ -40,11 +42,14 @@ void	free_textures(t_game *game)
 
 void	*end_game(t_game *game, int status)
 {
-	// ((int *)NULL)[0] = 0;
 	if (mlx_errno != 0)
 		puts(mlx_strerror(mlx_errno));
 	if (game->mlx)
+	{
 		mlx_close_window(game->mlx);
+		mlx_destroy_cursor(game->mlx);
+		game->mlx = NULL;
+	}
 	free_textures(game);
 	if (game->map)
 	{
