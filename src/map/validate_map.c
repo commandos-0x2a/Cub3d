@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:04:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/04 11:02:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:09:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	valid_file_name(const char *map_file)
 	return (ft_strcmp(ext, ".cub") == 0);
 }
 
-int	print_valid_char_error(t_grid *grid)
+static int	print_valid_char_error(t_grid *grid)
 {
 	size_t	y;
 	size_t	x;
@@ -50,7 +50,7 @@ int	print_valid_char_error(t_grid *grid)
 	return (0);
 }
 
-int	print_nb_player_error(t_grid *grid, int nb_player)
+static int	print_nb_player_error(t_grid *grid, int nb_player)
 {
 	size_t	y;
 	size_t	x;
@@ -79,7 +79,7 @@ int	print_nb_player_error(t_grid *grid, int nb_player)
 	return (0);
 }
 
-int	valid_char(t_grid *grid)
+static int	valid_char(t_grid *grid)
 {
 	size_t	y;
 	size_t	x;
@@ -112,7 +112,7 @@ int	valid_char(t_grid *grid)
 	return (1);
 }
 
-void	get_player_init(t_grid *grid, 
+static void	get_player_init(t_grid *grid, 
 	int *player_x, 
 	int *player_y, 
 	char *player_r)

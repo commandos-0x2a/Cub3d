@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 03:13:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 07:14:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:11:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ typedef struct	s_minimap
 	int			height;
 	float		mat[3][3];
 }	t_minimap;
+
+void	minimap(t_game *game);
 
 #endif

@@ -6,12 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:20:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/09 14:51:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:11:46 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 #include <stdio.h>
+#include "minimap.h"
 
 void	render_floor_ceiling(mlx_image_t *frame,
 	uint32_t floor_color, uint32_t ceiling_color)
@@ -56,8 +57,6 @@ void	animate(t_game *game, double now)
 	}
 }
 
-void	minimap_render(t_game *game);
-
 void	render(void *param)
 {
 	t_game	*game;
@@ -78,5 +77,5 @@ void	render(void *param)
 	render_floor_ceiling(game->frame, game->map->floor_color,
 		game->map->ceiling_color);
 	render_schema(game);
-	minimap_render(game);
+	minimap(game);
 }

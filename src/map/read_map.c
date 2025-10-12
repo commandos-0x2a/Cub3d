@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:38:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/01 20:41:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:08:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-int	copy_file_path(t_map *map, char *line, char *dir)
+static int	copy_file_path(t_map *map, char *line, char *dir)
 {
 	char	*path;
 	size_t	len;
@@ -49,7 +49,7 @@ int	copy_file_path(t_map *map, char *line, char *dir)
 	return (0);
 }
 
-int	copy_color(int *dst, char *line)
+static int	copy_color(int *dst, char *line)
 {
 	int	color;
 
@@ -77,14 +77,14 @@ int	copy_color(int *dst, char *line)
 	return (0);
 }
 
-int	is_emtpy_line(char *line)
+static int	is_emtpy_line(char *line)
 {
 	while (*line && isspace(*line))
 		line++;
 	return (!*line);
 }
 
-void	copy_line(t_grid *grid, size_t i, char *line)
+static void	copy_line(t_grid *grid, size_t i, char *line)
 {
 	char	*cur;
 
@@ -94,7 +94,7 @@ void	copy_line(t_grid *grid, size_t i, char *line)
 	ft_memset(cur, ' ', &grid->raw[(i + 1) * grid->w] - cur);
 }
 
-int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
+static int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 {
 	int		err;
 	size_t	w;
@@ -120,7 +120,7 @@ int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 	return (0);
 }
 
-int	read_map_iter(int fd, int i, t_map *map)
+static int	read_map_iter(int fd, int i, t_map *map)
 {
 	char	*line;
 	int		err;
@@ -149,13 +149,13 @@ int	read_map_iter(int fd, int i, t_map *map)
 	return (err);
 }
 
-void	print_read_error(t_map *map, int err)
+static void	print_read_error(t_map *map, int err)
 {
 	(void)map;
 	printf("error: %d\n", err);
 }
 
-t_map	*init_map(void)
+static t_map	*init_map(void)
 {
 	t_map	*map;
 

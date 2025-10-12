@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:05:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 08:03:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:03:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 // Resolution
 # define WIDTH 1080
 # define HEIGHT 720
-
-// PIXEL SCALE: is for scaling the entites movement. because moving 1px to right in a 1080 720 res is slow as hell
-# define PIXEL_SCALE 1
 
 // ( int ) FOV: determines the range the player will see from.
 // higher number results in more angle, less number will result in less angle to see through
@@ -45,7 +42,6 @@ typedef enum e_image_type
 
 int		iclamp(int value, int min, int max);
 float	fclamp(float value, float min, float max);
-double	clamp(double value, double min, double max);
 int		is_in_box(int x, int y, int w, int h);
 int		is_in_circle(float x, float y, float radius);
 

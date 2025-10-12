@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 09:54:04 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 08:10:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:03:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ int	iclamp(int value, int min, int max)
 float	fclamp(float value, float min, float max)
 {
 	return fmaxf(min, fminf(value, max));
-}
-
-double	clamp(double value, double min, double max)
-{
-	return fmax(min, fmin(value, max));
 }
 
 int	is_in_box(int x, int y, int w, int h)

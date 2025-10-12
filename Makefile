@@ -19,7 +19,6 @@ SRC += 	src/main.c							\
 		src/map/read_map.c					\
 		src/map/validate_map.c				\
 		src/map/validate_surrounded.c		\
-		src/map/print_map.c					\
 		src/render.c 						\
 		src/controls.c						\
 		src/game.c							\
@@ -29,9 +28,6 @@ SRC += 	src/main.c							\
 		src/image/sprite_to_animate.c		\
 		src/image/read_image.c				\
 		src/minimap/minimap.c				\
-		src/minimap/minimap_utils.c			\
-		src/minimap/minimap_utils2.c		\
-		src/minimap2/minimap_render.c		\
 		src/player.c						\
 		src/raycasting.c					\
 

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:44:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 08:02:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:10:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-t_stack	*init_stack(int x, int y)
+static t_stack	*init_stack(int x, int y)
 {
 	t_stack	*new;
 
@@ -27,7 +27,7 @@ t_stack	*init_stack(int x, int y)
 	return (new);
 }
 
-void	clear_stack(t_stack **stack)
+static void	clear_stack(t_stack **stack)
 {
 	t_stack	*cur;
 	t_stack	*tmp;
@@ -42,7 +42,7 @@ void	clear_stack(t_stack **stack)
 	*stack = NULL;
 }
 
-t_stack	*add_to_stack(t_stack **stack, int x, int y)
+static t_stack	*add_to_stack(t_stack **stack, int x, int y)
 {
 	t_stack	*new;
 
@@ -54,36 +54,7 @@ t_stack	*add_to_stack(t_stack **stack, int x, int y)
 	return (new);
 }
 
-t_stack	*full_all_empty_space(t_grid *grid)
-{
-	size_t	y;
-	size_t	x;
-	t_stack	*stack;
-
-	y = -1;
-	stack = NULL;
-	while (y <= grid->h)
-	{
-		x = -1;
-		while (x <= grid->w)
-		{
-			if (x >= grid->w || y >= grid->h
-				|| grid->raw[y * grid->w + x] == ' ')
-			{
-				if (add_to_stack(&stack, x, y) == NULL)
-				{
-					clear_stack(&stack);
-					return (NULL);
-				}
-			}
-			x++;
-		}
-		y++;
-	}
-	return (stack);
-}
-
-t_stack	*add_player_position(t_grid *grid)
+static t_stack	*add_player_position(t_grid *grid)
 {
 	size_t	y;
 	size_t	x;
@@ -103,7 +74,7 @@ t_stack	*add_player_position(t_grid *grid)
 	return (NULL);
 }
 
-int	save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y)
+static int	save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y)
 {
 	char	c;
 
@@ -115,7 +86,7 @@ int	save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y)
 	return (1);
 }
 
-int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
+static int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
 {
 	if (save_add_to_stack(stack, grid, x, y - 1) < 0
 		|| save_add_to_stack(stack, grid, x + 1, y) < 0
@@ -125,7 +96,7 @@ int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
 	return (1);
 }
 
-t_grid	*copy_grid2(t_grid *grid)
+static t_grid	*copy_grid2(t_grid *grid)
 {
 	t_grid	*new_grid;
 
@@ -137,18 +108,6 @@ t_grid	*copy_grid2(t_grid *grid)
 	new_grid->raw = malloc(grid->w * grid->h);
 	ft_memcpy(new_grid->raw, grid->raw, grid->w * grid->h);
 	return (new_grid);
-}
-
-void	print_stack(t_stack *stack, t_grid *grid)
-{
-	char	c;
-
-	while (stack)
-	{
-		c = grid->raw[stack->y * grid->w + stack->x];
-		printf("(%d, %d) = %c\n", stack->x, stack->y, c);
-		stack = stack->next;
-	}
 }
 
 int	valid_surrounded_wall(t_map *map)

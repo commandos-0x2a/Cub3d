@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 03:14:10 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:02:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,6 @@ typedef enum e_wall_side
 	WALL_SOUTH,
 	WALL_DOOR,
 }	t_wall_side;
-
-typedef struct s_dda_map
-{
-	int	dx;
-	int	dy;
-	int	psize;
-	int	screen_x;
-	int	screen_y;
-	int	step;
-	int	lx;
-	int	ly;
-}	t_dda_map;
-
-typedef struct s_tile_map
-{
-	int			dx;
-	int			dy;
-	int			map_x;
-	int			map_y;
-	int			tile_start_x;
-	int			tile_start_y;
-	int			screen_x;
-	int			screen_y;
-	int			px;
-	int			py;
-	int			map_w;
-	int			map_h;
-	char		tile;
-	uint32_t	color;
-}	t_tile_map;
 
 typedef struct s_ray_cast
 {
@@ -139,10 +109,6 @@ void			render(void *param);
 void			player_control(void *param);
 void			render_schema(t_game *game);
 
-void			update_minimap(t_game *game);
-void			clear_minimap_background(t_game *game);
-void			draw_local_map_tiles(t_game *game, int player_tile_x,
-		int player_tile_y, int tile_px_size);
 int				load_textures(t_game *game);
 t_game			*start_game(const char *map_path);
 void			*end_game(t_game *game, int status);
