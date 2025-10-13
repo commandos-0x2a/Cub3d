@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 03:13:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:11:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:49:56 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # include "utils.h"
 
-typedef struct	s_minimap
+typedef struct s_minimap
 {
 	float		x;
 	float		y;
@@ -26,7 +26,7 @@ typedef struct	s_minimap
 
 	float		ref_x;
 	float		ref_y;
-	
+
 	int			width;
 	int			height;
 	float		mat[3][3];

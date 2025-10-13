@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 13:52:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:47:57 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_ray_cast
 typedef struct s_ray_hit
 {
 	float	distance;
-	float	wall_x;        // texture coordinate along wall
+	float	wall_x;
 	int		tex_i;
 }	t_ray_hit;
 
@@ -119,6 +119,5 @@ void			end_game(t_game *game, int status);
 void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
 t_ray_hit		cast_ray(t_game *game, double angle, int x);
-
 
 #endif

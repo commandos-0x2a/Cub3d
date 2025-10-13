@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:05:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:51:35 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	MAP_H
+#ifndef MAP_H
 # define MAP_H
 
 # ifdef __linux__
@@ -18,17 +18,16 @@
 # else
 #  include <limits.h>
 # endif
-#include "utils.h"
+# include "utils.h"
+# include <stdlib.h>
 
-#define RED		"\x1b[31m"
-#define GREEN	"\x1b[32m"
-#define YELLOW	"\x1b[33m"
-#define BLUE	"\x1b[34m"
-#define MAGENTA	"\x1b[35m"
-#define CYAN	"\x1b[36m"
-#define RESET	"\x1b[0m"
-
-typedef unsigned long int	size_t;
+# define RED		"\x1b[31m"
+# define GREEN	"\x1b[32m"
+# define YELLOW	"\x1b[33m"
+# define BLUE	"\x1b[34m"
+# define MAGENTA	"\x1b[35m"
+# define CYAN	"\x1b[36m"
+# define RESET	"\x1b[0m"
 
 typedef struct s_stack
 {
