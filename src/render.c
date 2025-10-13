@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:20:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:11:46 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:57:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ void	animate(t_game *game, double now)
 	i = 0;
 	while (i < game->nb_animate)
 	{
-		anim = (void *)game->animates[i];
-		if (anim->next_frame)
+		if (game->is_animate & (1 << i))
 		{
-			if (now - anim->last_animate > anim->frame_duration)
+			anim = (void *)game->texture[i];
+			if (anim->next_frame)
 			{
-				anim->next_frame(anim, anim->ctx);
-				anim->last_animate = now;
+				if (now - anim->last_animate > anim->frame_duration)
+				{
+					anim->next_frame(anim, anim->ctx);
+					anim->last_animate = now;
+				}
 			}
 		}
 		i++;
@@ -63,6 +66,8 @@ void	render(void *param)
 	double	now;
 
 	game = param;
+	if (!game || !game->mlx)
+		return;
 	now = mlx_get_time();
 	animate(game, now);
 	game->time_delta = now - game->last_render;

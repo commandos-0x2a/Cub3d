@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:15:05 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:53:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ typedef struct s_game
 
 	int					width;
 	int					height;
-	mlx_texture_t		*texture[6];
+	mlx_texture_t		*texture[8];
+	int					is_animate;
 	bool				interact;
 }	t_game;
 
@@ -110,7 +111,7 @@ void			player_control(void *param);
 void			render_schema(t_game *game);
 
 int				load_textures(t_game *game);
-t_game			*start_game(const char *map_path);
+int				start_game(t_game *game, const char *map_path);
 void			end_game(t_game *game, int status);
 void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);

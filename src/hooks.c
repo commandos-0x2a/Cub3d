@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:51:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/04 10:19:16 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:55:33 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 void	resize_hook(int32_t width, int32_t height, void *param)
 {
-	t_game	*game;
+	t_game		*game;
+	mlx_image_t	*new_frame;
 
 	game = param;
+	if (!game || !game->mlx)
+		return ;
 	game->width = width;
 	game->height = height;
-	mlx_delete_image(game->mlx, game->frame);
-	game->frame = mlx_new_image(game->mlx, game->width, game->height);
-	if (!game->frame)
+	new_frame = mlx_new_image(game->mlx, game->width, game->height);
+	if (!new_frame)
 	{
 		printf("Error: frame init\n");
 		end_game(game, 1);
 	}
-	mlx_image_to_window(game->mlx, game->frame, 0, 0);
+	mlx_image_to_window(game->mlx, new_frame, 0, 0);
+	mlx_delete_image(game->mlx, game->frame);
+	game->frame = new_frame;
 }
 
 void	game_hooks(t_game *game)

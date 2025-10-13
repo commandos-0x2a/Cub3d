@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:05:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:03:34 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 11:05:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,10 @@ int		iclamp(int value, int min, int max);
 float	fclamp(float value, float min, float max);
 int		is_in_box(int x, int y, int w, int h);
 int		is_in_circle(float x, float y, float radius);
+
+t_vector	add_vector(t_vector v1, t_vector v2);
+t_vector	sub_vector(t_vector v1, t_vector v2);
+t_vector	multi_vector(t_vector v1, t_vector v2);
+t_vector	div_vector(t_vector v1, t_vector v2);
 
 #endif

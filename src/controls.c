@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:10:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:07:33 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,22 @@ void	mouse_control(t_game *game, t_player *player)
 	player->r += dx * 0.005f;
 }
 
-void	player_walk(t_game *game, t_player *player, t_vector *vec)
+void	player_walk(t_game *game, t_player *p, t_vector *vec)
 {
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
-	{
-		vec->x += cosf(player->r);
-		vec->y += sinf(player->r);
-	}
+		*vec = add_vector(*vec, (t_vector){cosf(p->r), sinf(p->r)});
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
-	{
-		vec->x -= cosf(player->r);
-		vec->y -= sinf(player->r);
-	}
+		*vec = add_vector(*vec, (t_vector){-cosf(p->r), -sinf(p->r)});
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
-	{
-		vec->x += sinf(player->r);
-		vec->y -= cosf(player->r);
-	}
+		*vec = add_vector(*vec, (t_vector){sinf(p->r), -cosf(p->r)});
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
-	{
-		vec->x -= sinf(player->r);
-		vec->y += cosf(player->r);
-	}
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		player->r -= (180.f * game->time_delta * PI) / 180.f;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		player->r += (180.f * game->time_delta * PI) / 180.f;
+		*vec = add_vector(*vec, (t_vector){-sinf(p->r), cosf(p->r)});
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT)
+		|| mlx_is_key_down(game->mlx, MLX_KEY_Q))
+		p->r -= (180.f * game->time_delta * PI) / 180.f;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(game->mlx, MLX_KEY_E))
+		p->r += (180.f * game->time_delta * PI) / 180.f;
 	game->interact = mlx_is_key_down(game->mlx, MLX_KEY_F);
 }
 
@@ -109,24 +99,22 @@ void	player_control(void *param)
 	t_vector	vec;
 
 	game = param;
+	if (!game || !game->mlx)
+		return ;
 	player = &game->player;
 	vec = (t_vector){0, 0};
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		end_game(game, 0);
-	// mouse_control(game, player);
+	mouse_control(game, player);
 	player_walk(game, player, &vec);
 	if(game->interact)
 	{
 		game->interact = false;
 		handle_door(game);
 	}
-	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
-		player->r -= (180.f * game->time_delta * PI) / 180.f;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
-		player->r += (180.f * game->time_delta * PI) / 180.f;
 	vec.x *= player->speed * game->time_delta;
 	vec.y *= player->speed * game->time_delta;
 	wall_collision(game, player, &vec);
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		end_game(game, 0);
 }
