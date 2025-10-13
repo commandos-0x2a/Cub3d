@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:20:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 13:49:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:45:02 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	render_floor_ceiling(mlx_image_t *frame,
 
 void	animate(t_game *game, double now)
 {
-	size_t		i;
+	size_t				i;
 	t_sprite_animate	*anim;
 
 	i = 0;
@@ -64,7 +64,7 @@ void	render(void *param)
 
 	game = param;
 	if (!game || !game->mlx)
-		return;
+		return ;
 	now = mlx_get_time();
 	animate(game, now);
 	game->time_delta = now - game->last_render;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 17:40:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:53:16 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 	}
 	if (new_x != old_x
 		&& (game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1'
-		|| game->map->grid.raw[old_y * game->map->grid.w + new_x] == 'D'))
+			|| game->map->grid.raw[old_y * game->map->grid.w + new_x] == 'D'))
 		vec->x = 0;
 	if (new_y != old_y
 		&& (game->map->grid.raw[new_y * game->map->grid.w + old_x] == '1'
-		|| game->map->grid.raw[new_y * game->map->grid.w + old_x] == 'D'))
+			|| game->map->grid.raw[new_y * game->map->grid.w + old_x] == 'D'))
 		vec->y = 0;
 }
 
@@ -106,7 +106,7 @@ void	player_control(void *param)
 	vec = (t_vector){0, 0};
 	// mouse_control(game, player);
 	player_walk(game, player, &vec);
-	if(game->interact)
+	if (game->interact)
 	{
 		game->interact = false;
 		handle_door(&game->player, &game->map->grid, game->last_render);

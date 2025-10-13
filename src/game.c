@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 14:12:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:44:28 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	init_player(t_map *map, t_player *player, t_debug *debug)
 	debug->fps = 0;
 }
 
-int start_game(t_game *game, const char *map_path)
+int	start_game(t_game *game, const char *map_path)
 {
 	ft_bzero(game, sizeof(*game));
 	game->map = read_map(map_path);
@@ -51,7 +51,8 @@ int start_game(t_game *game, const char *map_path)
 
 int	set_game_icon(t_game *game)
 {
-	game->texture[ICON_INDEX] = load_texture(game, "textures/directions.xpm42", ICON_INDEX);
+	game->texture[ICON_INDEX] = load_texture(game,
+			"textures/directions.xpm42", ICON_INDEX);
 	if (!game->texture[ICON_INDEX])
 		return (1);
 	mlx_set_icon(game->mlx, game->texture[ICON_INDEX]);

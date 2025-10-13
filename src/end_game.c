@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_game.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 14:10:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 14:45:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:45:48 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	free_textures(t_game *game)
 				free_animate(game->animates[i]);
 			else
 				mlx_delete_texture(game->texture[i]);
-			// printf("%s: %zu\n", __func__, i);
 			game->texture[i] = NULL;
 		}
 		i++;

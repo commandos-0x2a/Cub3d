@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 17:28:39 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:52:19 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	get_wall_height(t_game *game, float distance, int x)
 	return (wall_height);
 }
 
-static void	draw_wall_column(t_game *game, mlx_texture_t *texture, int x, int wall_height,
+static void	draw_wall_column(t_game *game, int x, int wall_height,
 			t_ray_hit ray_hit)
 {
 	int	y;
@@ -52,13 +52,14 @@ static void	draw_wall_column(t_game *game, mlx_texture_t *texture, int x, int wa
 	{
 		if (y >= 0 && y < game->height)
 		{
-			tex_x = (int)(ray_hit.wall_x * texture->width);
-			tex_x = iclamp(tex_x, 0, texture->width - 1);
+			tex_x = (int)(ray_hit.wall_x * game->texture[ray_hit.tex_i]->width);
+			tex_x = iclamp(tex_x, 0, game->texture[ray_hit.tex_i]->width - 1);
 			tex_y = (int)((float)(y - start_y)
-					/ (float)wall_height * texture->height);
-			tex_y = iclamp(tex_y, 0, texture->height - 1);
+					/ (float)wall_height
+					* game->texture[ray_hit.tex_i]->height);
+			tex_y = iclamp(tex_y, 0, game->texture[ray_hit.tex_i]->height - 1);
 			mlx_put_pixel(game->frame, x, y,
-				get_pixel_color(texture, tex_x, tex_y));
+				get_pixel_color(game->texture[ray_hit.tex_i], tex_x, tex_y));
 		}
 		y++;
 	}
@@ -66,16 +67,12 @@ static void	draw_wall_column(t_game *game, mlx_texture_t *texture, int x, int wa
 
 void	draw_wall(t_game *game, t_ray_hit ray_hit, int x)
 {
-	mlx_texture_t	*texture;
 	int				wall_height;
 
 	wall_height = get_wall_height(game, ray_hit.distance, x);
 	if (ray_hit.tex_i < 0 || ray_hit.tex_i > 4)
 		return ;
-	texture = game->texture[ray_hit.tex_i];
-	if (!texture || !texture->pixels)
-		return ;
-	draw_wall_column(game, texture, x, wall_height, ray_hit);
+	draw_wall_column(game, x, wall_height, ray_hit);
 }
 
 void	render_schema(t_game *game)
