@@ -29,6 +29,8 @@ SRC += 	src/main.c							\
 		src/image/sprite_to_animate.c		\
 		src/image/read_image.c				\
 		src/minimap/minimap.c				\
+		src/minimap/minimap_utils.c			\
+		src/minimap/minimap_render.c		\
 		src/player.c						\
 		src/raycasting.c					\
 		src/vector.c						\

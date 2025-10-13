@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 17:53:16 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/13 19:01:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	handle_door(t_player *player, t_grid *grid, double last_render)
 		return ;
 	door_x = (int)(player->pos.x + cosf(player->r));
 	door_y = (int)(player->pos.y + sinf(player->r));
-	if (!is_in_circle(door_x, door_y, 100))
+	if (!is_in_box(door_x, door_y, grid->w, grid->h))
 		return ;
 	if (grid->raw[door_y * grid->w + door_x] == 'D')
 		grid->raw[door_y * grid->w + door_x] = 'O';

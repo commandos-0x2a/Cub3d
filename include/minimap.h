@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 03:13:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 18:49:56 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/13 19:01:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define DRAWING_SCALE 50
 
 # include "utils.h"
+# include "game.h"
 
 typedef struct s_minimap
 {
@@ -33,5 +34,11 @@ typedef struct s_minimap
 }	t_minimap;
 
 void	minimap(t_game *game);
+
+void	draw_minimap(mlx_image_t *frame, t_minimap *minimap,
+		t_player *player, t_grid *grid);
+void	get_matrix(t_minimap *minimap, float mat[3][3]);
+void	transform_point(t_point *result, float mat[3][3], t_point point);
+
 
 #endif
