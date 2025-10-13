@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 14:45:28 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:40:32 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,23 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 		vec->y = 0;
 }
 
-void	handle_door(t_game *game)
+void	handle_door(t_player *player, t_grid *grid, double last_render)
 {
-	int	door_x;
-	int	door_y;
-	int	w;
-	int	h;
+	int				door_x;
+	int				door_y;
+	static double	last_use;
 
-	w = game->map->grid.w;
-	h = game->map->grid.h;
-	door_x = (int)(game->player.pos.x + cosf(game->player.r) * 1.5);
-	door_y = (int)(game->player.pos.y + sinf(game->player.r) * 1.5);
-	if (!is_in_box(door_x, door_y, w, h))
+	if (last_render - last_use < 0.5)
 		return ;
-	if (game->map->grid.raw[door_y * game->map->grid.w + door_x] == 'D')
-	{
-		game->map->grid.raw[door_y * w + door_x] = 'O';
+	door_x = (int)(player->pos.x + cosf(player->r));
+	door_y = (int)(player->pos.y + sinf(player->r));
+	if (!is_in_circle(door_x, door_y, 100))
 		return ;
-	}
-	if (game->map->grid.raw[door_y * w + door_x] == 'O')
-	{
-		game->map->grid.raw[door_y * w + door_x] = 'D';
-		return ;
-	}
+	if (grid->raw[door_y * grid->w + door_x] == 'D')
+		grid->raw[door_y * grid->w + door_x] = 'O';
+	else if (grid->raw[door_y * grid->w + door_x] == 'O')
+		grid->raw[door_y * grid->w + door_x] = 'D';
+	last_use = last_render;
 }
 
 void	player_control(void *param)
@@ -115,7 +109,7 @@ void	player_control(void *param)
 	if(game->interact)
 	{
 		game->interact = false;
-		handle_door(game);
+		handle_door(&game->player, &game->map->grid, game->last_render);
 	}
 	vec.x *= player->speed * game->time_delta;
 	vec.y *= player->speed * game->time_delta;
