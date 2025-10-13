@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:51:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 12:55:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:43:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,18 @@ void	resize_hook(int32_t width, int32_t height, void *param)
 	game->frame = new_frame;
 }
 
+void	close_hook(void *params)
+{
+	t_game	*game;
+
+	game = params;
+	end_game(game, 0);
+}
+
 void	game_hooks(t_game *game)
 {
 	mlx_loop_hook(game->mlx, render, game);
 	mlx_loop_hook(game->mlx, player_control, game);
 	mlx_resize_hook(game->mlx, resize_hook, game);
+	mlx_close_hook(game->mlx, close_hook, game);
 }

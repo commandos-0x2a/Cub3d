@@ -2,9 +2,9 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -g -fsanitize=address
+CFLAGS += -g #-fsanitize=address
 CPPFLAGS = -IMLX42/include -Ilibft/include -Iinclude
-LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild -fsanitize=address
+LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild #-fsanitize=address
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
@@ -22,6 +22,7 @@ SRC += 	src/main.c							\
 		src/render.c 						\
 		src/controls.c						\
 		src/game.c							\
+		src/end_game.c							\
 		src/hooks.c							\
 		src/image/sprite_reader.c			\
 		src/image/sprite.c					\

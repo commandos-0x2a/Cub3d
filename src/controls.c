@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 12:07:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:45:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	wall_collision(t_game *game, t_player *player, t_vector *vec)
 	new_y = player->pos.y + vec->y;
 	old_x = player->pos.x;
 	old_y = player->pos.y;
+	if (!is_in_box(new_x, new_y, game->map->grid.w, game->map->grid.h))
+	{
+		*vec = (t_vector){0, 0};
+		return ;
+	}
 	if (new_x != old_x
 		&& (game->map->grid.raw[old_y * game->map->grid.w + new_x] == '1'
 		|| game->map->grid.raw[old_y * game->map->grid.w + new_x] == 'D'))
@@ -101,9 +106,11 @@ void	player_control(void *param)
 	game = param;
 	if (!game || !game->mlx)
 		return ;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		end_game(game, 0);
 	player = &game->player;
 	vec = (t_vector){0, 0};
-	mouse_control(game, player);
+	// mouse_control(game, player);
 	player_walk(game, player, &vec);
 	if(game->interact)
 	{
@@ -115,6 +122,4 @@ void	player_control(void *param)
 	wall_collision(game, player, &vec);
 	player->pos.x += vec.x;
 	player->pos.y += vec.y;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		end_game(game, 0);
 }

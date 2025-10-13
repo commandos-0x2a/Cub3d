@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 12:53:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:52:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,16 @@ enum e_direction
 	RIGHT
 };
 
-typedef enum e_wall_side
+typedef enum e_texture_index
 {
 	WALL_EAST,
 	WALL_WEST,
 	WALL_NORTH,
 	WALL_SOUTH,
 	WALL_DOOR,
-}	t_wall_side;
+	ICON_INDEX,
+	TEXTURE_COUNT,
+}	t_texture_index;
 
 typedef struct s_ray_cast
 {
@@ -101,7 +103,7 @@ typedef struct s_game
 
 	int					width;
 	int					height;
-	mlx_texture_t		*texture[8];
+	mlx_texture_t		*texture[TEXTURE_COUNT];
 	int					is_animate;
 	bool				interact;
 }	t_game;
@@ -110,11 +112,13 @@ void			render(void *param);
 void			player_control(void *param);
 void			render_schema(t_game *game);
 
+mlx_texture_t	*load_texture(t_game *game, const char *path, int i);
 int				load_textures(t_game *game);
 int				start_game(t_game *game, const char *map_path);
 void			end_game(t_game *game, int status);
 void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
 t_ray_hit		cast_ray(t_game *game, double angle);
+
 
 #endif

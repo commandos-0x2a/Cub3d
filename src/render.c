@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:20:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 12:57:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:49:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	render_floor_ceiling(mlx_image_t *frame,
 void	animate(t_game *game, double now)
 {
 	size_t		i;
-	t_animate	*anim;
+	t_sprite_animate	*anim;
 
 	i = 0;
 	while (i < game->nb_animate)
@@ -47,13 +47,10 @@ void	animate(t_game *game, double now)
 		if (game->is_animate & (1 << i))
 		{
 			anim = (void *)game->texture[i];
-			if (anim->next_frame)
+			if (now - anim->last_animate > anim->frame_duration)
 			{
-				if (now - anim->last_animate > anim->frame_duration)
-				{
-					anim->next_frame(anim, anim->ctx);
-					anim->last_animate = now;
-				}
+				sprite_next_frame(anim);
+				anim->last_animate = now;
 			}
 		}
 		i++;

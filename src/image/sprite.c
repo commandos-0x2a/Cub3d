@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/03 15:15:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:08:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	free_group_frames(t_group_frame *gframes)
 	i = 0;
 	while (i < gframes->nb_frame)
 	{
-		free(gframes[i].frames[i].pixels);
-		gframes[i].frames[i].pixels = NULL;
+		free(gframes->frames[i].pixels);
+		gframes->frames[i].pixels = NULL;
 		i++;
 	}
 	free(gframes->frames);
@@ -48,6 +48,7 @@ void	free_sprite(t_sprite *spr)
 				free(spr->frames[i].u.single.pixels);
 				spr->frames[i].u.single.pixels = NULL;
 			}
+			i++;
 		}
 		free(spr->frames);
 	}

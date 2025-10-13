@@ -2,7 +2,7 @@ NO ./textures/test/NO.xpm42
 SO ./textures/test/SO.xpm42
 WE ./textures/test/WE.xpm42
 EA ./textures/test/EA.xpm42
-DO textures/closed_door.xpm42
+DO ./textures/closed_door.xpm42
 
 F 255, 255, 255
 C 178, 190, 181
