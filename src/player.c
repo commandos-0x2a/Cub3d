@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/09 11:27:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:28:39 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ static int	get_wall_height(t_game *game, float distance, int x)
 	angle_offset = (x - game->width / 2) * (FOV * PI / 180.0
 			/ game->width);
 	corrected_distance = distance * cos(angle_offset);
-	corrected_distance = fclamp(corrected_distance, 1.f, FLT_MAX);
 	wall_height = (int)(game->height * TILE_SIZE / corrected_distance);
-	return (iclamp(wall_height, 0, game->height));
+	return (wall_height);
 }
 
 static void	draw_wall_column(t_game *game, mlx_texture_t *texture, int x, int wall_height,
@@ -91,7 +90,7 @@ void	render_schema(t_game *game)
 	x = 0;
 	while (x < game->width)
 	{
-		ray_hit = cast_ray(game, sangle + x * angle_step);
+		ray_hit = cast_ray(game, sangle + x * angle_step, x);
 		draw_wall(game, ray_hit, x);
 		x++;
 	}

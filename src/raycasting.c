@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 13:51:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:15:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ static void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
 {
 	if (rc->side == 0)
 	{
-		ray->distance = (rc->map_x - rc->px + (1 - rc->step_x) / 2) / rc->dir_x;
+		ray->distance = rc->side_dist_x - rc->delta_dist_x;
 		ray->wall_x = rc->py + ray->distance * rc->dir_y;
 	}
 	else
 	{
-		ray->distance = (rc->map_y - rc->py + (1 - rc->step_y) / 2) / rc->dir_y;
+		ray->distance = rc->side_dist_y - rc->delta_dist_y;
 		ray->wall_x = rc->px + ray->distance * rc->dir_x;
 	}
 	ray->wall_x -= floor(ray->wall_x);
@@ -90,11 +90,12 @@ static void	calculate_distance_and_texture(t_ray_cast *rc, t_ray_hit *ray)
 		ray->tex_i = WALL_NORTH;
 }
 
-t_ray_hit	cast_ray(t_game *game, double angle)
+t_ray_hit	cast_ray(t_game *game, double angle, int x)
 {
 	t_ray_hit	ray;
 	t_ray_cast	rc;
 
+	(void)x;
 	ray.tex_i = 0;
 	rc.px = game->player.pos.x;
 	rc.py = game->player.pos.y;

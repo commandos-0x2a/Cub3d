@@ -118,7 +118,7 @@ int				start_game(t_game *game, const char *map_path);
 void			end_game(t_game *game, int status);
 void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
-t_ray_hit		cast_ray(t_game *game, double angle);
+t_ray_hit		cast_ray(t_game *game, double angle, int x);
 
 
 #endif
