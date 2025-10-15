@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:04:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:00:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:08:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ int	validate_map(t_map *map)
 	if (valid_char(&map->grid) == 0)
 		return (0);
 	if (valid_surrounded_wall(map) == 0)
+	{
+		printf("Error\nmap is not surrounded by wall\n");
 		return (0);
+	}
 	if (valid_color(map->ceiling_color, map->floor_color) == 0)
 		return (0);
 	get_player_init(&map->grid,

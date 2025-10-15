@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 19:06:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 13:10:38 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:06:33 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ static int	get_0_255(int *color, char **line_r, int offset, int check_comma)
 	int		slice;
 	char	*line;
 
+	
 	line = *line_r;
+	while (*line && ft_isspace(*line))
+		line++;
+	*line_r = line;
 	slice = ft_atoi_r(&line);
 	if (*line_r == line)
 		return (-1);
@@ -35,17 +39,28 @@ static int	get_0_255(int *color, char **line_r, int offset, int check_comma)
 	return (0);
 }
 
+static int	print_read_color_error(char *start, int err)
+{
+	printf("Error\n");
+	printf("%s\n", start);
+	return (err);
+}
+
 int	copy_color(int *color, char *line)
 {
-	int	err;
+	int		err;
+	char	*start;
 
+	start = line;
 	*color = 0xff;
 	err = get_0_255(color, &line, 24, 1);
 	if (err != 0)
-		return (err);
+		return (print_read_color_error(start, err));
 	err = get_0_255(color, &line, 16, 1);
 	if (err != 0)
-		return (err);
+		return (print_read_color_error(start, err));
 	err = get_0_255(color, &line, 8, 0);
-	return (err);
+	if (err != 0)
+		return (print_read_color_error(start, err));
+	return (0);
 }

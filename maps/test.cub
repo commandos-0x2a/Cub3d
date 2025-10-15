@@ -4,7 +4,7 @@ WE ./textures/test/WE.xpm42
 EA ./textures/test/EA.xpm42
 DO ./textures/closed_door.xpm42
 
-F 255, 255, 255
+F 255, 0,0 
 C 178, 190, 181
 
 1111111111111111111111
