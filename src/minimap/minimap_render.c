@@ -6,12 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:42:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:16:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:20:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
 #include "game.h"
+#include "libft.h"
 
 void	draw_circle(mlx_image_t *frame, t_point p, int radius, uint32_t color)
 {
@@ -49,6 +50,10 @@ uint32_t	get_map_color(t_grid *grid, int map_x, int map_y)
 		color = 0x000000ff;
 	else if (grid->raw[map_y * grid->w + map_x] == 'O')
 		color = 0xaa5500ff;
+	else if (ft_strchr("NSEW", grid->raw[map_y * grid->w + map_x]))
+		color = 0x000000ff;
+	else if (grid->raw[map_y * grid->w + map_x] == 'D')
+		color = 0xff00ffff;
 	else
 		color = 0xffffffff;
 	return (color);
