@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 18:51:35 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:40:14 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,17 @@ t_map	*read_map(const char *map_file);
 int		validate_map(t_map *map);
 int		valid_file_name(const char *map_file);
 int		valid_surrounded_wall(t_map *map);
+
+/*  Utils  */
+int		copy_file_path(t_map *map, char *line, char *dir);
+int		is_emtpy_line(char *line);
+void	copy_line(t_grid *grid, size_t i, char *line);
+int		copy_color(int *color, char *line);
+
+t_stack	*init_stack(int x, int y);
+void	clear_stack(t_stack **stack);
+t_stack	*add_to_stack(t_stack **stack, int x, int y);
+t_stack	*add_player_position(t_grid *grid);
+int		save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y);
 
 #endif

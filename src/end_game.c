@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_game.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 14:10:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 17:45:48 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/15 11:17:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ void	end_game(t_game *game, int status)
 		puts(mlx_strerror(mlx_errno));
 	if (game->mlx)
 	{
-		// mlx_destroy_cursor(game->mlx);
 		mlx_close_window(game->mlx);
 		mlx_terminate(game->mlx);
-		// game->mlx = NULL;
 	}
 	free_textures(game);
 	if (game->map)

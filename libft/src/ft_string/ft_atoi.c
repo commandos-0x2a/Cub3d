@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 20:54:35 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/05 12:14:41 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:41:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	ft_atoi(const char *nptr)
 int	ft_atoi_r(char **p_nptr)
 {
 	char	*nptr;
-	int			sign;
-	int			ret;
+	int		sign;
+	int		ret;
 
 	nptr = *p_nptr;
 	while (ft_isspace(*nptr))

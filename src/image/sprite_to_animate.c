@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:47:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 13:26:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:39:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,11 @@ void	sprite_next_frame(t_sprite_animate *anim)
 	anim->frame_index = index;
 }
 
-t_sprite_animate	*sprite_to_animate(t_sprite *spr, int group_idx)
+t_group_frame	*get_group_used(t_sprite *spr, int group_idx)
 {
-	t_sprite_animate	*anim;
 	size_t				i;
 	int					gi;
 
-	anim = ft_calloc(1, sizeof(t_sprite_animate));
-	if (!anim)
-		return (NULL);
-	anim->spr = spr;
 	i = 0;
 	gi = 0;
 	while (i < spr->nb_frame)
@@ -60,14 +55,23 @@ t_sprite_animate	*sprite_to_animate(t_sprite *spr, int group_idx)
 		if (spr->frames[i].type == 2)
 		{
 			if (gi == group_idx)
-			{
-				anim->group_used = &spr->frames[i].u.group;
-				break ;
-			}
+				return (&spr->frames[i].u.group);
 			gi++;
 		}
 		i++;
 	}
+	return (NULL);
+}
+
+t_sprite_animate	*sprite_to_animate(t_sprite *spr, int group_idx)
+{
+	t_sprite_animate	*anim;
+
+	anim = ft_calloc(1, sizeof(t_sprite_animate));
+	if (!anim)
+		return (NULL);
+	anim->spr = spr;
+	anim->group_used = get_group_used(spr, group_idx);
 	if (!anim->group_used)
 	{
 		anim->render_type = 1;

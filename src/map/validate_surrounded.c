@@ -6,85 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:44:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:10:11 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:07:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "libft.h"
 #include <stdio.h>
-
-static t_stack	*init_stack(int x, int y)
-{
-	t_stack	*new;
-
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->x = x;
-	new->y = y;
-	new->next = NULL;
-	return (new);
-}
-
-static void	clear_stack(t_stack **stack)
-{
-	t_stack	*cur;
-	t_stack	*tmp;
-
-	cur = *stack;
-	while (cur)
-	{
-		tmp = cur;
-		cur = cur->next;
-		free(tmp);
-	}
-	*stack = NULL;
-}
-
-static t_stack	*add_to_stack(t_stack **stack, int x, int y)
-{
-	t_stack	*new;
-
-	new = init_stack(x, y);
-	if (!new)
-		return (NULL);
-	new->next = *stack;
-	*stack = new;
-	return (new);
-}
-
-static t_stack	*add_player_position(t_grid *grid)
-{
-	size_t	y;
-	size_t	x;
-
-	y = 0;
-	while (y < grid->h)
-	{
-		x = 0;
-		while (x < grid->w)
-		{
-			if (ft_strchr("WESN", grid->raw[y * grid->w + x]))
-				return (init_stack(x, y));
-			x++;
-		}
-		y++;
-	}
-	return (NULL);
-}
-
-static int	save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y)
-{
-	char	c;
-
-	c = grid->raw[y * grid->w + x];
-	if (!is_in_box(x, y, grid->w, grid->h) || c == '@' || c == '1')
-		return (0);
-	if (add_to_stack(stack, x, y) == NULL)
-		return (-1);
-	return (1);
-}
 
 static int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
 {
@@ -96,7 +24,7 @@ static int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
 	return (1);
 }
 
-static t_grid	*copy_grid2(t_grid *grid)
+static t_grid	*copy_grid(t_grid *grid)
 {
 	t_grid	*new_grid;
 
@@ -110,14 +38,36 @@ static t_grid	*copy_grid2(t_grid *grid)
 	return (new_grid);
 }
 
+int	flood_fill(t_stack **cur_r, t_grid *tmp_grid)
+{
+	t_stack	*next;
+	char	*c;
+
+	while (*cur_r)
+	{
+		next = (*cur_r)->next;
+		c = &tmp_grid->raw[(*cur_r)->y * tmp_grid->w + (*cur_r)->x];
+		if (*c == ' '
+			|| !is_in_box((*cur_r)->x, (*cur_r)->y, tmp_grid->w, tmp_grid->h))
+			return (0);
+		if (*c != '1')
+		{
+			add_block_surrounded(&next, tmp_grid, (*cur_r)->x, (*cur_r)->y);
+			*c = '@';
+		}
+		free(*cur_r);
+		*cur_r = next;
+	}
+	return (1);
+}
+
 int	valid_surrounded_wall(t_map *map)
 {
 	t_stack	*cur;
-	t_stack	*next;
 	t_grid	*tmp_grid;
-	char	*c;
+	int		valid;
 
-	tmp_grid = copy_grid2(&map->grid);
+	tmp_grid = copy_grid(&map->grid);
 	if (!tmp_grid)
 		return (0);
 	cur = add_player_position(tmp_grid);
@@ -127,27 +77,9 @@ int	valid_surrounded_wall(t_map *map)
 		free(tmp_grid);
 		return (0);
 	}
-	while (cur)
-	{
-		next = cur->next;
-		c = &tmp_grid->raw[cur->y * tmp_grid->w + cur->x];
-		if (*c == ' ' || !is_in_box(cur->x, cur->y, tmp_grid->w, tmp_grid->h))
-		{
-			free(tmp_grid->raw);
-			free(tmp_grid);
-			clear_stack(&cur);
-			return (0);
-		}
-		if (*c != '1')
-		{
-			add_block_surrounded(&next, tmp_grid, cur->x, cur->y);
-			*c = '@';
-		}
-		free(cur);
-		cur = next;
-	}
+	valid = flood_fill(&cur, tmp_grid);
 	free(tmp_grid->raw);
 	free(tmp_grid);
 	clear_stack(&cur);
-	return (1);
+	return (valid);
 }

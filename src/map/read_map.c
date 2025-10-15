@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:38:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/12 16:08:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 11:54:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,81 +18,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-static int	copy_file_path(t_map *map, char *line, char *dir)
-{
-	char	*path;
-	size_t	len;
-
-	if (ft_strcmp(dir, "NO ") == 0)
-		path = map->north_path;
-	else if (ft_strcmp(dir, "SO ") == 0)
-		path = map->south_path;
-	else if (ft_strcmp(dir, "WE ") == 0)
-		path = map->west_path;
-	else if (ft_strcmp(dir, "EA ") == 0)
-		path = map->east_path;
-	else if (ft_strcmp(dir, "DO ") == 0)
-		path = map->door_path;
-	else
-		return (-1);
-	if (*path)
-		return (-1);
-	while (isspace(*line))
-		line++;
-	if (!*line)
-		return (-1);
-	len = ft_strlcpy(path, line, PATH_MAX);
-	if (len >= PATH_MAX)
-		return (-1);
-	if (path[len - 1] == '\n')
-		path[len - 1] = '\0';
-	return (0);
-}
-
-static int	copy_color(int *dst, char *line)
-{
-	int	color;
-
-	*dst = 0xff;
-	color = ft_atoi_r(&line);
-	while (*line && isspace(*line))
-		line++;
-	if (color < 0 || color > 255 || *line != ',')
-		return (-1);
-	line++;
-	*dst |= color << 24;
-	color = ft_atoi_r(&line);
-	while (*line && isspace(*line))
-		line++;
-	if (color < 0 || color > 255 || *line != ',')
-		return (-2);
-	line++;
-	*dst |= color << 16;
-	color = ft_atoi_r(&line);
-	while (*line && isspace(*line))
-		line++;
-	if (color < 0 || color > 255 || *line != '\0')
-		return (-3);
-	*dst |= color << 8;
-	return (0);
-}
-
-static int	is_emtpy_line(char *line)
-{
-	while (*line && isspace(*line))
-		line++;
-	return (!*line);
-}
-
-static void	copy_line(t_grid *grid, size_t i, char *line)
-{
-	char	*cur;
-
-	cur = &grid->raw[i * grid->w];
-	while (*line && *line != '\n')
-		*cur++ = *line++;
-	ft_memset(cur, ' ', &grid->raw[(i + 1) * grid->w] - cur);
-}
+int	copy_color(int *color, char *line);
 
 static int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 {
@@ -149,12 +75,6 @@ static int	read_map_iter(int fd, int i, t_map *map)
 	return (err);
 }
 
-static void	print_read_error(t_map *map, int err)
-{
-	(void)map;
-	printf("error: %d\n", err);
-}
-
 static t_map	*init_map(void)
 {
 	t_map	*map;
@@ -197,7 +117,7 @@ t_map	*read_map(const char *map_file)
 	close(fd);
 	if (err != 0)
 	{
-		print_read_error(map, err);
+		printf("error: %d\n", err);
 		free(map);
 		return (NULL);
 	}

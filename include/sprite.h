@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/02 12:06:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:39:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,12 @@ typedef struct s_sprite
 	t_frame			*frames;
 }	t_sprite;
 
+/*  Private  */
+int			read_exact(int fd, void *buffer, size_t size);
+int			read_frame_pixels(int fd, uint32_t *pixels,
+				t_rgb *palette, t_dspriteframe *header);
+
+/*  Public  */
 int			load_sprite_file(int fd, t_sprite *spr);
 void		free_sprite(t_sprite *spr);
 t_sprite	*load_sprite(const char *filename);

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 19:01:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 11:32:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	player_control(void *param)
 		end_game(game, 0);
 	player = &game->player;
 	vec = (t_vector){0, 0};
-	// mouse_control(game, player);
+	mouse_control(game, player);
 	player_walk(game, player, &vec);
 	if (game->interact)
 	{

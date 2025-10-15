@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:25:27 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 14:44:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:18:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static void	print_ext_not_exist(const char *path)
 		printf("Error: cannot load '%s' ext '%s' not exist.\n", path, ext);
 }
 
-void	print_tex_load_error(const char *path, t_image_type type)
+void	print_tex_load_error(mlx_texture_t	*tex,
+	const char *path, t_image_type type)
 {
-	if (type == IT_PNG || type == IT_XPM)
+	if (!tex && (type == IT_PNG || type == IT_XPM))
 		printf("Error: load image (%s): %s\n", path, mlx_strerror(mlx_errno));
-	
 }
 
 mlx_texture_t	*load_texture(t_game *game, const char *path, int i)
@@ -57,9 +57,9 @@ mlx_texture_t	*load_texture(t_game *game, const char *path, int i)
 	mlx_texture_t	*tex;
 
 	type = get_image_type(path);
-	// if (type == IT_PNG)
-	// 	tex = mlx_load_png(path);
-	 if (type == IT_XPM)
+	if (type == IT_PNG)
+		tex = mlx_load_png(path);
+	if (type == IT_XPM)
 		tex = (void *)mlx_load_xpm42(path);
 	else if (type == IT_SRP)
 	{
@@ -76,8 +76,7 @@ mlx_texture_t	*load_texture(t_game *game, const char *path, int i)
 		print_ext_not_exist(path);
 		return (NULL);
 	}
-	if (!tex)
-		print_tex_load_error(path, type);
+	print_tex_load_error(tex, path, type);
 	return (tex);
 }
 

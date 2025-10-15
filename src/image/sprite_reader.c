@@ -6,38 +6,17 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 17:00:00 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/02 12:12:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:34:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprite.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <limits.h>
 #include <libft.h>
-
-static int	read_exact(int fd, void *buffer, size_t size)
-{
-	ssize_t	bytes_read;
-	ssize_t	total_read;
-	char	*buf_ptr;
-
-	if (!buffer)
-		return (SPRITE_ERROR_NULL_PTR);
-	buf_ptr = (char *)buffer;
-	total_read = 0;
-	while (total_read < (ssize_t)size)
-	{
-		bytes_read = read(fd, buf_ptr + total_read, size - total_read);
-		if (bytes_read <= 0)
-			return (SPRITE_ERROR_HEADER);
-		total_read += bytes_read;
-	}
-	return (SPRITE_SUCCESS);
-}
 
 static int	validate_sprite_header(const t_sprite_header *sprite)
 {
@@ -54,47 +33,6 @@ static int	validate_sprite_header(const t_sprite_header *sprite)
 		return (SPRITE_ERROR_INVALID);
 	if (sprite->nb_frame <= 0 || sprite->nb_frame > 1000)
 		return (SPRITE_ERROR_INVALID);
-	return (SPRITE_SUCCESS);
-}
-
-uint32_t	get_rgba(uint8_t index, t_rgb *palette, int trans)
-{
-	if (trans && index == 255)
-		return (0);
-	return ((((uint32_t *)palette)[index] << 8) | 255);
-}
-
-static int	read_frame_pixels(int fd, uint32_t *pixels,
-						t_rgb *palette,
-						t_dspriteframe *header)
-{
-	uint8_t		*pixels_data;
-	int			res;
-	int			x;
-	int			y;
-
-	pixels_data = malloc(header->width * header->height);
-	if (!pixels_data)
-		return (SPRITE_ERROR_MEMORY);
-	res = read_exact(fd, pixels_data, header->width * header->height);
-	if (res != SPRITE_SUCCESS)
-	{
-		free(pixels_data);
-		return (res);
-	}
-	y = 0;
-	while (y < header->height)
-	{
-		x = 0;
-		while (x < header->width)
-		{
-			pixels[y * header->width + x] = get_rgba(
-					pixels_data[y * header->width + x], palette, 1);
-			x++;
-		}
-		y++;
-	}
-	free(pixels_data);
 	return (SPRITE_SUCCESS);
 }
 
@@ -120,7 +58,6 @@ int	read_single_frame(int fd, mlx_texture_t *frame, t_rgb *palette)
 int	read_group_frame(int fd, t_group_frame *group, t_rgb *palette)
 {
 	int				i;
-	mlx_texture_t	*frame;
 	int				res;
 
 	res = read_exact(fd, &group->nb_frame, sizeof(group->nb_frame));
@@ -139,8 +76,7 @@ int	read_group_frame(int fd, t_group_frame *group, t_rgb *palette)
 	i = 0;
 	while (i < group->nb_frame)
 	{
-		frame = &group->frames[i];
-		res = read_single_frame(fd, frame, palette);
+		res = read_single_frame(fd, &group->frames[i], palette);
 		if (res != SPRITE_SUCCESS)
 			return (res);
 		i++;

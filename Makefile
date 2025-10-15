@@ -16,24 +16,33 @@ endif
 
 SRC += 	src/main.c							\
 		src/utils.c							\
-		src/map/read_map.c					\
-		src/map/validate_map.c				\
-		src/map/validate_surrounded.c		\
 		src/render.c 						\
 		src/controls.c						\
 		src/game.c							\
-		src/end_game.c							\
+		src/end_game.c						\
 		src/hooks.c							\
-		src/image/sprite_reader.c			\
-		src/image/sprite.c					\
-		src/image/sprite_to_animate.c		\
-		src/image/read_image.c				\
-		src/minimap/minimap.c				\
-		src/minimap/minimap_utils.c			\
-		src/minimap/minimap_render.c		\
 		src/player.c						\
 		src/raycasting.c					\
 		src/vector.c						\
+		\
+		src/map/read_map.c					\
+		src/map/validate_map.c				\
+		src/map/validate_surrounded.c		\
+		src/map/get_color.c					\
+		src/map/print_validate_error.c		\
+		src/map/read_map_utils.c			\
+		src/map/surrounded_utils.c			\
+		\
+		src/image/read_image.c				\
+		src/image/sprite.c					\
+		src/image/sprite_reader.c			\
+		src/image/sprite_to_animate.c		\
+		src/image/read_pixels.c				\
+		src/image/sprites_utils.c			\
+		\
+		src/minimap/minimap.c				\
+		src/minimap/minimap_utils.c			\
+		src/minimap/minimap_render.c		\
 
 OBJ = $(SRC:%.c=build/%.o)
 
@@ -54,7 +63,9 @@ build/%.o: %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS)  -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(NAME)
+	rm -f $(OBJ)
+	$(MAKE) -C libft clean
+	rm -rf build
 
 fclean: clean
 	rm -f $(NAME)

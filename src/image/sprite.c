@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:49:01 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 14:08:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:18:39 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_sprite(t_sprite *spr)
  */
 const char	*get_sprite_error_message(size_t error_code)
 {
-	static const char *sprite_error_messages[] = {
+	static const char	*sprite_error_messages[] = {
 		"Success",
 		"Null pointer error",
 		"File open error",
@@ -74,6 +74,7 @@ const char	*get_sprite_error_message(size_t error_code)
 		"Memory allocation error",
 		"Pixel data read error"
 	};
+
 	if (error_code >= sizeof(sprite_error_messages)
 		/ sizeof(sprite_error_messages[0]))
 		return ("Unknown error");

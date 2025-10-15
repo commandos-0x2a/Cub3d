@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vsnprintf.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsrour <rsrour@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:33:34 by mkurkar           #+#    #+#             */
-/*   Updated: 2025/07/28 09:31:57 by rsrour           ###   ########.fr       */
+/*   Updated: 2025/10/15 12:41:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	ft_handle_string(const char *src, char *buf,
 		put_char_to_buf(buf, *src++, pos, size);
 }
 
-static void ft_handle_float(double f, char *buf, size_t *pos, size_t size)
+static void	ft_handle_float(double f, char *buf, size_t *pos, size_t size)
 {
 	int		int_part;
 	double	frac_part;
@@ -73,7 +73,7 @@ static void ft_handle_float(double f, char *buf, size_t *pos, size_t size)
 	ft_handle_number(int_part, buf, pos, size);
 	put_char_to_buf(buf, '.', pos, size);
 	i = 0;
-	while (i < 6) // Limit to 6 decimal places
+	while (i < 6)
 	{
 		frac_part *= 10;
 		put_char_to_buf(buf, '0' + ((int)frac_part % 10), pos, size);

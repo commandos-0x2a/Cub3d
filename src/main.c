@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:28:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 14:12:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 11:17:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	main(int argc, char *argv[])
 		end_game(&game, 1);
 	game_hooks(&game);
 	mlx_loop(game.mlx);
-	mlx_terminate(game.mlx);
+	end_game(&game, 0);
 	return (0);
 }

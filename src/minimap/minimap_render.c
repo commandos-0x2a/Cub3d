@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:42:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 18:59:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:16:36 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,42 @@ uint32_t	get_map_color(t_grid *grid, int map_x, int map_y)
 	return (color);
 }
 
+t_point	get_draw_point(t_minimap *minimap, float x, float y)
+{
+	t_point	draw_point;
+	t_point	center_point;
+
+	center_point.x = x - minimap->width / 2;
+	center_point.y = y - minimap->height / 2;
+	draw_point = transform_point(minimap->mat, center_point);
+	return (draw_point);
+}
+
 void	draw_minimap(mlx_image_t *frame, t_minimap *minimap,
 		t_player *player, t_grid *grid)
 {
-	t_point		point;
+	t_point		draw_p;
 	int			map_x;
 	int			map_y;
-	uint32_t	color;
+	float		x;
+	float		y;
 
-	for (float y = 0; y < (float)minimap->height; y += 0.5f)
+	y = 0;
+	while (y < (float)minimap->height)
 	{
-		for (float x = 0; x < (float)minimap->width; x += 0.5f)
+		x = 0;
+		while (x < (float)minimap->width)
 		{
-			point.x = x - minimap->width / 2;
-			point.y = y - minimap->height / 2;
-			transform_point(&point, minimap->mat, point);	
-			if (!is_in_box(point.x, point.y, frame->width, frame->height))
-				continue;
+			draw_p = get_draw_point(minimap, x, y);
+			if (!is_in_box(draw_p.x, draw_p.y, frame->width, frame->height))
+				continue ;
 			map_x = player->pos.x + (x - minimap->width / 2) / DRAWING_SCALE;
 			map_y = player->pos.y + (y - minimap->height / 2) / DRAWING_SCALE;
-			color = get_map_color(grid, map_x, map_y);			
-			mlx_put_pixel(frame, point.x, point.y, color);
+			mlx_put_pixel(frame, draw_p.x, draw_p.y,
+				get_map_color(grid, map_x, map_y));
+			x += 0.5f;
 		}
+		y += 0.5f;
 	}
 	draw_circle(frame, (t_point){minimap->x, minimap->y}, 20, 0xff0000ff);
 }

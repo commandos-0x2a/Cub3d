@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 03:13:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 19:01:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:40:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ typedef struct s_minimap
 void	minimap(t_game *game);
 
 void	draw_minimap(mlx_image_t *frame, t_minimap *minimap,
-		t_player *player, t_grid *grid);
+			t_player *player, t_grid *grid);
 void	get_matrix(t_minimap *minimap, float mat[3][3]);
-void	transform_point(t_point *result, float mat[3][3], t_point point);
-
+t_point	transform_point(float mat[3][3], t_point point);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 11:38:39 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/09/05 11:28:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:40:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <errno.h>
 #include "libft.h"
 
-static void	ft_strjoin_gnl_help(char **new_line_p, char *buffer, \
+static void	ft_strjoin_gnl_help(char **new_line_p, char *buffer,
 									size_t i1, size_t i2)
 {
 	char	*new_line;
