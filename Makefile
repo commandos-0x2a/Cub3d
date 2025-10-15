@@ -1,10 +1,13 @@
 NAME = cub3d
 
+LIBMLX	:= ./lib/MLX42
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g #-fsanitize=address
-CPPFLAGS = -IMLX42/include -Ilibft/include -Iinclude
+CPPFLAGS = -I${LIBMLX}/include -Ilibft/include -Iinclude
 LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild #-fsanitize=address
+
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
@@ -49,7 +52,7 @@ OBJ = $(SRC:%.c=build/%.o)
 all: MLX42 $(NAME)
 
 MLX42:
-	cmake -S MLX42 -B build -Wno-dev
+	cmake -S ${LIBMLX} -B build -Wno-dev
 	cmake --build build -j4
 
 libft:
