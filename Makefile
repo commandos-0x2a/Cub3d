@@ -1,12 +1,13 @@
 NAME = cub3d
 
 LIBMLX	:= ./lib/MLX42
+LIBFT	:= ./lib/libft
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g #-fsanitize=address
-CPPFLAGS = -I${LIBMLX}/include -Ilibft/include -Iinclude
-LDFLAGS = -Llibft -lft -lmlx42 -lglfw -lm -Lbuild #-fsanitize=address
+CPPFLAGS = -I${LIBMLX}/include -I$(LIBFT)/include -Iinclude
+LDFLAGS = -L$(LIBFT) -lft -lmlx42 -lglfw -lm -Lbuild #-fsanitize=address
 
 
 UNAME_S := $(shell uname -s)
@@ -56,7 +57,7 @@ MLX42:
 	cmake --build build -j4
 
 libft:
-	$(MAKE) -C libft
+	$(MAKE) -C $(LIBFT)
 
 $(NAME): $(OBJ) | libft
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -67,7 +68,7 @@ build/%.o: %.c
 
 clean:
 	rm -f $(OBJ)
-	$(MAKE) -C libft clean
+	$(MAKE) -C $(LIBFT) clean
 	rm -rf build
 
 fclean: clean
