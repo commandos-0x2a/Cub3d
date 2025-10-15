@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 17:44:28 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:25:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	set_game_icon(t_game *game)
 
 int32_t	open_window(t_game *game)
 {
-	game->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	game->mlx = mlx_init(WIDTH, HEIGHT, "TOO LATE", true);
 	if (!game->mlx)
 		return (-1);
 	game->frame = mlx_new_image(game->mlx, game->width, game->height);

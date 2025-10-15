@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 19:06:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:08:28 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:10:38 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int	copy_color(int *color, char *line)
 	err = get_0_255(color, &line, 16, 1);
 	if (err != 0)
 		return (err);
-	err = get_0_255(color, &line, 8, 1);
-	return (0);
+	err = get_0_255(color, &line, 8, 0);
+	return (err);
 }
