@@ -52,13 +52,6 @@ FILES =	\
 		ft_io/ft_putnbr_fd			\
 		ft_io/ft_putbase_fd			\
 		\
-		ft_printf/ft_printf			\
-		ft_printf/ft_fprintf		\
-		ft_printf/ft_snprintf		\
-		ft_printf/ft_vprintf		\
-		ft_printf/ft_vfprintf		\
-		ft_printf/ft_vsnprintf		\
-		\
 		get_next_line/get_next_line			\
 		\
 #
