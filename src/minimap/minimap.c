@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 14:20:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:14:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/18 13:44:59 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 void	setup_minimap(t_minimap *minimap, t_map *map)
 {
-	minimap->x = 150 + 10;
-	minimap->y = 150 + 10;
+	minimap->x = MINIMAP_WIDTH / 2 + MINIMAP_X;
+	minimap->y = MINIMAP_HEIGHT / 2 + MINIMAP_Y;
 	minimap->r = 0;
 	minimap->ref_x = 1;
 	minimap->ref_y = 1;
-	minimap->width = 300;
-	minimap->height = 300;
+	minimap->width = MINIMAP_WIDTH;
+	minimap->height = MINIMAP_HEIGHT;
 	(void)map;
 	get_matrix(minimap, minimap->mat);
 }

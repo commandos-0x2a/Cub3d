@@ -6,14 +6,29 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 03:13:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:40:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/18 13:47:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIMAP_H
 # define MINIMAP_H
 
-# define DRAWING_SCALE 50
+# define DRAWING_SCALE 32
+
+# define MINIMAP_X		10
+# define MINIMAP_Y		10
+# define MINIMAP_WIDTH	300
+# define MINIMAP_HEIGHT	300
+# define GRID_SIZE		0.05f
+
+# define VOID_COLOR			0x000000ff
+# define GRID_COLOR			0x000000ff
+# define WALL_COLOR			0x00ff00ff
+# define SPACE_COLOR		0x000000ff
+# define DOOROPEN_COLOR		0xaa5500ff
+# define DOORCLOSE_COLOR	0xff00ffff
+# define RESPAWN_COLOR		0x000000ff
+# define UNKNOW_COLOR		0x000000ff
 
 # include "utils.h"
 # include "game.h"

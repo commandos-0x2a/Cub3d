@@ -49,8 +49,11 @@ SRC += 	src/main.c							\
 		src/minimap/minimap_render.c		\
 
 OBJ = $(SRC:%.c=build/%.o)
+DEP = $(OBJ:%.o=%.d)
 
 all: MLX42 $(NAME)
+
+-include $(DEP)
 
 MLX42:
 	cmake -S ${LIBMLX} -B build -Wno-dev
@@ -64,7 +67,7 @@ $(NAME): $(OBJ) | libft
 
 build/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS)  -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -MMD  -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

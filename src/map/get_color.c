@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 19:06:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 16:06:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/18 13:48:33 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	get_0_255(int *color, char **line_r, int offset, int check_comma)
 	int		slice;
 	char	*line;
 
-	
 	line = *line_r;
 	while (*line && ft_isspace(*line))
 		line++;

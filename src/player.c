@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 17:52:19 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:49:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static uint32_t	get_pixel_color(mlx_texture_t *texture, int tex_x, int tex_y)
 	uint8_t		*pixel;
 	uint32_t	color;
 
+	if (!texture->pixels)
+		return (0x000000ff);
 	pixel = texture->pixels + (tex_y * texture->width + tex_x) * 4;
 	color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
 	return (color);

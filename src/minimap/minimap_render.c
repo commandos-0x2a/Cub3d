@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:42:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 16:20:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/18 13:45:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,26 @@ void	draw_circle(mlx_image_t *frame, t_point p, int radius, uint32_t color)
 	}
 }
 
-uint32_t	get_map_color(t_grid *grid, int map_x, int map_y)
+uint32_t	get_map_color(t_grid *grid, float map_x, float map_y)
 {
-	uint32_t	color;
+	char		c;
 
-	if (!is_in_box(map_x, map_y, grid->w, grid->h))
-		color = 0x000000ff;
-	else if (grid->raw[map_y * grid->w + map_x] == '1')
-		color = 0x00ff00ff;
-	else if (grid->raw[map_y * grid->w + map_x] == '0')
-		color = 0x000000ff;
-	else if (grid->raw[map_y * grid->w + map_x] == 'O')
-		color = 0xaa5500ff;
-	else if (ft_strchr("NSEW", grid->raw[map_y * grid->w + map_x]))
-		color = 0x000000ff;
-	else if (grid->raw[map_y * grid->w + map_x] == 'D')
-		color = 0xff00ffff;
-	else
-		color = 0xffffffff;
-	return (color);
+	if (map_x - (int)map_x < GRID_SIZE || map_y - (int)map_y < GRID_SIZE)
+		return (GRID_COLOR);
+	if (!is_in_box(map_x, map_y, grid->w - 1, grid->h))
+		return (VOID_COLOR);
+	c = grid->raw[(int)map_y * grid->w + (int)map_x];
+	if (c == '1')
+		return (WALL_COLOR);
+	if (c == '0')
+		return (SPACE_COLOR);
+	if (ft_strchr("NSEW", c))
+		return (RESPAWN_COLOR);
+	if (c == 'O')
+		return (DOOROPEN_COLOR);
+	if (c == 'D')
+		return (DOORCLOSE_COLOR);
+	return (UNKNOW_COLOR);
 }
 
 t_point	get_draw_point(t_minimap *minimap, float x, float y)
@@ -73,11 +74,11 @@ t_point	get_draw_point(t_minimap *minimap, float x, float y)
 void	draw_minimap(mlx_image_t *frame, t_minimap *minimap,
 		t_player *player, t_grid *grid)
 {
-	t_point		draw_p;
-	int			map_x;
-	int			map_y;
-	float		x;
-	float		y;
+	t_point	draw_p;
+	float	map_x;
+	float	map_y;
+	float	x;
+	float	y;
 
 	y = 0;
 	while (y < (float)minimap->height)
