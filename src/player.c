@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 21:11:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/18 12:49:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 16:05:25 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static void	draw_wall_column(t_game *game, int x, int wall_height,
 	{
 		if (y >= 0 && y < game->height)
 		{
-			tex_x = (int)(ray_hit.wall_x * game->texture[ray_hit.tex_i]->width);
-			tex_x = iclamp(tex_x, 0, game->texture[ray_hit.tex_i]->width - 1);
+			tex_x = get_tex_x(game, &ray_hit);
 			tex_y = (int)((float)(y - start_y)
 					/ (float)wall_height
 					* game->texture[ray_hit.tex_i]->height);

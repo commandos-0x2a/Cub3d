@@ -6,7 +6,7 @@
 /*   By: hassende <hassende@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:43:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/13 18:47:57 by hassende         ###   ########.fr       */
+/*   Updated: 2025/10/19 16:04:56 by hassende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ void			end_game(t_game *game, int status);
 void			game_hooks(t_game *game);
 int32_t			open_window(t_game *game);
 t_ray_hit		cast_ray(t_game *game, double angle, int x);
+int				get_tex_x(t_game *game, t_ray_hit *ray_hit);
 
 #endif
