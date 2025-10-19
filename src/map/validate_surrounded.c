@@ -6,23 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:44:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:07:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:24:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "libft.h"
 #include <stdio.h>
-
-static int	add_block_surrounded(t_stack **stack, t_grid *grid, int x, int y)
-{
-	if (save_add_to_stack(stack, grid, x, y - 1) < 0
-		|| save_add_to_stack(stack, grid, x + 1, y) < 0
-		|| save_add_to_stack(stack, grid, x - 1, y) < 0
-		|| save_add_to_stack(stack, grid, x, y + 1) < 0)
-		return (0);
-	return (1);
-}
 
 static t_grid	*copy_grid(t_grid *grid)
 {
@@ -38,48 +28,45 @@ static t_grid	*copy_grid(t_grid *grid)
 	return (new_grid);
 }
 
-int	flood_fill(t_stack **cur_r, t_grid *tmp_grid)
+int	flood_fill(t_grid *tmp_grid, int x, int y)
 {
-	t_stack	*next;
 	char	*c;
 
-	while (*cur_r)
+	if (!is_in_box(x, y, tmp_grid->w, tmp_grid->h))
+		return (0);
+	c = &tmp_grid->raw[y * tmp_grid->w + x];
+	if (*c == ' ')
+		return (0);
+	if (*c == '@')
+		return (1);
+	if (*c != '1')
 	{
-		next = (*cur_r)->next;
-		c = &tmp_grid->raw[(*cur_r)->y * tmp_grid->w + (*cur_r)->x];
-		if (*c == ' '
-			|| !is_in_box((*cur_r)->x, (*cur_r)->y, tmp_grid->w, tmp_grid->h))
+		*c = '@';
+		if (!flood_fill(tmp_grid, x, y - 1))
 			return (0);
-		if (*c != '1')
-		{
-			add_block_surrounded(&next, tmp_grid, (*cur_r)->x, (*cur_r)->y);
-			*c = '@';
-		}
-		free(*cur_r);
-		*cur_r = next;
+		if (!flood_fill(tmp_grid, x - 1, y))
+			return (0);
+		if (!flood_fill(tmp_grid, x + 1, y))
+			return (0);
+		if (!flood_fill(tmp_grid, x, y + 1))
+			return (0);
 	}
 	return (1);
 }
 
 int	valid_surrounded_wall(t_map *map)
 {
-	t_stack	*cur;
 	t_grid	*tmp_grid;
 	int		valid;
+	int		px;
+	int		py;
 
 	tmp_grid = copy_grid(&map->grid);
 	if (!tmp_grid)
 		return (0);
-	cur = add_player_position(tmp_grid);
-	if (!cur)
-	{
-		free(tmp_grid->raw);
-		free(tmp_grid);
-		return (0);
-	}
-	valid = flood_fill(&cur, tmp_grid);
+	get_player_position(tmp_grid, &px, &py);
+	valid = flood_fill(tmp_grid, px, py);
 	free(tmp_grid->raw);
 	free(tmp_grid);
-	clear_stack(&cur);
 	return (valid);
 }

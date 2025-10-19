@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:42 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:12:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:42:25 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,17 @@ void	copy_line(t_grid *grid, size_t i, char *line)
 	while (*line && *line != '\n')
 		*cur++ = *line++;
 	ft_memset(cur, ' ', &grid->raw[(i + 1) * grid->w] - cur);
+}
+
+/*
+	newline char non-counted
+*/
+size_t	grid_linelen(const char *line)
+{
+	size_t	i;
+
+	i = 0;
+	while (line[i] != '\0' && line[i] != '\n')
+		i++;
+	return (i);
 }

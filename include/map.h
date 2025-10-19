@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:11:20 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 12:40:14 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:10:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@
 # define MAGENTA	"\x1b[35m"
 # define CYAN	"\x1b[36m"
 # define RESET	"\x1b[0m"
-
-typedef struct s_stack
-{
-	int				x;
-	int				y;
-	struct s_stack	*next;
-}	t_stack;
 
 typedef struct s_grid
 {
@@ -65,15 +58,12 @@ int		valid_file_name(const char *map_file);
 int		valid_surrounded_wall(t_map *map);
 
 /*  Utils  */
+size_t	grid_linelen(const char *line);
 int		copy_file_path(t_map *map, char *line, char *dir);
 int		is_emtpy_line(char *line);
 void	copy_line(t_grid *grid, size_t i, char *line);
 int		copy_color(int *color, char *line);
 
-t_stack	*init_stack(int x, int y);
-void	clear_stack(t_stack **stack);
-t_stack	*add_to_stack(t_stack **stack, int x, int y);
-t_stack	*add_player_position(t_grid *grid);
-int		save_add_to_stack(t_stack **stack, t_grid *grid, int x, int y);
+void	get_player_position(t_grid *grid, int *x, int *y);
 
 #endif

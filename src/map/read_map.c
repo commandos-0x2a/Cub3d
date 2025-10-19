@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:38:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 14:20:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:54:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	read_grid_iter(int fd, int i, t_grid *grid, char *line)
 			return (-1);
 		return (0);
 	}
-	w = ft_strlen(line);
+	w = grid_linelen(line);
 	if (w > grid->w)
 		grid->w = w;
 	err = read_grid_iter(fd, i + 1, grid, get_next_line(fd));

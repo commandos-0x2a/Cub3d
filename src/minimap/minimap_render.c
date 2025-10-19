@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:42:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/18 13:45:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:40:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ uint32_t	get_map_color(t_grid *grid, float map_x, float map_y)
 
 	if (map_x - (int)map_x < GRID_SIZE || map_y - (int)map_y < GRID_SIZE)
 		return (GRID_COLOR);
-	if (!is_in_box(map_x, map_y, grid->w - 1, grid->h))
+	if (!is_in_box(map_x, map_y, grid->w, grid->h))
 		return (VOID_COLOR);
 	c = grid->raw[(int)map_y * grid->w + (int)map_x];
 	if (c == '1')
