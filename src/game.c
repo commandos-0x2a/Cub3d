@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 13:23:37 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/15 14:25:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:33:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void	init_player(t_map *map, t_player *player, t_debug *debug)
 	player->r = 0;
 	player->pos.x = map->player_x + 0.5f;
 	player->pos.y = map->player_y + 0.5f;
-	if (map->player_r == 'E')
+	if (map->player_r == 'W')
 		player->r = 0.f * PI / 180.f;
-	else if (map->player_r == 'W')
-		player->r = 90.f * PI / 180.f;
 	else if (map->player_r == 'N')
+		player->r = 90.f * PI / 180.f;
+	else if (map->player_r == 'E')
 		player->r = 180.f * PI / 180.f;
 	else if (map->player_r == 'S')
 		player->r = 270.f * PI / 180.f;

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:01:57 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/10/19 15:21:46 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:30:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ void	get_player_position(t_grid *grid, int *px, int *py)
 		y++;
 	}
 }
-
